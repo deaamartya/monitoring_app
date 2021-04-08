@@ -14,6 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('layout');
+Route::get('/', 'HomeController@index');
+
+Auth::routes();
+
+Route::prefix('admin')->middleware(['auth'])->group(function(){
+    Route::get('/','AdminController@index');
+
+    Route::get('/admin/menuproyek','MenuProyekController@index');
+    Route::resource('user','UserController');
 });
