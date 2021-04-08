@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,3 +21,10 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::prefix('admin')->middleware(['auth'])->group(function(){
+    Route::get('/','AdminController@index');
+
+    Route::get('/admin/menuproyek','MenuProyekController@index');
+
+
+});
