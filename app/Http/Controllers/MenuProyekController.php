@@ -6,11 +6,14 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Carbon;
 use DB;
+use App\Models\Proyek;
 use Maatwebsite\Excel\Facades\Excel;
 
 
 class MenuProyekController extends Controller
 {
-    $menuproyek=MenuProyek::all();
-    return view('admin.menuproyek',compact('menuproyek'));
+    public function index(){
+        $proyek = Proyek::all();
+        return view('admin.menuproyek',compact('proyek'));
+    }
 }
