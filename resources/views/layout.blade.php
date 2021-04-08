@@ -39,7 +39,7 @@ License: You must have a valid license purchased only from themeforest(the above
             </div>
             <ul class="border-t border-theme-24 py-5 hidden">
                 <li>
-                    <a href="{{url('/dashboard')}}" class="menu menu--active">
+                    <a href="{{url('/')}}" class="menu menu--active">
                         <div class="menu__icon"> <i data-feather="home"></i> </div>
                         <div class="menu__title"> Dashboard </div>
                     </a>
@@ -72,7 +72,7 @@ License: You must have a valid license purchased only from themeforest(the above
                 <div class="side-nav__devider my-6"></div>
                 <ul>
                     <li>
-                        <a href="{{url('/dashboard')}}" class="side-menu @if(request() -> segment(1) == '/dashboard' && request()->segment(2) == '') side-menu--active @endif">
+                        <a href="{{url('/')}}" class="side-menu @if(request() -> segment(1) == '' && request()->segment(2) == '') side-menu--active @endif">
                             <div class="side-menu__icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home mx-auto"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                             </div>
@@ -107,7 +107,7 @@ License: You must have a valid license purchased only from themeforest(the above
                 <!-- BEGIN: Top Bar -->
                 <div class="top-bar">
                     <!-- BEGIN: Breadcrumb -->
-                    <div class="-intro-x breadcrumb mr-auto hidden sm:flex"> <a href="" class="">Application</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i> <a href="" class="breadcrumb--active">
+                    <div class="-intro-x breadcrumb mr-auto hidden sm:flex"> <a href="" class="">Aplikasi Monitor Progress Proyek</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i> <a href="" class="breadcrumb--active">
                         @if(request()->segment(2) != '')
                         {{ ucwords(request()->segment(2)) }}
                         @else
@@ -116,29 +116,6 @@ License: You must have a valid license purchased only from themeforest(the above
                         </a> 
                     </div>
                     <!-- END: Breadcrumb -->
-                    <!-- BEGIN: Notifications -->
-                    {{-- <div class="intro-x dropdown mr-auto sm:mr-6">
-                        <div class="dropdown-toggle notification notification--bullet cursor-pointer"> <i data-feather="bell" class="notification__icon dark:text-gray-300"></i> </div>
-                        <div class="notification-content pt-2 dropdown-box">
-                            <div class="notification-content__box dropdown-box__content box dark:bg-dark-6">
-                                <div class="notification-content__title">Notifications</div>
-                                <div class="cursor-pointer relative flex items-center ">
-                                    <div class="w-12 h-12 flex-none image-fit mr-1">
-                                        <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="dist/images/profile-4.jpg">
-                                        <div class="w-3 h-3 bg-theme-9 absolute right-0 bottom-0 rounded-full border-2 border-white"></div>
-                                    </div>
-                                    <div class="ml-2 overflow-hidden">
-                                        <div class="flex items-center">
-                                            <a href="javascript:;" class="font-medium truncate mr-5">John Travolta</a> 
-                                            <div class="text-xs text-gray-500 ml-auto whitespace-no-wrap">05:09 AM</div>
-                                        </div>
-                                        <div class="w-full truncate text-gray-600">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#039;s standard dummy text ever since the 1500</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
-                    <!-- END: Notifications -->
                     <!-- BEGIN: Account Menu -->
                     <div class="intro-x dropdown w-8 h-8">
                         <div class="dropdown-toggle w-8 h-8 rounded-full overflow-hidden shadow-lg image-fit zoom-in">
@@ -155,7 +132,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                     <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 dark:hover:bg-dark-3 rounded-md"> <i data-feather="lock" class="w-4 h-4 mr-2"></i> Reset Password </a>
                                 </div>
                                 <div class="p-2 border-t border-theme-40 dark:border-dark-3">
-                                    <form action="#" method="POST">
+                                    <form action="{{ route('logout') }}" method="POST">
                                         @csrf
                                         <button class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 dark:hover:bg-dark-3 rounded-md"> 
                                             <i data-feather="toggle-right" class="w-4 h-4 mr-2"></i> Logout 
@@ -176,12 +153,9 @@ License: You must have a valid license purchased only from themeforest(the above
 
         <!-- BEGIN: JS Assets-->
         <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=["your-google-map-api"]&libraries=places></script>
         <script src="{{asset('dist/js/app.js')}}"></script>
         <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
         <!-- END: JS Assets-->
-
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 
         @yield('script')
     </body>
