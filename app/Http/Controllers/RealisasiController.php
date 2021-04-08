@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Progress;
 
 class RealisasiController extends Controller
 {
@@ -13,17 +14,8 @@ class RealisasiController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $progress = Progress::all();
+        return view('admin.realisasi',compact('progress'));
     }
 
     /**
@@ -34,30 +26,25 @@ class RealisasiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'TANGGAL' => 'required',
+            'PV_VALUE' => 'required',
+            'EV_VALUE' => 'required',
+            'AC_VALUE' => 'required',
+            'REALISASI' => 'required'
+        ]);
+
+        Progress::insert([
+            'TANGGAL' => $request->TANGGAL,
+            'PV_VALUE' => $request->PV_VALUE,
+            'EV_VALUE' => $request->EV_VALUE,
+            'AC_VALUE' => $request->AC_VALUE,
+            'REALISASI' => $request->REALISASI
+        ]);
+        
+        return redirect('admin/realisasi')->with('success','Realisasi berhasil ditambahkan.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -68,7 +55,23 @@ class RealisasiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'TANGGAL' => 'required',
+            'PV_VALUE' => 'required',
+            'EV_VALUE' => 'required',
+            'AC_VALUE' => 'required',
+            'REALISASI' => 'required'
+        ]);
+
+        Progress::find($id)->update([
+            'TANGGAL' => $request->TANGGAL,
+            'PV_VALUE' => $request->PV_VALUE,
+            'EV_VALUE' => $request->EV_VALUE,
+            'AC_VALUE' => $request->AC_VALUE,
+            'REALISASI' => $request->REALISASI
+        ]);
+
+        return redirect('admin/realisasi')->with('success','Realisasi berhasil diupdate.');
     }
 
     /**
@@ -79,6 +82,12 @@ class RealisasiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Progress::find($id)->update([
+            'EV_VALUE' => null,
+            'AC_VALUE' => null,
+            'REALISASI' => null
+        ]);
+
+        return redirect('admin/realisasi')->with('success','Realisasi berhasil dihapus.');
     }
 }

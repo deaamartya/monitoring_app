@@ -71,7 +71,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
 <div class="intro-y box p-5 mt-5 sm:mt-5 bg-blue-400 text-white" style="background-color: #1c3faa;">                        
     <div class="flex flex-row">
         <i data-feather="list"></i>
-        <h2 class="text-lg font-medium mr-auto ml-3">Realisasi</h2>
+        <h2 class="text-lg font-medium mr-auto ml-3">Realisasi Proyek (NAMA PROYEK)</h2>
     </div>
 </div>
 
@@ -88,34 +88,38 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
     <br>
     <!--Card-->
     <div class="px-2 py-1">
-        <a href ="javascript:;" data-toggle="modal" data-target="#tambah_user" class="button mb-6 mr-6 flex items-center justify-center bg-theme-1 text-white float-right block" style="float:right;" ><i data-feather="file-plus" class="w-6 h-6 mr-2"></i>Tambah User</a>
+        <a href ="javascript:;" data-toggle="modal" data-target="#tambah_realisasi" class="button mb-6 mr-6 flex items-center justify-center bg-theme-1 text-white float-right block" style="float:right;" ><i data-feather="plus-circle" class="w-6 h-6 mr-2"></i>Tambah Realisasi</a>
 
         <table id="example" class="stripe hover display cell-border" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
             <thead>
                 <tr>
                     <th data-priority="1">Tanggal</th>
-                    <th data-priority="2">Prosentase</th>
-                    <th data-priority="3" width="10%">PV</th>
+                    <th data-priority="2">PV</th>
+                    <th data-priority="3" width="10%">EV</th>
+                    <th data-priority="3" width="10%">AC</th>
+                    <th data-priority="3" width="10%">Realisasi</th>
                     <th data-priority="4">Aksi</th>
                 </tr>
             </thead>
             <tbody>
-            @foreach($users as $u)
+            @foreach($progress as $p)
                 <tr>
-                    <td>{{$loop->iteration}}</td>
-                    <td>{{$u->username}}</td>
-                    <td>{{$u->NAMA_LENGKAP}}</td>
+                    <td>{{$p->TANGGAL}}</td>
+                    <td>{{$p->PV_VALUE}}</td>
+                    <td>{{$p->EV_VALUE}}</td>
+                    <td>{{$p->AC_VALUE}}</td>
+                    <td>{{$p->REALISASI}}</td>
                     <td>
                     <div class="flex" style="justify-content: center;">
-                        <a data-toggle="modal" data-target="#edit_{{ $u->ID_USER }}">
-                            <button href="javascript:;" title="Edit User" type="button" class="button px-3 mr-3 mb-3 bg-theme-17 text-theme-11">
+                        <a data-toggle="modal" data-target="#edit_{{ $p->TANGGAL }}">
+                            <button href="javascript:;" title="Edit Realisasi" type="button" class="button px-3 mr-3 mb-3 bg-theme-17 text-theme-11">
                                 <span class="flex items-center justify-center">
                                     <i data-feather="edit" class="w-7 h-7 mr-2"></i>Edit
                                 </span>
                             </button>
                         </a>
-                        <a data-toggle="modal" data-target="#delete_{{ $u->ID_USER }}">
-                            <button href="javascript:;" title="Delete User" type="button" class="button px-3 mr-3 mb-3 bg-theme-31 text-theme-6">
+                        <a data-toggle="modal" data-target="#delete_{{ $p->TANGGAL }}">
+                            <button href="javascript:;" title="Hapus Realisasi" type="button" class="button px-3 mr-3 mb-3 bg-theme-31 text-theme-6">
                                 <span class="flex items-center justify-center">
                                     <i data-feather="trash" class="w-6 h-6 mr-2"></i>Hapus
                                 </span>
@@ -128,33 +132,44 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
             </tbody>
         </table>
 
-        <div class="modal" id="tambah_user">
-            <div class="modal__content modal__content--lg py-5 pl-3 pr-1 ml-auto">
+        <div class="modal" id="tambah_realisasi">
+            <div class="modal__content modal__content py-5 pl-3 pr-1 ml-auto">
                 <div class="modal-header">
                     <div class="modal__content relative"> 
                     </div>
                     <div class="flex px-2 sm:pb-3 sm:pt-1 border-b border-gray-200 dark:border-dark-5">
-                        <h2 class="font-bold text-2xl flex"><i data-feather="info" class="w-8 h-8 mr-2"></i>Tambah User</h2>
+                        <h2 class="font-bold text-2xl flex"><i data-feather="plus-circle" class="w-8 h-8 mr-2"></i>Tambah Realisasi</h2>
                         <a data-dismiss="modal" href="javascript:;" class="mr-3 ml-auto"><i data-feather="x" class="w-8 h-8 text-gray-500"></i></a>
                     </div>
                 </div>
-                <form action="{{ route('user.store') }}" method="POST">
+                <form action="{{ route('realisasi.store') }}" method="POST">
                     @csrf
                     <div class="modal-body">
                         <div class="p-5 grid grid-cols-12 gap-4 row-gap-3">
-                            <div class="col-span-12"> 
-                                <label class="font-semibold text-lg">Username</label>
-                                <input type="text" class="input w-full border mt-2 flex-1" name="username">
+                            <div class="col-span-12">
+                                <label class="font-semibold text-lg">TANGGAL</label> 
+                                <div class="relative mx-auto mt-2 mb-5"> 
+                                    <div class="absolute rounded-l w-10 h-full flex items-center justify-center bg-gray-100 border text-gray-600 dark:bg-dark-1 dark:border-dark-4"> 
+                                        <i data-feather="calendar" class="w-4 h-4"></i> 
+                                    </div> 
+                                    <input type="text" class="datepicker input pl-12 border" data-single-mode="true" name="TANGGAL"> 
+                                </div>
                             </div>
-
                             <div class="col-span-12"> 
-                                <label class="font-semibold text-lg">Password</label>
-                                <input type="password" class="input w-full border mt-2 flex-1" name="password">
+                                <label class="font-semibold text-lg">PV</label>
+                                <input type="number" class="input w-full border mt-2 flex-1" name="PV_VALUE" value="PV_VALUE" readonly>
                             </div>
-
                             <div class="col-span-12"> 
-                                <label class="font-semibold text-lg">Nama Lengkap</label>
-                                <input type="text" class="input w-full border mt-2 flex-1" name="NAMA_LENGKAP">
+                                <label class="font-semibold text-lg">EV</label>
+                                <input type="number" class="input w-full border mt-2 flex-1" name="EV_VALUE">
+                            </div>
+                            <div class="col-span-12"> 
+                                <label class="font-semibold text-lg">AC</label>
+                                <input type="number" class="input w-full border mt-2 flex-1" name="AC_VALUE">
+                            </div>
+                            <div class="col-span-12"> 
+                                <label class="font-semibold text-lg">Realisasi</label>
+                                <input type="number" class="input w-full border mt-2 flex-1" name="REALISASI">
                             </div>
                         </div>
                     </div>
@@ -169,30 +184,46 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
             </div>
         </div>
 
-        @foreach($users as $u)
-        <div class="modal" id="edit_{{ $u->ID_USER }}">
-            <div class="modal__content modal__content--lg py-5 pl-3 pr-1 ml-auto">
+        @foreach($progress as $p)
+        <div class="modal" id="edit_{{ $p->TANGGAL }}">
+            <div class="modal__content modal__content py-5 pl-3 pr-1 ml-auto">
                 <div class="modal-header">
                     <div class="modal__content relative"> 
                     </div>
                     <div class="flex px-2 sm:pb-3 sm:pt-1 border-b border-gray-200 dark:border-dark-5">
-                        <h2 class="font-bold text-2xl flex"><i data-feather="info" class="w-8 h-8 mr-2"></i>Edit User #{{ $u->ID_USER }}</h2>
+                        <h2 class="font-bold text-2xl flex"><i data-feather="info" class="w-8 h-8 mr-2"></i>Edit Realisasi #{{ $p->TANGGAL }}</h2>
                         <a data-dismiss="modal" href="javascript:;" class="mr-3 ml-auto"><i data-feather="x" class="w-8 h-8 text-gray-500"></i></a>
                     </div>
                 </div>
-                <form action="{{ route('user.update',$u->ID_USER) }}" method="POST">
+                <form action="{{ route('realisasi.update',$p->TANGGAL) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="modal-body">
                         <div class="p-5 grid grid-cols-12 gap-4 row-gap-3">
-                            <div class="col-span-12"> 
-                                <label class="font-semibold text-lg">Username</label>
-                                <input type="text" class="input w-full border mt-2 flex-1" value="{{ $u->username }}" name="username">
+                        <div class="col-span-12"> 
+                            <label class="font-semibold text-lg">Tanggal</label>
+                            <select class="input border mr-2 w-full mt-2" name="TANGGAL" required>
+                                <option selected disabled>Pilih tanggal.....</option>
+                                @foreach($progress as $p)
+                                    <option value="{{ $p->TANGGAL }}">{{ $p->TANGGAL }}</option>
+                                @endforeach
+                            </select>
                             </div>
-
                             <div class="col-span-12"> 
-                                <label class="font-semibold text-lg">Nama Lengkap</label>
-                                <input type="text" class="input w-full border mt-2 flex-1" value="{{ $u->NAMA_LENGKAP }}" name="NAMA_LENGKAP">
+                                <label class="font-semibold text-lg">PV</label>
+                                <input type="number" class="input w-full border mt-2 flex-1" name="PV_VALUE" value="{{ $p->PV_VALUE }}" readonly>
+                            </div>
+                            <div class="col-span-12"> 
+                                <label class="font-semibold text-lg">EV</label>
+                                <input type="number" class="input w-full border mt-2 flex-1" name="EV_VALUE" value="{{ $p->EV_VALUE }}">
+                            </div>
+                            <div class="col-span-12"> 
+                                <label class="font-semibold text-lg">AC</label>
+                                <input type="number" class="input w-full border mt-2 flex-1" name="AC_VALUE" value="{{ $p->AC_VALUE }}">
+                            </div>
+                            <div class="col-span-12"> 
+                                <label class="font-semibold text-lg">Realisasi</label>
+                                <input type="number" class="input w-full border mt-2 flex-1" name="REALISASI" value="{{ $p->REALISASI }}">
                             </div>
                         </div>
                     </div>
@@ -206,21 +237,21 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                 </form>
             </div>
         </div>
-        <div class="modal" id="delete_{{ $u->ID_USER }}">
-            <div class="modal__content modal__content--lg py-5 pl-3 pr-1 ml-auto">
+        <div class="modal" id="delete_{{ $p->TANGGAL }}">
+            <div class="modal__content modal__content py-5 pl-3 pr-1 ml-auto">
                 <div class="modal-header">
                     <div class="modal__content relative"> 
                     </div>
                     <div class="flex px-2 sm:pb-3 sm:pt-1 border-b border-gray-200 dark:border-dark-5">
-                        <h2 class="font-bold text-2xl flex"><i data-feather="info" class="w-8 h-8 mr-2"></i>Hapus User #{{ $u->ID_USER }}</h2>
+                        <h2 class="font-bold text-2xl flex"><i data-feather="info" class="w-8 h-8 mr-2"></i>Hapus Realisasi #{{ $p->TANGGAL }}</h2>
                         <a data-dismiss="modal" href="javascript:;" class="mr-3 ml-auto"><i data-feather="x" class="w-8 h-8 text-gray-500"></i></a>
                     </div>
                 </div>
-                <form action="{{ route('user.destroy',$u->ID_USER) }}" method="POST">
+                <form action="{{ route('realisasi.destroy',$p->TANGGAL) }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <div class="text-base mt-5 ml-3">
-                        Apakah anda yakin ingin menghapus user {{ $u->NAMA_LENGKAP }} ?
+                        Apakah Anda yakin ingin menghapus realisasi pada tanggal {{ $p->TANGGAL }} ?
                     </div>
                     <div class="text-base text-theme-6 ml-3">Data yang dihapus tidak dapat dikembalikan.</div>
                     <div class="modal-footer mt-5">

@@ -23,6 +23,5 @@ Route::prefix('admin')->middleware(['auth'])->group(function(){
 
     Route::get('/admin/menuproyek','MenuProyekController@index');
     Route::resource('user','UserController');
-
-    Route::get('/admin/realisasi','RealisasiController@');
+    Route::resource('realisasi','RealisasiController');
 });
