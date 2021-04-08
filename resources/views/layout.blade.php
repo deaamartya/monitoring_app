@@ -53,7 +53,7 @@ License: You must have a valid license purchased only from themeforest(the above
                 </li>
 
                 <li>
-                    <a href="{{url('/user')}}" class="menu menu--active">
+                    <a href="{{url('admin/user')}}" class="menu menu--active">
                         <div class="menu__icon"> <i data-feather="inbox"></i> </div>
                         <div class="menu__title"> User </div>
                     </a>
@@ -91,7 +91,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
                     <li>
                     
-                        <a href="{{url('/user')}}" class="side-menu @if(request() -> segment(1) == 'users' && request()->segment(2) == 'permohonan') side-menu--active @endif">
+                        <a href="{{ route('user.index') }}" class="side-menu @if(request() -> segment(1) == 'admin' && request()->segment(2) == 'user') side-menu--active @endif">
                             <div class="side-menu__icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users mx-auto"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                             </div>
@@ -124,17 +124,13 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="dropdown-box w-56">
                             <div class="dropdown-box__content box bg-theme-38 dark:bg-dark-6 text-white">
                                 <div class="p-4 border-b border-theme-40 dark:border-dark-3">
-                                    <div class="font-medium"></div>
-                                    <div class="text-xs text-theme-41 dark:text-gray-600"></div>
-                                </div>
-                                <div class="p-2">
-                                    <a href="#" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 dark:hover:bg-dark-3 rounded-md"> <i data-feather="user" class="w-4 h-4 mr-2"></i> Profile </a>
-                                    <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 dark:hover:bg-dark-3 rounded-md"> <i data-feather="lock" class="w-4 h-4 mr-2"></i> Reset Password </a>
+                                    <div class="font-medium">{{ Auth::user()->NAMA_LENGKAP }}</div>
+                                    <div class="text-xs text-theme-41 dark:text-gray-600">Admin</div>
                                 </div>
                                 <div class="p-2 border-t border-theme-40 dark:border-dark-3">
                                     <form action="{{ route('logout') }}" method="POST">
                                         @csrf
-                                        <button class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 dark:hover:bg-dark-3 rounded-md"> 
+                                        <button class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 dark:hover:bg-dark-3 rounded-md w-full" type="submit"> 
                                             <i data-feather="toggle-right" class="w-4 h-4 mr-2"></i> Logout 
                                         </button>
                                     </form>
@@ -152,7 +148,7 @@ License: You must have a valid license purchased only from themeforest(the above
         </div>
 
         <!-- BEGIN: JS Assets-->
-        <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+        {{-- <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script> --}}
         <script src="{{asset('dist/js/app.js')}}"></script>
         <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
         <!-- END: JS Assets-->
