@@ -15,7 +15,11 @@ class UsersTableSeeder extends Seeder
         
 
         \DB::table('users')->delete();
-        
+        \DB::table('users')->insert([
+            'username' => 'admin',
+            'password' => bcrypt('admin'),
+            'NAMA_LENGKAP' => 'Admin'
+        ]);
         
         
     }
