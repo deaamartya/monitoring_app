@@ -23,4 +23,6 @@ Route::prefix('admin')->middleware(['auth'])->group(function(){
 
     Route::get('/menuproyek','MenuProyekController@index');
     Route::resource('user','UserController');
+
+    Route::get('/rencana/{id}','RencanaController@index');
 });

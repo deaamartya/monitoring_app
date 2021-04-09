@@ -76,7 +76,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
 <div class="intro-y box p-5 mt-5 mb-5 sm:mt-5 bg-blue-400 text-white" style="background-color: #1c3faa;">                        
     <div class="flex flex-row">
         <i data-feather="list"></i>
-        <h2 class="text-lg font-medium mr-auto ml-3">Table Rencana </h2>
+        <h2 class="text-lg font-medium mr-auto ml-3">Table Rencana #{{$progress->KODE_PROYEK}}</h2>
     </div>
     
 </div>
@@ -122,7 +122,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
     <!--Container-->
     <!--Card-->
     
-    <a href ="javascript:;" data-toggle="modal" data-target="#tambah_kategori" class="button mb-5 mr-6 mt-4 flex items-center justify-center bg-theme-1 text-white tombol-tambah-kategori" style="float:right;" ><i data-feather="plus-circle" class="w-6 h-6 mr-2"></i>Tambah Kategori Dokumen</a>
+    <a href ="javascript:;" data-toggle="modal" data-target="#tambah_rencana" class="button mb-5 mr-6 mt-4 flex items-center justify-center bg-theme-1 text-white tombol-tambah-rencana" style="float:right;" ><i data-feather="plus-circle" class="w-6 h-6 mr-2"></i>Tambah Rencana Proyek</a>
     
     <div class="container w-full">
 
@@ -139,23 +139,22 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                 </thead>
 
                 <tbody style="text-align: center;">
-                @foreach($rencana as $r)
+                @foreach($progress as $p)
                     <tr>
-                        <td>{{$k->ID_KATEGORI}}</td>
-                        <td>{{$k->jenis_kategori_dokumen->JENIS_KATEGORI}}</td>
-                        <td>{{$k->KATEGORI}}</td>
-                        <td>{{$k->NOMOR_URUT}}</td>
+                        <td>{{$p->TANGGAL}}</td>
+                        <td>{{$p->PV_VALUE}}</td>
+                        <td>{{$p->RENCANA}}</td>
                         <td>
                         <div class="flex" style="justify-content: center;">
-                            <a data-toggle="modal" data-target="#editKategori_{{ $k->ID_KATEGORI }}">
-                                <button href="javascript:;" title="Edit Kategori" type="button" class="tooltip button px-2 mr-1 mb-2 bg-green-300 dark:text-gray-300">
+                            <a data-toggle="modal" data-target="#editRencana_{{ $p->TANGGAL }}">
+                                <button href="javascript:;" title="Edit Rencana" type="button" class="tooltip button px-2 mr-1 mb-2 bg-green-300 dark:text-gray-300">
                                     <span class="w-5 h-5 flex items-center justify-center">
                                         <i data-feather="edit" class="w-4 h-4 "></i>
                                     </span>
                                 </button>
                             </a>
-                            <a data-toggle="modal" data-target="#deleteKategori_{{$k->ID_KATEGORI}}">
-                                <button href="javascript:;" title="Hapus Kategori" type="button" class="tooltip button px-2 mr-1 mb-2 bg-red-300 dark:text-gray-300">
+                            <a data-toggle="modal" data-target="#deleteRencana_{{$p->TANGGAL}}">
+                                <button href="javascript:;" title="Hapus Rencana" type="button" class="tooltip button px-2 mr-1 mb-2 bg-red-300 dark:text-gray-300">
                                     <span class="w-5 h-5 flex items-center justify-center">
                                         <i data-feather="trash-2" class="w-5 h-5 "></i>
                                     </span>
@@ -173,47 +172,45 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
 
 
 
-        @foreach($kategori as $k)
-        <div class="modal" id="editKategori_{{ $k->ID_KATEGORI }}">
+        @foreach($progress as $p)
+        <div class="modal" id="editRencana_{{ $p->TANGGAL }}">
             <div class="modal__content modal__content--lg py-5 pl-5 pr-5 ml-auto">
                 <div class="modal-header">
                     <div class="modal__content relative"> 
                     </div>
                     <div class="flex px-2 sm:pb-3 sm:pt-1 border-b border-gray-200 dark:border-dark-5">
-                        <h2 class="font-bold text-2xl flex"><i data-feather="info" class="w-8 h-8 mr-2"></i>Edit Kategori Dokumen #{{ $k->ID_KATEGORI }}</h2>
-                        <a data-dismiss="modal" href="javascript:;" class="mr-3 ml-auto" id="close_{{$k->ID_KATEGORI}}"><i data-feather="x" class="w-8 h-8 text-gray-500"></i></a>
+                        <h2 class="font-bold text-2xl flex"><i data-feather="info" class="w-8 h-8 mr-2"></i>Edit Rencana #{{ $p->TANGGAL }}</h2>
+                        <a data-dismiss="modal" href="javascript:;" class="mr-3 ml-auto" id="close_{{$p->TANGGAL}}"><i data-feather="x" class="w-8 h-8 text-gray-500"></i></a>
                     </div>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('kategori-dokumen.update', $k->ID_KATEGORI) }}" method="POST" class="needs-validation" novalidate">
+                    <form action="{{ route('rencana.update', $p->TANGGAL) }}" method="POST" class="needs-validation" novalidate>
                     @method('PUT')
                     @csrf
                     
+                    <div class="mr-5 mb-5 grid grid-cols-12 gap-4 row-gap-3">
+                        <div class="col-span-12">
+                             <label class="font-semibold text-lg">Tanggal</label> 
+                                    <div class="relative mx-auto mt-2 mb-5"> 
+                                        <div class="absolute rounded-l w-10 h-full flex items-center justify-center bg-gray-100 border text-gray-600 dark:bg-dark-1 dark:border-dark-4"><i data-feather="calendar" class="w-4 h-4"></i></div> 
+                                            <input type="text" class="datepicker input pl-12 border" data-single-mode="true" name="TANGGAL"> 
+                                    </div>
+                        </div>
+                    </div>
+                 
                     <div class="grid grid-cols-12 gap-4 row-gap-3 mt-3">
                         <div class="col-span-12">
-                            <label class="font-semibold text-lg mr-auto mt-3">Jenis Kategori Dokumen</label> 
-                            <select class="input w-full border mt-2 flex-1" name="ID_JENIS_KATEGORI" required>
-                                @foreach($jenis_kategori as $j)
-                                <option value="{{ $j->ID_JENIS_KATEGORI }}" {{ ( $j->ID_JENIS_KATEGORI == $k->ID_JENIS_KATEGORI) ? 'selected' : '' }} >{{ $j->JENIS_KATEGORI }}</option>
-                                @endforeach
-                            </select>
+                            <label class="font-semibold text-lg mr-auto mt-3">Planning Value</label> 
+                                <input type="number" class="input w-full border mt-2 flex-1" placeholder="Planning Value" name="PV_VALUE" required >
                         </div>
                     </div>
 
                     <div class="grid grid-cols-12 gap-4 row-gap-3 mt-3">
                         <div class="col-span-12">
-                            <label class="font-semibold text-lg mr-auto mt-3">Kategori Dokumen</label> 
-                                <input type="text" class="input w-full border mt-2 flex-1" placeholder="Kategori Dokumen" name="KATEGORI_DOKUMEN" value="{{ $k->KATEGORI }}" required >
+                            <label class="font-semibold text-lg mr-auto mt-3">Prosentase</label> 
+                                <input type="number" class="input w-full border mt-2 flex-1" placeholder="Prosentase" name="RENCANA" required >
                         </div>
                     </div>
-
-                    <div class="grid grid-cols-12 gap-4 row-gap-3 mt-3">
-                        <div class="col-span-12">
-                            <label class="font-semibold text-lg mr-auto mt-3">Nomor Urut</label> 
-                                <input type="number" min="1" class="input w-full border mt-2 flex-1" placeholder="Nomor Urut" name="NOMOR_URUT" value="{{ $k->NOMOR_URUT }}" required >
-                        </div>
-                    </div>
-                </div>
 
                 <div class="modal-footer mt-5">
                     <div class="text-right">
@@ -227,21 +224,21 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
             </div>
         </div>
 
-        <div class="modal editModal" id="deleteKategori_{{ $k->ID_KATEGORI }}">
+        <div class="modal editModal" id="deleteRencana_{{ $p->TANGGAL }}">
             <div class="modal__content modal__content--lg p-5 ml-auto">
                 <div class="modal-header">
                     <div class="modal__content relative"> 
                     </div>
                     <div class="flex px-2 sm:pb-3 sm:pt-1 border-b border-gray-200 dark:border-dark-5">
-                        <h2 class="font-bold text-2xl flex"><i data-feather="trash-2" class="w-8 h-8 mr-2"></i>Delete Kategori Dokumen #{{ $k->ID_KATEGORI }}</h2>
+                        <h2 class="font-bold text-2xl flex"><i data-feather="trash-2" class="w-8 h-8 mr-2"></i>Delete Rencana #{{ $p->TANGGAL }}</h2>
                         <a data-dismiss="modal" href="javascript:;" class="mr-3 ml-auto"><i data-feather="x" class="w-8 h-8 text-gray-500"></i></a>
                     </div>
                 </div>
-                <form action="{{ route('kategori-dokumen.destroy',$k->ID_KATEGORI) }}" method="POST">
+                <form action="{{ route('rencana.destroy',$p->TANGGAL) }}" method="POST">
                     @method('DELETE')
                     @csrf
                     <div class="text-base mt-5">
-                        Apakah Anda yakin ingin menghapus kategori dokumen "{{ $k->KATEGORI }}" ?
+                        Apakah Anda yakin ingin menghapus rencana "{{ $p->NAMA_PROYEK }}" ?
                     </div>
                     <div class="text-base text-theme-6">Data yang dihapus tidak dapat dikembalikan.</div>
                     <div class="modal-footer mt-5">
