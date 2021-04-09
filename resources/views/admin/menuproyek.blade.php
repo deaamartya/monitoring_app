@@ -118,20 +118,20 @@
                 <tr>
                     <td>{{$p->KODE_PROYEK}}</td>
                     <td>{{$p->NAMA_PROYEK}}</td>
-                    <td>{{$p->START_PROYEK}}</td>
-                    <td>{{$p->END_PROYEK}}</td>
+                    <td>{{ date('d F Y',strtotime($p->START_PROYEK)) }}</td>
+                    <td>{{ date('d F Y',strtotime($p->END_PROYEK)) }}</td>
                     <td>{{$p->STATUS}}</td>
                     <td>{{$p->LAST_UPDATE}}</td>
                     <td style="text-align: center;">
                         <div class="flex" style="justify-content: center;">
-                            <a target="_blank" href="{{url('/admin//'.$p->KODE_PROYEK}}">
+                            <a target="_blank" href="{{url('/admin/plan/'.$p->KODE_PROYEK)}}">
                                 <button href="javascript:;" title="Plan" type="button" class="tooltip button px-2 mr-1 mb-2 bg-blue-300 dark:text-gray-300">
                                     <span class="w-5 h-5 flex items-center justify-center">
                                         <i data-feather="file-text" class="w-4 h-4 "></i>
                                     </span>
                                 </button>
                             </a>
-                            <a target="_blank" href="{{url('/admin//'.$p->KODE_PROYEK)}}">
+                            <a target="_blank" href="{{url('/admin/realisasi/'.$p->KODE_PROYEK)}}">
                                 <button href="javascript:;" title="Realisasi" type="button" class="tooltip button px-2 mr-1 mb-2 bg-orange-300 dark:text-gray-300">
                                     <span class="w-5 h-5 flex items-center justify-center">
                                         <i data-feather="layers" class="w-4 h-4 "></i>

@@ -15,9 +15,7 @@ class ProyekTableSeeder extends Seeder
 
         \DB::table('proyek')->delete();
         
-        $proyek = [];
-        // for ($i = 0; $i < 50; $i++) {
-            $users[] = [
+            $proyek[] = [
                 'KODE_PROYEK' => "ABC45678",
                 'NAMA_PROYEK' => "contoh proyek",
                 'START_PROYEK' => "2021-01-01",
@@ -25,7 +23,6 @@ class ProyekTableSeeder extends Seeder
                 'STATUS' => "0",
                 'LAST_UPDATE' => "2021-04-09 08:40:51",
             ];
-        // }
         DB::table('proyek')->insert($proyek);
         
     }
