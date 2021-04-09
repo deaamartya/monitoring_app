@@ -142,18 +142,18 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                         <a data-dismiss="modal" href="javascript:;" class="mr-3 ml-auto"><i data-feather="x" class="w-8 h-8 text-gray-500"></i></a>
                     </div>
                 </div>
-                <form action="{{ route('realisasi.store') }}" method="POST">
+                <form action="{{ url('/realisasi/store') }}" method="POST">
                     @csrf
                     <div class="modal-body">
                         <div class="p-5 grid grid-cols-12 gap-4 row-gap-3">
-                            <div class="col-span-12">
-                                <label class="font-semibold text-lg">TANGGAL</label> 
-                                <div class="relative mx-auto mt-2 mb-5"> 
-                                    <div class="absolute rounded-l w-10 h-full flex items-center justify-center bg-gray-100 border text-gray-600 dark:bg-dark-1 dark:border-dark-4"> 
-                                        <i data-feather="calendar" class="w-4 h-4"></i> 
-                                    </div> 
-                                    <input type="text" class="datepicker input pl-12 border" data-single-mode="true" name="TANGGAL"> 
-                                </div>
+                            <div class="col-span-12"> 
+                                <label class="font-semibold text-lg">Tanggal</label>
+                                <select class="input border mr-2 w-full mt-2" name="TANGGAL" required>
+                                    <option selected disabled>Pilih tanggal.....</option>
+                                    @foreach($progress as $p)
+                                        <option value="{{ $p->TANGGAL }}">{{ $p->TANGGAL }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">PV</label>
