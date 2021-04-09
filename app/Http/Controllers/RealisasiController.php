@@ -12,9 +12,9 @@ class RealisasiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        $progress = Progress::all();
+        $progress = Progress::where('KODE_PROYEK', $id)->get();
         return view('admin.realisasi',compact('progress'));
     }
 
