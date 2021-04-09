@@ -107,7 +107,7 @@ License: You must have a valid license purchased only from themeforest(the above
                 <!-- BEGIN: Top Bar -->
                 <div class="top-bar">
                     <!-- BEGIN: Breadcrumb -->
-                    <div class="-intro-x breadcrumb mr-auto hidden sm:flex"> <a href="" class="">Aplikasi Monitor Progress Proyek</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i> <a href="" class="breadcrumb--active">
+                    <div class="-intro-x breadcrumb mr-auto hidden sm:flex"> <a href="" class="">Aplikasi Monitoring Progres Proyek</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i> <a href="" class="breadcrumb--active">
                         @if(request()->segment(2) != '')
                         {{ ucwords(request()->segment(2)) }}
                         @else
