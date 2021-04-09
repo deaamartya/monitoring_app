@@ -118,8 +118,8 @@
                 <tr>
                     <td>{{$p->KODE_PROYEK}}</td>
                     <td>{{$p->NAMA_PROYEK}}</td>
-                    <td>{{$p->START_PROYEK}}</td>
-                    <td>{{$p->END_PROYEK}}</td>
+                    <td>{{ date('d F Y',strtotime($p->START_PROYEK)) }}</td>
+                    <td>{{ date('d F Y',strtotime($p->END_PROYEK)) }}</td>
                     <td>{{$p->STATUS}}</td>
                     <td>{{$p->LAST_UPDATE}}</td>
                     <td style="text-align: center;">
