@@ -71,7 +71,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
 <div class="intro-y box p-5 mt-5 sm:mt-5 bg-blue-400 text-white" style="background-color: #1c3faa;">                        
     <div class="flex flex-row">
         <i data-feather="list"></i>
-        <h2 class="text-lg font-medium mr-auto ml-3">Realisasi Proyek (NAMA PROYEK)</h2>
+        <h2 class="text-lg font-medium mr-auto ml-3">Realisasi Proyek {{ $nama_proyek }}</h2>
     </div>
 </div>
 
@@ -195,7 +195,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                         <a data-dismiss="modal" href="javascript:;" class="mr-3 ml-auto"><i data-feather="x" class="w-8 h-8 text-gray-500"></i></a>
                     </div>
                 </div>
-                <form action="{{ route('realisasi.update',$p->TANGGAL) }}" method="POST">
+                <form action="{{ url('/realisasi/update',$p->TANGGAL) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="modal-body">
@@ -247,7 +247,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                         <a data-dismiss="modal" href="javascript:;" class="mr-3 ml-auto"><i data-feather="x" class="w-8 h-8 text-gray-500"></i></a>
                     </div>
                 </div>
-                <form action="{{ route('realisasi.destroy',$p->TANGGAL) }}" method="POST">
+                <form action="{{ url('/realisasi/delete',$p->TANGGAL) }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <div class="text-base mt-5 ml-3">

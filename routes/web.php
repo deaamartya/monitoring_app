@@ -24,5 +24,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function(){
     Route::get('/menuproyek','MenuProyekController@index');
     Route::resource('user','UserController');
     Route::get('/realisasi/{id}','RealisasiController@index');
-    Route::get('/realisasi/store','RealisasiController@store');
+    Route::post('/realisasi/store','RealisasiController@store');
+    Route::put('/realisasi/update','RealisasiController@update');
+    Route::delete('/realisasi/delete','RealisasiController@destroy');
 });

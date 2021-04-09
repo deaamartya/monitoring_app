@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Progress;
+use App\Models\Proyek;
 
 class RealisasiController extends Controller
 {
@@ -15,7 +16,8 @@ class RealisasiController extends Controller
     public function index($id)
     {
         $progress = Progress::where('KODE_PROYEK', $id)->get();
-        return view('admin.realisasi',compact('progress'));
+        $nama_proyek = Proyek::where('KODE_PROYEK', $id)->value('NAMA_PROYEK');
+        return view('admin.realisasi',compact('progress', 'nama_proyek'));
     }
 
     /**
