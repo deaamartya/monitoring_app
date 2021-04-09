@@ -16,4 +16,9 @@ class MenuProyekController extends Controller
         $proyek = Proyek::all();
         return view('admin.menuproyek',compact('proyek'));
     }
+
+    public function exportexcel()
+	{
+		return Excel::download(new SiswaExport, 'S_Curve.xlsx');
+	}
 }

@@ -22,5 +22,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function(){
     Route::get('/','AdminController@index');
 
     Route::get('/menuproyek','MenuProyekController@index');
+    Route::get('/exportexcel','MenuProyekController@exportexcel');
+
     Route::resource('user','UserController');
 });
