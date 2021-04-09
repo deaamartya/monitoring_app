@@ -85,10 +85,16 @@
             Print Tabel Permohonan yang Sudah Dikonfirmasi
         </h2> -->
         <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
-            <a target="_blank" href="{{url('/admin/addproyek')}}">
-                <button class="ml-3 button box flex items-center shadow-md bg-gray-200 text-gray-700 buttons-html5 buttons-pdf" id="print"> <i data-feather="file-plus" class="hidden sm:block w-4 h-4 mr-2"></i> Tambah Proyek Baru </button>
+            <a href="{{url('/admin/addproyek')}}">
+                <button class="button box flex items-center shadow-md bg-gray-200 text-gray-700 buttons-html5 buttons-pdf" id="print"> <i data-feather="file-plus" class="hidden sm:block w-4 h-4 mr-2"></i> Tambah Proyek Baru </button>
+            </a>
+            <a target="_blank" href="{{url('/admin/exportexcel')}}">
+                <button class="ml-3 button box flex items-center shadow-md bg-gray-200 text-gray-700 buttons-html5 buttons-pdf" id="print"> <i data-feather="download" class="hidden sm:block w-4 h-4 mr-2"></i> Export to Excel </button>
             </a>
         </div>
+        <!-- <div class="flex items-center sm:ml-auto mt-3 sm:mt-0"> -->
+            
+        <!-- </div> -->
     </div>  
     <br>
 
@@ -117,22 +123,22 @@
                     <td>{{$p->STATUS}}</td>
                     <td>{{$p->LAST_UPDATE}}</td>
                     <td style="text-align: center;">
-                        <!-- <div class="flex" style="justify-content: center;">
-                            <a data-toggle="modal" data-target="#detail_{{ $p->ID_PERMOHONAN }}">
-                                <button href="javascript:;" title="Detail Permohonan" type="button" class="tooltip button px-2 mr-1 mb-2 bg-green-300 dark:text-gray-300">
+                        <div class="flex" style="justify-content: center;">
+                            <a data-toggle="modalplan" data-target="#plan_{{ $p->KODE_PROYEK }}">
+                                <button href="javascript:;" title="Plan" type="button" class="tooltip button px-2 mr-1 mb-2 bg-blue-300 dark:text-gray-300">
                                     <span class="w-5 h-5 flex items-center justify-center">
-                                        <i data-feather="more-horizontal" class="w-4 h-4 "></i>
+                                        <i data-feather="file-text" class="w-4 h-4 "></i>
                                     </span>
                                 </button>
                             </a>
-                            <a target="_blank" href="{{url('/admin/cetakpermohonan/'.$p->ID_PERMOHONAN)}}">
-                                <button href="javascript:;" title="Print Permohonan" type="button" class="tooltip button px-2 mr-1 mb-2 bg-blue-300 dark:text-gray-300">
+                            <a data-toggle="modalrealisasi" data-target="#realisasi_{{ $p->KODE_PROYEK }}">
+                                <button href="javascript:;" title="Realisasi" type="button" class="tooltip button px-2 mr-1 mb-2 bg-orange-300 dark:text-gray-300">
                                     <span class="w-5 h-5 flex items-center justify-center">
-                                        <i data-feather="printer" class="w-4 h-4 "></i>
+                                        <i data-feather="layers" class="w-4 h-4 "></i>
                                     </span>
                                 </button>
                             </a>
-                        </div> -->
+                        </div>
                     </td>
                 </tr>
             @endforeach
