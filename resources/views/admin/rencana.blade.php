@@ -82,7 +82,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
 </div>
 
 <!-- Tambah Rencana -->
-                <div id="rencana">
+                <!-- <div id="rencana">
                     <form action="{{ route('rencana.store') }}" method="POST" class="needs-validation" novalidate id="tambah-rencana">
                     @csrf
                     
@@ -115,7 +115,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                     </div>
               
                 </form>
-            </div>
+            </div> -->
 
 
 <div class="intro-y box mt-5">
