@@ -71,7 +71,7 @@
 <div class="intro-y box p-5 mt-5 sm:mt-5 bg-blue-400 text-white" style="background-color: #1c3faa;">                        
     <div class="flex flex-row">
         <i data-feather="list"></i>
-        <h2 class="text-lg font-medium mr-auto ml-3">Table Menu Proyek</h2>
+        <h2 class="text-lg font-medium mr-auto ml-3">Tabel Menu Proyek</h2>
     </div>
 </div>
 
@@ -80,17 +80,17 @@
 <!--Container-->
 <div class="container w-full ">
 
-    <!-- <div class="intro-y block sm:flex items-center h-10">
-        <h2 class="text-lg font-medium truncate mr-5">
+    <div class="intro-y block sm:flex items-center h-10">
+        <!-- <h2 class="text-lg font-medium truncate mr-5">
             Print Tabel Permohonan yang Sudah Dikonfirmasi
-        </h2>
+        </h2> -->
         <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
-            <a target="_blank" href="{{url('/admin/cetak-permohonan-confirm')}}">
-                <button class="ml-3 button box flex items-center shadow-md bg-gray-200 text-gray-700 buttons-html5 buttons-pdf" id="print"> <i data-feather="printer" class="hidden sm:block w-4 h-4 mr-2"></i> Print Tabel Permohonan  </button>
+            <a target="_blank" href="{{url('/admin/addproyek')}}">
+                <button class="ml-3 button box flex items-center shadow-md bg-gray-200 text-gray-700 buttons-html5 buttons-pdf" id="print"> <i data-feather="file-plus" class="hidden sm:block w-4 h-4 mr-2"></i> Tambah Proyek Baru </button>
             </a>
         </div>
     </div>  
-    <br> -->
+    <br>
 
     <!--Card-->
     <div class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
