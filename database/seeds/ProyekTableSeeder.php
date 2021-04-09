@@ -17,7 +17,7 @@ class ProyekTableSeeder extends Seeder
         
         $proyek = [];
         // for ($i = 0; $i < 50; $i++) {
-            $users[] = [
+            $proyek[] = [
                 'KODE_PROYEK' => "ABC45678",
                 'NAMA_PROYEK' => "contoh proyek",
                 'START_PROYEK' => "2021-01-01",
