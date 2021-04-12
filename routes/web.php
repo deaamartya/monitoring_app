@@ -27,8 +27,6 @@ Route::prefix('admin')->middleware(['auth'])->group(function(){
     Route::resource('user','UserController');
 
     Route::get('/rencana/{id}','RencanaController@index');
-    Route::get('/realisasi/{id}','RealisasiController@index');
-    Route::post('/realisasi/store','RealisasiController@store');
-    Route::put('/realisasi/update','RealisasiController@update');
-    Route::delete('/realisasi/delete','RealisasiController@destroy');
+    Route::resource('realisasi','RealisasiController');
+    Route::post('/realisasi/get-rencana','RealisasiController@getRencana');
 });

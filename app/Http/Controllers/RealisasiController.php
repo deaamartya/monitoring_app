@@ -13,11 +13,29 @@ class RealisasiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function show($id)
     {
-        $progress = Progress::where('KODE_PROYEK', $id)->get();
+        $progress = Progress::where('KODE_PROYEK', $id)
+        ->whereNotNull('EV_VALUE')
+        ->orWhereNotNull('AC_VALUE')
+        ->orWhereNotNull('REALISASI')
+        ->orderByDesc('TANGGAL')
+        ->get();
+        $tgl_progress = Progress::where('KODE_PROYEK', $id)
+        ->whereNull('EV_VALUE')
+        ->orWhereNull('AC_VALUE')
+        ->orWhereNull('REALISASI')
+        ->orderByDesc('TANGGAL')
+        ->get();
+        $kode_proyek =$id;
         $nama_proyek = Proyek::where('KODE_PROYEK', $id)->value('NAMA_PROYEK');
-        return view('admin.realisasi',compact('progress', 'nama_proyek'));
+        return view('admin.realisasi',compact('progress', 'nama_proyek', 'kode_proyek', 'tgl_progress'));
+    }
+
+    public function getRencana(Request $req)
+    {
+        $pv_val = Progress::where('TANGGAL', $req->key)->value('PV_VALUE');
+        return response()->json(['pv_val'=>$pv_val]);
     }
 
     /**
@@ -30,21 +48,18 @@ class RealisasiController extends Controller
     {
         $request->validate([
             'TANGGAL' => 'required',
-            'PV_VALUE' => 'required',
             'EV_VALUE' => 'required',
             'AC_VALUE' => 'required',
             'REALISASI' => 'required'
         ]);
 
-        Progress::insert([
-            'TANGGAL' => $request->TANGGAL,
-            'PV_VALUE' => $request->PV_VALUE,
+        Progress::where('KODE_PROYEK',$request->KODE_PROYEK)->where('TANGGAL', $request->TANGGAL)->update([
             'EV_VALUE' => $request->EV_VALUE,
             'AC_VALUE' => $request->AC_VALUE,
             'REALISASI' => $request->REALISASI
         ]);
         
-        return redirect('admin/realisasi')->with('success','Realisasi berhasil ditambahkan.');
+        return redirect()->back()->with('success','Data realisasi berhasil ditambahkan.');
     }
 
 
@@ -58,22 +73,18 @@ class RealisasiController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'TANGGAL' => 'required',
-            'PV_VALUE' => 'required',
-            'EV_VALUE' => 'required',
-            'AC_VALUE' => 'required',
-            'REALISASI' => 'required'
+            'EV_VALUE_EDIT' => 'required',
+            'AC_VALUE_EDIT' => 'required',
+            'REALISASI_EDIT' => 'required'
         ]);
 
-        Progress::find($id)->update([
-            'TANGGAL' => $request->TANGGAL,
-            'PV_VALUE' => $request->PV_VALUE,
-            'EV_VALUE' => $request->EV_VALUE,
-            'AC_VALUE' => $request->AC_VALUE,
-            'REALISASI' => $request->REALISASI
+        Progress::where('KODE_PROYEK',$request->KODE_PROYEK)->where('TANGGAL', $request->TANGGAL_EDIT)->update([
+            'EV_VALUE' => $request->EV_VALUE_EDIT,
+            'AC_VALUE' => $request->AC_VALUE_EDIT,
+            'REALISASI' => $request->REALISASI_EDIT
         ]);
 
-        return redirect('admin/realisasi')->with('success','Realisasi berhasil diupdate.');
+        return redirect()->back()->with('success','Data realisasi berhasil diupdate.');
     }
 
     /**
@@ -82,14 +93,14 @@ class RealisasiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        Progress::find($id)->update([
-            'EV_VALUE' => null,
-            'AC_VALUE' => null,
-            'REALISASI' => null
+        Progress::where('KODE_PROYEK',$id)->where('TANGGAL', $request->TANGGAL_DELETE)->update([
+            'EV_VALUE' => NULL,
+            'AC_VALUE' => NULL,
+            'REALISASI' => NULL
         ]);
 
-        return redirect('admin/realisasi')->with('success','Realisasi berhasil dihapus.');
+        return redirect()->back()->with('success','Data realisasi berhasil dihapus.');
     }
 }
