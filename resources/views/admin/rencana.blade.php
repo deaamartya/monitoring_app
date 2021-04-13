@@ -89,10 +89,10 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
     <!--Card-->
 
     <!-- Grafik Rencana -->
-    <div class="col-span-12 lg:col-span-8 mt-8">
+    <div class="col-span-12 lg:col-span-8 mt-8 ml-8 mr-8">
             <div class="intro-y block sm:flex items-center h-10">
                 <h2 class="text-lg font-medium truncate mr-5">
-                    Grafik Jumlah Proyek Tahun {{ $current_year }}
+                    Grafik Rencana Proyek Tahun {{ $current_year }}
                 </h2>
             </div>
             <div class="intro-y box p-5 mt-12 sm:mt-5">
@@ -127,6 +127,8 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
         </div>
 
     <!-- End Grafik Rencana -->
+    <br>
+    <hr>
     
     <a href ="javascript:;" data-toggle="modal" data-target="#tambah_rencana" class="button mb-5 mr-6 mt-4 flex items-center justify-center bg-theme-1 text-white tombol-tambah-rencana" style="float:right;" ><i data-feather="plus-circle" class="w-6 h-6 mr-2"></i>Tambah Rencana Proyek</a>
     
@@ -323,7 +325,7 @@ $(document).ready(function() {
         } )
         .columns.adjust()
         .responsive.recalc();
-
+    
 var ctx = document.getElementById('line-chart').getContext('2d');
 var myChart = new Chart(ctx, {
   type: 'line', 
@@ -346,14 +348,8 @@ var myChart = new Chart(ctx, {
         display: false
     }
   }
+}); 
 });
-
-</script>
-
-    
-
-});
-
 
 </script>
 @endsection

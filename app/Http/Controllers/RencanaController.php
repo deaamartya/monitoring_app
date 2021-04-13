@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Proyek;
 use App\Models\Progress;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class RencanaController extends Controller
 {
@@ -16,7 +17,23 @@ class RencanaController extends Controller
         ->get();
         $kode_proyek =$id;
         $nama_proyek = Proyek::where('KODE_PROYEK', $id)->value('NAMA_PROYEK');
-        return view('admin.rencana',compact('progress', 'nama_proyek', 'kode_proyek'));
+
+        $progress2=Progress::all();
+        $current_year = date('Y');
+        $jml_proyek_this_month  = Progress::whereMonth(
+            'tanggal', '=', Carbon::now()->month
+        )->whereYear('TANGGAL', date('Y'))->count();
+        $jml_proyek_last_month  = Progress::whereMonth(
+            'tanggal', '=', Carbon::now()->subMonth()->month
+        )->whereYear('TANGGAL', date('Y'))->count();
+
+        $pv = Progress::all();
+        $ev = Progress::all();
+        $ac = Progress::all();
+        $rencana= Progress::all();
+        $realisasi = Progress::all();
+
+        return view('admin.rencana',compact('progress', 'progress2', 'current_year', 'jml_proyek_this_month', 'jml_proyek_last_month', 'pv', 'ev', 'ac', 'rencana', 'realisasi', 'nama_proyek', 'kode_proyek'));
     }
 
     public function store(Request $request)
