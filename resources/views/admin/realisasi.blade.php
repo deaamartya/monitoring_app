@@ -94,7 +94,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
     <div class="intro-y block sm:flex items-center h-10">
         <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
             <a href ="javascript:;" data-toggle="modal" data-target="#tambah_realisasi">
-                <button class="ml-3 button box flex items-center shadow-md bg-gray-200 text-gray-700 buttons-html5 buttons-pdf"> <i data-feather="plus-circle" class="hidden sm:block w-4 h-4 mr-2"></i> Tambah Realisasi </button>
+                <button class="ml-3 button box flex items-center shadow-md bg-blue-200 text-gray-700 buttons-html5 buttons-pdf"> <i data-feather="plus-circle" class="hidden sm:block w-4 h-4 mr-2"></i> Tambah Realisasi </button>
             </a>
         </div>
     </div> 
