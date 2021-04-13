@@ -91,10 +91,17 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
         {{ Session::get('success') }}
     </div>
     @endif
+    <div class="intro-y block sm:flex items-center h-10">
+        <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
+            <a href ="javascript:;" data-toggle="modal" data-target="#tambah_realisasi">
+                <button class="ml-3 button box flex items-center shadow-md bg-blue-200 text-gray-700 buttons-html5 buttons-pdf"> <i data-feather="plus-circle" class="hidden sm:block w-4 h-4 mr-2"></i> Tambah Realisasi </button>
+            </a>
+        </div>
+    </div> 
     <br>
     <!--Card-->
     <div class="px-2 py-1">
-        <a href ="javascript:;" data-toggle="modal" data-target="#tambah_realisasi" class="button mb-6 mr-6 flex items-center justify-center bg-theme-1 text-white float-right block" style="float:right;" ><i data-feather="plus-circle" class="w-6 h-6 mr-2"></i>Tambah Realisasi</a>
+        <!-- <a href ="javascript:;" data-toggle="modal" data-target="#tambah_realisasi" class="button mb-6 mr-6 flex items-center justify-center bg-theme-1 text-white float-right block" style="float:right;" ><i data-feather="plus-circle" class="w-6 h-6 mr-2"></i>Tambah Realisasi</a> -->
 
         <table id="example" class="stripe hover display cell-border" style="width:100%; padding-top: 1em;  padding-bottom: 1em; text-align:center;">
             <thead>
