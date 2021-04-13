@@ -81,20 +81,14 @@
 <div class="container w-full ">
 
     <div class="intro-y block sm:flex items-center h-10">
-        <!-- <h2 class="text-lg font-medium truncate mr-5">
-            Print Tabel Permohonan yang Sudah Dikonfirmasi
-        </h2> -->
         <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
             <a href="{{url('/admin/addproyek')}}">
-                <button class="button box flex items-center shadow-md bg-gray-200 text-gray-700 buttons-html5 buttons-pdf" id="print"> <i data-feather="file-plus" class="hidden sm:block w-4 h-4 mr-2"></i> Tambah Proyek Baru </button>
+                <button class="button box flex items-center shadow-md bg-blue-200 text-gray-700 buttons-html5 buttons-pdf"> <i data-feather="file-plus" class="hidden sm:block w-4 h-4 mr-2"></i> Tambah Proyek Baru </button>
             </a>
             <a target="_blank" href="{{url('/admin/exportexcel')}}">
-                <button class="ml-3 button box flex items-center shadow-md bg-gray-200 text-gray-700 buttons-html5 buttons-pdf" id="print"> <i data-feather="download" class="hidden sm:block w-4 h-4 mr-2"></i> Export to Excel </button>
+                <button class="ml-3 button box flex items-center shadow-md bg-blue-200 text-gray-700 buttons-html5 buttons-pdf"> <i data-feather="download" class="hidden sm:block w-4 h-4 mr-2"></i> Export to Excel </button>
             </a>
         </div>
-        <!-- <div class="flex items-center sm:ml-auto mt-3 sm:mt-0"> -->
-            
-        <!-- </div> -->
     </div>  
     <br>
 
@@ -125,7 +119,7 @@
                     <td style="text-align: center;">
                         <div class="flex" style="justify-content: center;">
                             <a href="{{url('/admin/rencana/'.$p->KODE_PROYEK)}}">
-                                <button href="javascript:;" title="Rencana" type="button" class="tooltip button px-2 mr-1 mb-2 bg-blue-300 dark:text-gray-300">
+                                <button href="javascript:;" title="Rencana" type="button" class="tooltip button px-2 mr-1 mb-2 bg-green-300 dark:text-gray-300">
                                     <span class="w-5 h-5 flex items-center justify-center">
                                         <i data-feather="file-text" class="w-4 h-4 "></i>
                                     </span>
