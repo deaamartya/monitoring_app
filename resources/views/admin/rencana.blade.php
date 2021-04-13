@@ -76,7 +76,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
 <div class="intro-y box p-5 mt-5 mb-5 sm:mt-5 bg-blue-400 text-white" style="background-color: #1c3faa;">                        
     <div class="flex flex-row">
         <i data-feather="list"></i>
-        <h2 class="text-lg font-medium mr-auto ml-3">Table Rencana {{ $nama_proyek }}</h2>
+        <h2 class="text-lg font-medium mr-auto ml-3">Table Rencana </h2>
     </div>
     
 </div>
@@ -142,45 +142,46 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                     <div class="modal__content relative"> 
                     </div>
                     <div class="flex px-2 sm:pb-3 sm:pt-1 border-b border-gray-200 dark:border-dark-5">
-                        <h2 class="font-bold text-2xl flex"><i data-feather="plus-circle" class="w-8 h-8 mr-2"></i>Tambah Rencana Proyek</h2>
+                        <h2 class="font-bold text-2xl flex"><i data-feather="plus-circle" class="w-8 h-8 mr-2"></i>Tambah Rencana</h2>
                         <a data-dismiss="modal" href="javascript:;" class="mr-3 ml-auto"><i data-feather="x" class="w-8 h-8 text-gray-500"></i></a>
                     </div>
                 </div>
-                <form action="{{ route('rencana.store') }}" method="POST">
+                <form action="{{ url('/rencana/store') }}" method="POST" class="needs-validation" novalidate id="tambah-rencana">
                     @csrf
-                    <input type="hidden" name="KODE_PROYEK" value="{{ $kode_proyek }}">
-                    <div class="modal-body">
+                    
+                    <div class="mr-5 mb-5 grid grid-cols-12 gap-4 row-gap-3">
+                        <div class="col-span-12">
+                             <label class="font-semibold text-lg">Tanggal</label> 
+                                    <div class="relative mx-auto mt-2 mb-5"> 
+                                        <div class="absolute rounded-l w-10 h-full flex items-center justify-center bg-gray-100 border text-gray-600 dark:bg-dark-1 dark:border-dark-4"><i data-feather="calendar" class="w-4 h-4"></i></div> 
+                                            <input type="text" class="datepicker input pl-12 border" data-single-mode="true" name="TANGGAL"> 
+                                    </div>
+                        </div>
+                    </div>
+                 
+                    <div class="grid grid-cols-12 gap-4 row-gap-3 mt-3">
+                        <div class="col-span-12">
+                            <label class="font-semibold text-lg mr-auto mt-3">Planning Value</label> 
+                                <input type="number" class="input w-full border mt-2 flex-1" placeholder="Planning Value" name="PV_VALUE" required >
+                        </div>
+                    </div>
 
-                        <div class="p-5 grid grid-cols-12 gap-4 row-gap-3">
-                            
-                            <div class="col-span-12"> 
-                                <label class="font-semibold text-lg">PV</label>
-                                <input disabled id="pv_value" type="text" class="input w-full border mt-2 flex-1" name="PV_VALUE">
-                            </div>
-                            <div class="col-span-12"> 
-                                <label class="font-semibold text-lg">EV</label>
-                                <input type="number" class="input w-full border mt-2 flex-1" name="EV_VALUE" required>
-                            </div>
-                            <div class="col-span-12"> 
-                                <label class="font-semibold text-lg">AC</label>
-                                <input type="number" class="input w-full border mt-2 flex-1" name="AC_VALUE" required>
-                            </div>
-                            <div class="col-span-12"> 
-                                <label class="font-semibold text-lg">Realisasi</label>
-                                <input type="number" class="input w-full border mt-2 flex-1" name="REALISASI" required>
-                            </div>
+                    <div class="grid grid-cols-12 gap-4 row-gap-3 mt-3">
+                        <div class="col-span-12">
+                            <label class="font-semibold text-lg mr-auto mt-3">Prosentase</label> 
+                                <input type="number" class="input w-full border mt-2 flex-1" placeholder="Prosentase" name="RENCANA" required >
                         </div>
                     </div>
-                    <div class="modal-footer mt-5">
-                        <div class="text-right mr-5">
-                        <button type="button" class="button w-24 shadow-md mr-1 mb-2 bg-red-500 text-white" data-dismiss="modal">Cancel</button> 
-                        <button class="button items-right w-24 shadow-md mr-5 mb-2 justify-right bg-theme-1 text-white shadow-md" type="submit">Simpan</button>
-                       
-                        </div>
+               
+                    <div class="text-right"> 
+                        <button class="button items-right w-24 shadow-md mr-1 mb-2 justify-right bg-theme-1 text-white shadow-md" type="submit">Simpan</button>
                     </div>
+              
                 </form>
             </div>
         </div>
+
+
 
 
         @foreach($progress as $p)
@@ -194,7 +195,8 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                         <a data-dismiss="modal" href="javascript:;" class="mr-3 ml-auto" id="close_{{$p->TANGGAL}}"><i data-feather="x" class="w-8 h-8 text-gray-500"></i></a>
                     </div>
                 </div>
-                    <form action="{{ url('/rencana/update', $p->TANGGAL) }}" method="POST">
+                <div class="modal-body">
+                    <form action="{{ url('/rencana/update') }}" method="POST" class="needs-validation" novalidate>
                     @method('PUT')
                     @csrf
                     
@@ -242,7 +244,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                         <a data-dismiss="modal" href="javascript:;" class="mr-3 ml-auto"><i data-feather="x" class="w-8 h-8 text-gray-500"></i></a>
                     </div>
                 </div>
-                <form action="{{ url('/realisasi/destroy') }}" method="POST">
+                <form action="{{ url('/rencana/destroy') }}" method="POST">
                     @method('DELETE')
                     @csrf
                     <div class="text-base mt-5">

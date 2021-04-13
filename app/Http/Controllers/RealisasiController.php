@@ -15,10 +15,13 @@ class RealisasiController extends Controller
      */
     public function show($id)
     {
+        // $progress = Progress::where('KODE_PROYEK', $id)
+        // ->whereNotNull('EV_VALUE')
+        // ->orWhereNotNull('AC_VALUE')
+        // ->orWhereNotNull('REALISASI')
+        // ->orderByDesc('TANGGAL')
+        // ->get();
         $progress = Progress::where('KODE_PROYEK', $id)
-        ->whereNotNull('EV_VALUE')
-        ->orWhereNotNull('AC_VALUE')
-        ->orWhereNotNull('REALISASI')
         ->orderByDesc('TANGGAL')
         ->get();
         $tgl_progress = Progress::where('KODE_PROYEK', $id)
