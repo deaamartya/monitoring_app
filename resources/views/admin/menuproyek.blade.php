@@ -124,14 +124,14 @@
                     <td>{{$p->LAST_UPDATE}}</td>
                     <td style="text-align: center;">
                         <div class="flex" style="justify-content: center;">
-                            <a target="_blank" href="{{url('/admin/rencana/'.$p->KODE_PROYEK)}}">
+                            <a href="{{url('/admin/rencana/'.$p->KODE_PROYEK)}}">
                                 <button href="javascript:;" title="Rencana" type="button" class="tooltip button px-2 mr-1 mb-2 bg-blue-300 dark:text-gray-300">
                                     <span class="w-5 h-5 flex items-center justify-center">
                                         <i data-feather="file-text" class="w-4 h-4 "></i>
                                     </span>
                                 </button>
                             </a>
-                            <a target="_blank" href="{{url('/admin/realisasi/'.$p->KODE_PROYEK)}}">
+                            <a href="{{route('realisasi.show',$p->KODE_PROYEK)}}">
                                 <button href="javascript:;" title="Realisasi" type="button" class="tooltip button px-2 mr-1 mb-2 bg-orange-300 dark:text-gray-300">
                                     <span class="w-5 h-5 flex items-center justify-center">
                                         <i data-feather="layers" class="w-4 h-4 "></i>

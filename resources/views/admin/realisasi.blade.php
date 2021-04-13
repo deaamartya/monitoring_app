@@ -79,6 +79,12 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
 
 <!--Container-->
 <div class="container w-full ">
+    @if($errors->any())
+        <div class="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-31 text-theme-6">
+            <i data-feather="alert-octagon" class="w-6 h-6 mr-2"></i>
+            Data tidak berhasil disimpan. Mohon cek form kembali.
+        </div>
+    @endif
     @if(Session::has('success'))
     <div class="rounded-md w-35 flex items-center px-5 py-4 mb-2 bg-theme-18 text-theme-9">
         <i data-feather="alert-circle" class="w-6 h-6 mr-2"></i>
@@ -90,35 +96,57 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
     <div class="px-2 py-1">
         <a href ="javascript:;" data-toggle="modal" data-target="#tambah_realisasi" class="button mb-6 mr-6 flex items-center justify-center bg-theme-1 text-white float-right block" style="float:right;" ><i data-feather="plus-circle" class="w-6 h-6 mr-2"></i>Tambah Realisasi</a>
 
-        <table id="example" class="stripe hover display cell-border" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
+        <table id="example" class="stripe hover display cell-border" style="width:100%; padding-top: 1em;  padding-bottom: 1em; text-align:center;">
             <thead>
                 <tr>
+                    <th>#</th>
                     <th data-priority="1">Tanggal</th>
                     <th data-priority="2">PV</th>
-                    <th data-priority="3" width="10%">EV</th>
-                    <th data-priority="3" width="10%">AC</th>
-                    <th data-priority="3" width="10%">Realisasi</th>
-                    <th data-priority="4">Aksi</th>
+                    <th data-priority="3">EV</th>
+                    <th data-priority="4">AC</th>
+                    <th data-priority="5">Rencana</th>
+                    <th data-priority="6">Realisasi</th>
+                    <th data-priority="7"style="width: 20%;">Aksi</th>
                 </tr>
             </thead>
             <tbody>
             @foreach($progress as $p)
                 <tr>
-                    <td>{{$p->TANGGAL}}</td>
+                    <td>{{ $loop->iteration  }}</td>
+                    <td>{{ date('d-m-Y', strtotime($p->TANGGAL))}}</td>
                     <td>{{$p->PV_VALUE}}</td>
-                    <td>{{$p->EV_VALUE}}</td>
-                    <td>{{$p->AC_VALUE}}</td>
-                    <td>{{$p->REALISASI}}</td>
+                    <td>
+                    @if(isset($p->EV_VALUE))
+                        {{$p->EV_VALUE}}
+                    @else
+                        -
+                    @endif 
+                    </td>
+                    <td>
+                    @if(isset($p->AC_VALUE))
+                        {{$p->AC_VALUE}}
+                    @else
+                        -
+                    @endif 
+                    </td>
+                    <td>{{$p->RENCANA}}%</td>
+                    <td>
+                    @if(isset($p->REALISASI)) 
+                        {{$p->REALISASI}}%
+                    @else
+                        -
+                    @endif
+                    </td>
                     <td>
                     <div class="flex" style="justify-content: center;">
-                        <a data-toggle="modal" data-target="#edit_{{ $p->TANGGAL }}">
+                        <a data-toggle="modal" data-target="#edit_{{ date('d-m-Y', strtotime($p->TANGGAL)) }}">
                             <button href="javascript:;" title="Edit Realisasi" type="button" class="button px-3 mr-3 mb-3 bg-theme-17 text-theme-11">
                                 <span class="flex items-center justify-center">
                                     <i data-feather="edit" class="w-7 h-7 mr-2"></i>Edit
                                 </span>
                             </button>
                         </a>
-                        <a data-toggle="modal" data-target="#delete_{{ $p->TANGGAL }}">
+                        <a data-toggle="modal" data-target="#delete_{{ date('d-m-Y', strtotime($p->TANGGAL)) }}">
                             <button href="javascript:;" title="Hapus Realisasi" type="button" class="button px-3 mr-3 mb-3 bg-theme-31 text-theme-6">
                                 <span class="flex items-center justify-center">
                                     <i data-feather="trash" class="w-6 h-6 mr-2"></i>Hapus
@@ -142,34 +170,39 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                         <a data-dismiss="modal" href="javascript:;" class="mr-3 ml-auto"><i data-feather="x" class="w-8 h-8 text-gray-500"></i></a>
                     </div>
                 </div>
-                <form action="{{ url('/realisasi/store') }}" method="POST">
+                <form action="{{ route('realisasi.store') }}" method="POST">
                     @csrf
+                    <input type="hidden" name="KODE_PROYEK" value="{{ $kode_proyek }}">
                     <div class="modal-body">
+
                         <div class="p-5 grid grid-cols-12 gap-4 row-gap-3">
                             <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">Tanggal</label>
-                                <select class="input border mr-2 w-full mt-2" name="TANGGAL" required>
+                                <select id="select_tanggal" class="input border mr-2 w-full mt-2" name="TANGGAL" required>
                                     <option selected disabled>Pilih tanggal.....</option>
-                                    @foreach($progress as $p)
-                                        <option value="{{ $p->TANGGAL }}">{{ $p->TANGGAL }}</option>
+                                    @foreach($tgl_progress as $t)
+                                        <option value="{{ $t->TANGGAL }}">{{ date('d-m-Y',strtotime($t->TANGGAL)) }}</option>
                                     @endforeach
                                 </select>
+                                @if($errors->has('TANGGAL'))
+                                <small class="text-theme-6">Tanggal Wajib Diisi.</small>
+                                @endif
                             </div>
                             <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">PV</label>
-                                <input type="number" class="input w-full border mt-2 flex-1" name="PV_VALUE" value="PV_VALUE" readonly>
+                                <input disabled id="pv_value" type="text" class="input w-full border mt-2 flex-1" name="PV_VALUE">
                             </div>
                             <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">EV</label>
-                                <input type="number" class="input w-full border mt-2 flex-1" name="EV_VALUE">
+                                <input type="number" class="input w-full border mt-2 flex-1" name="EV_VALUE" required>
                             </div>
                             <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">AC</label>
-                                <input type="number" class="input w-full border mt-2 flex-1" name="AC_VALUE">
+                                <input type="number" class="input w-full border mt-2 flex-1" name="AC_VALUE" required>
                             </div>
                             <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">Realisasi</label>
-                                <input type="number" class="input w-full border mt-2 flex-1" name="REALISASI">
+                                <input type="number" class="input w-full border mt-2 flex-1" name="REALISASI" required>
                             </div>
                         </div>
                     </div>
@@ -185,79 +218,77 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
         </div>
 
         @foreach($progress as $p)
-        <div class="modal" id="edit_{{ $p->TANGGAL }}">
+        <div class="modal" id="edit_{{ date('d-m-Y', strtotime($p->TANGGAL)) }}">
             <div class="modal__content modal__content py-5 pl-3 pr-1 ml-auto">
                 <div class="modal-header">
                     <div class="modal__content relative"> 
                     </div>
                     <div class="flex px-2 sm:pb-3 sm:pt-1 border-b border-gray-200 dark:border-dark-5">
-                        <h2 class="font-bold text-2xl flex"><i data-feather="info" class="w-8 h-8 mr-2"></i>Edit Realisasi #{{ $p->TANGGAL }}</h2>
+                        <h2 class="font-bold text-2xl flex"><i data-feather="edit" class="w-8 h-8 mr-2"></i>Edit Realisasi #{{ $loop->iteration  }}</h2>
                         <a data-dismiss="modal" href="javascript:;" class="mr-3 ml-auto"><i data-feather="x" class="w-8 h-8 text-gray-500"></i></a>
                     </div>
                 </div>
-                <form action="{{ url('/realisasi/update',$p->TANGGAL) }}" method="POST">
+                <form action="{{ route('realisasi.update',$p->TANGGAL) }}" method="POST">
                     @csrf
                     @method('PUT')
+                    <input type="hidden" name="KODE_PROYEK" value="{{ $kode_proyek }}">
                     <div class="modal-body">
                         <div class="p-5 grid grid-cols-12 gap-4 row-gap-3">
-                        <div class="col-span-12"> 
+                            <div class="col-span-12"> 
                             <label class="font-semibold text-lg">Tanggal</label>
-                            <select class="input border mr-2 w-full mt-2" name="TANGGAL" required>
-                                <option selected disabled>Pilih tanggal.....</option>
-                                @foreach($progress as $p)
-                                    <option value="{{ $p->TANGGAL }}">{{ $p->TANGGAL }}</option>
-                                @endforeach
-                            </select>
+                            <input disabled class="input border mr-2 w-full mt-2"  value="{{ date('d-m-Y', strtotime($p->TANGGAL)) }}">
+                            <input type="hidden" class="input border mr-2 w-full mt-2" name="TANGGAL_EDIT" value="{{ $p->TANGGAL }}">
                             </div>
                             <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">PV</label>
-                                <input type="number" class="input w-full border mt-2 flex-1" name="PV_VALUE" value="{{ $p->PV_VALUE }}" readonly>
+                                <input disabled type="number" class="input w-full border mt-2 flex-1" name="PV_VALUE_EDIT" value="{{ $p->PV_VALUE }}" readonly>
                             </div>
                             <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">EV</label>
-                                <input type="number" class="input w-full border mt-2 flex-1" name="EV_VALUE" value="{{ $p->EV_VALUE }}">
+                                <input type="number" class="input w-full border mt-2 flex-1" name="EV_VALUE_EDIT" value="{{ $p->EV_VALUE }}" required>
                             </div>
                             <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">AC</label>
-                                <input type="number" class="input w-full border mt-2 flex-1" name="AC_VALUE" value="{{ $p->AC_VALUE }}">
+                                <input type="number" class="input w-full border mt-2 flex-1" name="AC_VALUE_EDIT" value="{{ $p->AC_VALUE }}" required>
                             </div>
                             <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">Realisasi</label>
-                                <input type="number" class="input w-full border mt-2 flex-1" name="REALISASI" value="{{ $p->REALISASI }}">
+                                <input type="number" class="input w-full border mt-2 flex-1" name="REALISASI_EDIT" value="{{ $p->REALISASI }}" required>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer mt-5">
                         <div class="text-right mr-5">
                         <button type="button" class="button w-24 shadow-md mr-1 mb-2 bg-red-500 text-white" data-dismiss="modal">Cancel</button> 
-                        <button class="button items-right w-24 shadow-md mr-5 mb-2 justify-right bg-theme-1 text-white shadow-md" type="submit">Simpan</button>
+                        <button class="button items-right w-24 shadow-md mr-5 mb-2 justify-right bg-theme-1 text-white shadow-md" type="submit">Update</button>
                        
                         </div>
                     </div>
                 </form>
             </div>
         </div>
-        <div class="modal" id="delete_{{ $p->TANGGAL }}">
+        <div class="modal" id="delete_{{ date('d-m-Y', strtotime($p->TANGGAL)) }}">
             <div class="modal__content modal__content py-5 pl-3 pr-1 ml-auto">
                 <div class="modal-header">
                     <div class="modal__content relative"> 
                     </div>
                     <div class="flex px-2 sm:pb-3 sm:pt-1 border-b border-gray-200 dark:border-dark-5">
-                        <h2 class="font-bold text-2xl flex"><i data-feather="info" class="w-8 h-8 mr-2"></i>Hapus Realisasi #{{ $p->TANGGAL }}</h2>
+                        <h2 class="font-bold text-2xl flex"><i data-feather="trash" class="w-8 h-8 mr-2"></i>Hapus Realisasi #{{ $loop->iteration }}</h2>
                         <a data-dismiss="modal" href="javascript:;" class="mr-3 ml-auto"><i data-feather="x" class="w-8 h-8 text-gray-500"></i></a>
                     </div>
                 </div>
-                <form action="{{ url('/realisasi/delete',$p->TANGGAL) }}" method="POST">
+                <form action="{{ route('realisasi.destroy',$p->KODE_PROYEK) }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <div class="text-base mt-5 ml-3">
-                        Apakah Anda yakin ingin menghapus realisasi pada tanggal {{ $p->TANGGAL }} ?
+                        Apakah Anda yakin ingin menghapus realisasi pada tanggal {{ date('d-m-Y', strtotime($p->TANGGAL)) }} ?
                     </div>
+                    <input type="hidden" name="TANGGAL_DELETE" value="{{ $p->TANGGAL }}">
                     <div class="text-base text-theme-6 ml-3">Data yang dihapus tidak dapat dikembalikan.</div>
                     <div class="modal-footer mt-5">
                         <div class="text-right mr-5">
-                            <button type="button" class="button w-24 shadow-md mr-1 mb-2 bg-red-500 text-white" data-dismiss="modal">Cancel</button> 
-                            <button class="button items-right w-24 shadow-md mr-5 mb-2 justify-right bg-theme-1 text-white shadow-md" type="submit">Simpan</button>
+                            <button type="button" class="button w-24 shadow-md mr-1 mb-2 bg-red-500 text-white" data-dismiss="modal">Tidak</button> 
+                            <button class="button items-right w-24 shadow-md mr-5 mb-2 justify-right bg-theme-1 text-white shadow-md" type="submit">Ya</button>
                         </div>
                     </div>
                 </form>
@@ -280,10 +311,37 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
 <script>
     $(document).ready(function() {
         var table = $('#example').DataTable( {
+                // "order": [ 0, 'asc' ],
                 responsive: true,
             } )
             .columns.adjust()
             .responsive.recalc();
     });
+
+    $('#select_tanggal').on('change', function(e){
+      var key = $('#select_tanggal').val();
+          $.ajaxSetup({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              }
+          });
+
+          $.ajax({
+                type:"POST",
+                url:"{{ url('admin/realisasi/get-rencana') }}",
+                data:{
+                  "key":key,
+                  "_token": "{{ csrf_token() }}",//harus ada ini jika menggunakan metode POST
+                },
+                success : function(results) {
+                  //console.log(JSON.stringify(results)); //print_r
+                    $('#pv_value').val(results.pv_val);
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+          });
+    });
+    
 </script>
 @endsection

@@ -22,6 +22,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function(){
     Route::get('/','AdminController@index');
 
     Route::get('/menuproyek','MenuProyekController@index');
+    Route::get('/exportexcel','MenuProyekController@exportexcel');
 
     Route::resource('user','UserController');
 
@@ -34,4 +35,6 @@ Route::prefix('admin')->middleware(['auth'])->group(function(){
     Route::post('/realisasi/store','RealisasiController@store');
     Route::put('/realisasi/update','RealisasiController@update');
     Route::delete('/realisasi/delete','RealisasiController@destroy');
+    Route::resource('realisasi','RealisasiController');
+    Route::post('/realisasi/get-rencana','RealisasiController@getRencana');
 });
