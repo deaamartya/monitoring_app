@@ -21,7 +21,12 @@ class ProgressTableSeeder extends Seeder
             'ID_TIPE' => '1',
             'VALUE' => '9845',
         ]);
-        
+        \DB::table('progress')->insert([
+            'TANGGAL' => date('Y-m-d'),
+            'KODE_PROYEK' => "ABC45678",
+            'ID_TIPE' => '4',
+            'VALUE' => '456',
+        ]);
         
     }
 }
