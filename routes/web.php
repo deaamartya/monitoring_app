@@ -22,9 +22,14 @@ Route::prefix('admin')->middleware(['auth'])->group(function(){
     Route::get('/','AdminController@index');
 
     Route::get('/menuproyek','MenuProyekController@index');
+
     Route::resource('user','UserController');
 
     Route::get('/rencana/{id}','RencanaController@index');
+    Route::post('/rencana/store','RencanaController@store');
+    Route::put('/rencana/update','RencanaController@update');
+    Route::delete('/rencana/delete','RencanaController@destroy');
+
     Route::get('/realisasi/{id}','RealisasiController@index');
     Route::post('/realisasi/store','RealisasiController@store');
     Route::put('/realisasi/update','RealisasiController@update');
