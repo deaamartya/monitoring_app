@@ -32,22 +32,33 @@ class HomeController extends Controller
         $jml_proyek_last_month  = Proyek::whereMonth(
             'START_PROYEK', '=', Carbon::now()->subMonth()->month
         )->whereYear('START_PROYEK', date('Y'))->count();
-        $tipe=Tipe::all();
-        $pv = Tipe::select('ID_TIPE')
-        ->where('ID_TIPE', '=', 1)
+
+        $pv = Progress::
+        select('progress.VALUE', 'tipe.NAMA_TIPE')
+        ->join('TIPE', 'tipe.ID_TIPE', '=', 'progress.ID_TIPE')
+        ->where('progress.ID_TIPE', '=', 1)
         ->get();
-        $ev = Tipe::select('ID_TIPE')
-        ->where('ID_TIPE', '=', 2)
+        $ev = Progress::
+        select('progress.VALUE', 'tipe.NAMA_TIPE')
+        ->join('TIPE', 'tipe.ID_TIPE', '=', 'progress.ID_TIPE')
+        ->where('progress.ID_TIPE', '=', 2)
         ->get();
-        $ac = Tipe::select('ID_TIPE')
-        ->where('ID_TIPE', '=', 3)
+        $ac = Progress::
+        select('progress.VALUE', 'tipe.NAMA_TIPE')
+        ->join('TIPE', 'tipe.ID_TIPE', '=', 'progress.ID_TIPE')
+        ->where('progress.ID_TIPE', '=', 3)
         ->get();
-        $rencana= Tipe::select('ID_TIPE')
-        ->where('ID_TIPE', '=', 4)
+        $rencana= Progress::
+        select('progress.VALUE', 'tipe.NAMA_TIPE')
+        ->join('TIPE', 'tipe.ID_TIPE', '=', 'progress.ID_TIPE')
+        ->where('progress.ID_TIPE', '=', 4)
         ->get();
-        $realisasi = Tipe::select('ID_TIPE')
-        ->where('ID_TIPE', '=', 5)
+        $realisasi = Progress::
+        select('progress.VALUE', 'tipe.NAMA_TIPE')
+        ->join('TIPE', 'tipe.ID_TIPE', '=', 'progress.ID_TIPE')
+        ->where('progress.ID_TIPE', '=', 5)
         ->get();
-        return view('dashboard', compact('progress', 'current_year', 'jml_proyek_this_month', 'jml_proyek_last_month', 'tipe', 'pv', 'ev', 'ac', 'rencana', 'realisasi'));
+
+        return view('dashboard', compact('progress', 'current_year', 'jml_proyek_this_month', 'jml_proyek_last_month', 'pv', 'ev', 'ac', 'rencana', 'realisasi'));
     }
 }
