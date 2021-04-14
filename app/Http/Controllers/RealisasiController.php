@@ -19,15 +19,25 @@ class RealisasiController extends Controller
     {
         $progress = Proyek::select('proyek.KODE_PROYEK', 'p1.TANGGAL', DB::raw('COALESCE(p1.VALUE,"-") AS PV'), 
         DB::raw('COALESCE(p2.VALUE,"-") AS EV'), DB::raw('COALESCE(p3.VALUE,"-") AS AC'), DB::raw('COALESCE(p4.VALUE,"-") AS Rencana'), DB::raw('COALESCE(p5.VALUE,"-") AS Realisasi'))
-        ->join('progress as p1', 'p1.KODE_PROYEK','=','proyek.KODE_PROYEK')
-        ->join('progress as p2', 'p2.KODE_PROYEK','=','proyek.KODE_PROYEK')
-        ->join('progress as p3', 'p3.KODE_PROYEK','=', 'proyek.KODE_PROYEK')
-        ->join('progress as p4', 'p4.KODE_PROYEK','=', 'proyek.KODE_PROYEK')
-        ->join('progress as p5', 'p5.KODE_PROYEK','=', 'proyek.KODE_PROYEK')
+        ->join('progress as p1', 'p1.KODE_PROYEK', 'proyek.KODE_PROYEK')
+        ->join('progress as p2', 'p2.KODE_PROYEK','proyek.KODE_PROYEK')
+        ->join('progress as p3', 'p3.KODE_PROYEK','proyek.KODE_PROYEK')
+        ->join('progress as p4', 'p4.KODE_PROYEK', 'proyek.KODE_PROYEK')
+        ->join('progress as p5', 'p5.KODE_PROYEK', 'proyek.KODE_PROYEK')
         // ->where([['proyek.KODE_PROYEK','=',$id], ['p1.ID_TIPE','=', '1'],  ['p2.ID_TIPE','=', '2'],  ['p3.ID_TIPE','=', '3'],  ['p4.ID_TIPE','=', '4'],  ['p5.ID_TIPE','=', '5'],
         // ['p1.TANGGAL','=', 'p2.TANGGAL'],['p1.TANGGAL','=', 'p3.TANGGAL'], ['p1.TANGGAL','=', 'p4.TANGGAL'], ['p1.TANGGAL','=', 'p5.TANGGAL']])
-        ->where(['proyek.KODE_PROYEK' => $id, 'p1.ID_TIPE' => '1', 'p2.ID_TIPE' => '2', 'p3.ID_TIPE'  => '3','p4.ID_TIPE' =>'4', 'p5.ID_TIPE'  => '5',
-            'p1.TANGGAL' => 'p2.TANGGAL', 'p1.TANGGAL' => 'p3.TANGGAL','p1.TANGGAL' => 'p4.TANGGAL','p1.TANGGAL' => 'p5.TANGGAL'])
+        // ->where(['proyek.KODE_PROYEK' => $id, 'p1.ID_TIPE' => '1', 'p2.ID_TIPE' => '2', 'p3.ID_TIPE'  => '3','p4.ID_TIPE' =>'4', 'p5.ID_TIPE'  => '5',
+        //     'p2.TANGGAL' => 'p1.TANGGAL', 'p3.TANGGAL' => 'p1.TANGGAL','p4.TANGGAL' => 'p1.TANGGAL','p5.TANGGAL' => 'p1.TANGGAL'])
+        ->where('proyek.KODE_PROYEK','=',$id)
+        ->where('p1.ID_TIPE','=', '1')
+        ->where('p2.ID_TIPE','=', '2')
+        ->where('p3.ID_TIPE','=', '3')
+        ->where('p4.ID_TIPE','=', '4')
+        ->where('p5.ID_TIPE','=', '5')
+        ->where('p2.TANGGAL','=', 'p1.TANGGAL')
+        ->where('p3.TANGGAL','=', 'p1.TANGGAL')
+        ->where('p4.TANGGAL','=', 'p1.TANGGAL')
+        ->where('p5.TANGGAL','=', 'p1.TANGGAL')
         ->orderByDesc('p1.TANGGAL')
         ->get();
         echo "<pre>";
