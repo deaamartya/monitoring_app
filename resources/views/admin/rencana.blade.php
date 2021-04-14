@@ -68,73 +68,84 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
 </style>
 @endsection
 @section('content')
-@if(Session::has('success'))
-<div class="rounded-md w-35 flex items-center px-5 py-4 mb-2 mt-3 ml-5 bg-theme-18 text-theme-9"> <i data-feather="alert-circle" class="w-6 h-6 mr-2"></i>{{@session::get('success') }}</div>
-@endif
-
-<div class="content">
-<div class="intro-y box p-5 mt-5 mb-5 sm:mt-5 bg-blue-400 text-white" style="background-color: #1c3faa;">                        
+<div class="intro-y box p-5 mt-5 sm:mt-5 bg-blue-400 text-white" style="background-color: #1c3faa;">                        
     <div class="flex flex-row">
         <i data-feather="list"></i>
-        <h2 class="text-lg font-medium mr-auto ml-3">Table Rencana </h2>
+        <h2 class="text-lg font-medium mr-auto ml-3">Rencana Proyek {{ $nama_proyek }}</h2>
     </div>
-    
 </div>
 
+<div class="intro-y box p-5 mt-5">
 
-
-
-<div class="intro-y box mt-5">
-    <!--Container-->
-    <!--Card-->
-    
-    <a href ="javascript:;" data-toggle="modal" data-target="#tambah_rencana" class="button mb-5 mr-6 mt-4 flex items-center justify-center bg-theme-1 text-white tombol-tambah-rencana" style="float:right;" ><i data-feather="plus-circle" class="w-6 h-6 mr-2"></i>Tambah Rencana Proyek</a>
-    
-    <div class="container w-full">
-
-        <div class="p-6 mt-6 lg:mt-0 rounded shadow">
-            <table id="example" class="stripe hover display cell-border" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
-                <thead>
-                    <tr>
-                       
-                        <th data-priority="1">Tanggal</th>
-                        <th data-priority="2">Ptosentase</th>
-                        <th data-priority="3">Planning Value</th>
-                        <th data-priority="4">Aksi</th>
-                    </tr>
-                </thead>
-
-                <tbody style="text-align: center;">
-                @foreach($progress as $p)
-                    <tr>
-                        <td>{{$p->TANGGAL}}</td>
-                        <td>{{$p->PV_VALUE}}</td>
-                        <td>{{$p->RENCANA}}</td>
-                        <td>
-                        <div class="flex" style="justify-content: center;">
-                            <a data-toggle="modal" data-target="#editRencana_{{ $p->TANGGAL }}">
-                                <button href="javascript:;" title="Edit Rencana" type="button" class="tooltip button px-2 mr-1 mb-2 bg-green-300 dark:text-gray-300">
-                                    <span class="w-5 h-5 flex items-center justify-center">
-                                        <i data-feather="edit" class="w-4 h-4 "></i>
-                                    </span>
-                                </button>
-                            </a>
-                            <a data-toggle="modal" data-target="#deleteRencana_{{$p->TANGGAL}}">
-                                <button href="javascript:;" title="Hapus Rencana" type="button" class="tooltip button px-2 mr-1 mb-2 bg-red-300 dark:text-gray-300">
-                                    <span class="w-5 h-5 flex items-center justify-center">
-                                        <i data-feather="trash-2" class="w-5 h-5 "></i>
-                                    </span>
-                                </button>
-                            </a>
-                        </div>
-                        </td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
+<!--Container-->
+<div class="container w-full ">
+    @if($errors->any())
+        <div class="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-31 text-theme-6">
+            <i data-feather="alert-octagon" class="w-6 h-6 mr-2"></i>
+            Data tidak berhasil disimpan. Mohon cek form kembali.
         </div>
+    @endif
+    @if(Session::has('success'))
+    <div class="rounded-md w-35 flex items-center px-5 py-4 mb-2 bg-theme-18 text-theme-9">
+        <i data-feather="alert-circle" class="w-6 h-6 mr-2"></i>
+        {{ Session::get('success') }}
     </div>
-</div>
+    @endif
+    <div class="intro-y block sm:flex items-center h-10">
+        <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
+            <a href ="javascript:;" data-toggle="modal" data-target="#tambah_rencana">
+                <button class="ml-3 button box flex items-center shadow-md bg-blue-200 text-gray-700 buttons-html5 buttons-pdf"> <i data-feather="plus-circle" class="hidden sm:block w-4 h-4 mr-2"></i> Tambah Rencana </button>
+            </a>
+        </div>
+    </div> 
+    <br>
+    <!--Card-->
+    <div class="px-2 py-1">
+       
+
+        <table id="example" class="stripe hover display cell-border" style="width:100%; padding-top: 1em;  padding-bottom: 1em; text-align:center;">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th data-priority="1">Tanggal</th>
+                    <th data-priority="2">PV</th>
+                
+                    <th data-priority="3">Rencana</th>
+        
+                    <th data-priority="4"style="width: 20%;">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach($progress as $p)
+                <tr>
+                    <td>{{ $loop->iteration  }}</td>
+                    <td>{{ date('d-m-Y', strtotime($p->TANGGAL))}}</td>
+                    <td>{{$p->PV_VALUE}}</td>
+                    <td>{{$p->RENCANA}}%</td>
+                    <td>
+                    <div class="flex" style="justify-content: center;">
+                        <a data-toggle="modal" data-target="#edit_{{ date('d-m-Y', strtotime($p->TANGGAL)) }}">
+                            <button href="javascript:;" title="Edit Rencana" type="button" class="button px-3 mr-3 mb-3 bg-theme-17 text-theme-11">
+                                <span class="flex items-center justify-center">
+                                    <i data-feather="edit" class="w-7 h-7 mr-2"></i>Edit
+                                </span>
+                            </button>
+                        </a>
+                        <a data-toggle="modal" data-target="#delete_{{ date('d-m-Y', strtotime($p->TANGGAL)) }}">
+                            <button href="javascript:;" title="Hapus Rencana" type="button" class="button px-3 mr-3 mb-3 bg-theme-31 text-theme-6">
+                                <span class="flex items-center justify-center">
+                                    <i data-feather="trash" class="w-6 h-6 mr-2"></i>Hapus
+                                </span>
+                            </button>
+                        </a>
+                    </div>
+                    </td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+
+   
 
 <div class="modal" id="tambah_rencana">
             <div class="modal__content modal__content py-5 pl-3 pr-1 ml-auto">
@@ -146,7 +157,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                         <a data-dismiss="modal" href="javascript:;" class="mr-3 ml-auto"><i data-feather="x" class="w-8 h-8 text-gray-500"></i></a>
                     </div>
                 </div>
-                <form action="{{ url('/rencana/store') }}" method="POST" class="needs-validation" novalidate id="tambah-rencana">
+                <form action="{{ route('rencana.store') }}" method="POST" class="needs-validation" novalidate id="tambah-rencana">
                     @csrf
                     
                     <div class="mr-5 mb-5 grid grid-cols-12 gap-4 row-gap-3">
@@ -154,7 +165,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                              <label class="font-semibold text-lg">Tanggal</label> 
                                     <div class="relative mx-auto mt-2 mb-5"> 
                                         <div class="absolute rounded-l w-10 h-full flex items-center justify-center bg-gray-100 border text-gray-600 dark:bg-dark-1 dark:border-dark-4"><i data-feather="calendar" class="w-4 h-4"></i></div> 
-                                            <input type="text" class="datepicker input pl-12 border" data-single-mode="true" name="TANGGAL"> 
+                                            <input type="text" class="datepicker-m input pl-12 border" data-single-mode="true" name="TANGGAL"> 
                                     </div>
                         </div>
                     </div>
@@ -185,7 +196,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
 
 
         @foreach($progress as $p)
-        <div class="modal" id="editRencana_{{ $p->TANGGAL }}">
+        <div class="modal" id="edit_{{ date('d-m-Y', strtotime($p->TANGGAL)) }}">
             <div class="modal__content modal__content--lg py-5 pl-5 pr-5 ml-auto">
                 <div class="modal-header">
                     <div class="modal__content relative"> 
@@ -196,16 +207,17 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                     </div>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ url('/rencana/update') }}" method="POST" class="needs-validation" novalidate>
+                    <form action="{{ route('rencana.update', $p->TANGGAL) }}" method="POST" class="needs-validation" novalidate>
                     @method('PUT')
                     @csrf
-                    
+                    <input type="hidden" name="KODE_PROYEK" value="{{ $kode_proyek }}">
+                    <div class="modal-body">
                     <div class="mr-5 mb-5 grid grid-cols-12 gap-4 row-gap-3">
                         <div class="col-span-12">
                              <label class="font-semibold text-lg">Tanggal</label> 
                                     <div class="relative mx-auto mt-2 mb-5"> 
                                         <div class="absolute rounded-l w-10 h-full flex items-center justify-center bg-gray-100 border text-gray-600 dark:bg-dark-1 dark:border-dark-4"><i data-feather="calendar" class="w-4 h-4"></i></div> 
-                                            <input type="text" class="datepicker input pl-12 border" data-single-mode="true" name="TANGGAL"> 
+                                            <input type="text" class="datepicker-m input pl-12 border" data-single-mode="true" name="TANGGAL"> 
                                     </div>
                         </div>
                     </div>
@@ -223,7 +235,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                                 <input type="number" class="input w-full border mt-2 flex-1" placeholder="Prosentase" name="RENCANA" required >
                         </div>
                     </div>
-
+                    </div>
                 <div class="modal-footer mt-5">
                     <div class="text-right">
                     <button type="button" class="button w-24 shadow-md mr-1 mb-2 bg-red-500 text-white" data-dismiss="modal">Cancel</button> 
@@ -236,17 +248,17 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
             </div>
         </div>
 
-        <div class="modal editModal" id="deleteRencana_{{ $p->TANGGAL }}">
+        <div class="modal editModal" id="delete_{{ date('d-m-Y', strtotime($p->TANGGAL)) }}">
             <div class="modal__content modal__content--lg p-5 ml-auto">
                 <div class="modal-header">
                     <div class="modal__content relative"> 
                     </div>
                     <div class="flex px-2 sm:pb-3 sm:pt-1 border-b border-gray-200 dark:border-dark-5">
-                        <h2 class="font-bold text-2xl flex"><i data-feather="trash-2" class="w-8 h-8 mr-2"></i>Delete Rencana #{{ $p->TANGGAL }}</h2>
+                        <h2 class="font-bold text-2xl flex"><i data-feather="trash-2" class="w-8 h-8 mr-2"></i>Hapus Rencana #{{ $loop->iteration }}</h2>
                         <a data-dismiss="modal" href="javascript:;" class="mr-3 ml-auto"><i data-feather="x" class="w-8 h-8 text-gray-500"></i></a>
                     </div>
                 </div>
-                <form action="{{ url('/rencana/destroy') }}" method="POST">
+                <form action="{{ route('rencana.destroy', $p->KODE_PROYEK) }}" method="POST">
                     @method('DELETE')
                     @csrf
                     <div class="text-base mt-5">

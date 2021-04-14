@@ -81,20 +81,14 @@
 <div class="container w-full ">
 
     <div class="intro-y block sm:flex items-center h-10">
-        <!-- <h2 class="text-lg font-medium truncate mr-5">
-            Print Tabel Permohonan yang Sudah Dikonfirmasi
-        </h2> -->
         <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
-            <a href="{{url('/admin/addproyek')}}">
-                <button class="button box flex items-center shadow-md bg-gray-200 text-gray-700 buttons-html5 buttons-pdf" id="print"> <i data-feather="file-plus" class="hidden sm:block w-4 h-4 mr-2"></i> Tambah Proyek Baru </button>
+            <a href ="javascript:;" data-toggle="modal" data-target="#tambah_proyek">
+                <button class="button box flex items-center shadow-md bg-blue-200 text-gray-700 buttons-html5 buttons-pdf"> <i data-feather="file-plus" class="hidden sm:block w-4 h-4 mr-2"></i> Tambah Proyek Baru </button>
             </a>
             <a target="_blank" href="{{url('/admin/exportexcel')}}">
-                <button class="ml-3 button box flex items-center shadow-md bg-gray-200 text-gray-700 buttons-html5 buttons-pdf" id="print"> <i data-feather="download" class="hidden sm:block w-4 h-4 mr-2"></i> Export to Excel </button>
+                <button class="ml-3 button box flex items-center shadow-md bg-blue-200 text-gray-700 buttons-html5 buttons-pdf"> <i data-feather="download" class="hidden sm:block w-4 h-4 mr-2"></i> Export to Excel </button>
             </a>
         </div>
-        <!-- <div class="flex items-center sm:ml-auto mt-3 sm:mt-0"> -->
-            
-        <!-- </div> -->
     </div>  
     <br>
 
@@ -118,14 +112,14 @@
                 <tr>
                     <td>{{$p->KODE_PROYEK}}</td>
                     <td>{{$p->NAMA_PROYEK}}</td>
-                    <td>{{ date('d F Y',strtotime($p->START_PROYEK)) }}</td>
-                    <td>{{ date('d F Y',strtotime($p->END_PROYEK)) }}</td>
+                    <td>{{ date('d-m-Y',strtotime($p->START_PROYEK)) }}</td>
+                    <td>{{ date('d-m-Y',strtotime($p->END_PROYEK)) }}</td>
                     <td>{{$p->STATUS}}</td>
                     <td>{{$p->LAST_UPDATE}}</td>
                     <td style="text-align: center;">
                         <div class="flex" style="justify-content: center;">
                             <a href="{{url('/admin/rencana/'.$p->KODE_PROYEK)}}">
-                                <button href="javascript:;" title="Rencana" type="button" class="tooltip button px-2 mr-1 mb-2 bg-blue-300 dark:text-gray-300">
+                                <button href="javascript:;" title="Rencana" type="button" class="tooltip button px-2 mr-1 mb-2 bg-green-300 dark:text-gray-300">
                                     <span class="w-5 h-5 flex items-center justify-center">
                                         <i data-feather="file-text" class="w-4 h-4 "></i>
                                     </span>
@@ -145,6 +139,63 @@
             </tbody>
         </table>
         
+        <div class="modal" id="tambah_proyek">
+            <div class="modal__content modal__content py-5 pl-3 pr-1 ml-auto">
+                <div class="modal-header">
+                    <div class="modal__content relative"> 
+                    </div>
+                    <div class="flex px-2 sm:pb-3 sm:pt-1 border-b border-gray-200 dark:border-dark-5">
+                        <h2 class="font-bold text-2xl flex"><i data-feather="file-plus" class="w-8 h-8 mr-2"></i>Tambah Proyek</h2>
+                        <a data-dismiss="modal" href="javascript:;" class="mr-3 ml-auto"><i data-feather="x" class="w-8 h-8 text-gray-500"></i></a>
+                    </div>
+                </div>
+
+                <form action="{{ route('menuproyek.store') }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="p-5 grid grid-cols-12 gap-4 row-gap-3">
+                            <div class="col-span-12"> 
+                                <label class="font-semibold text-lg">Kode Proyek</label>
+                                <input type="text" class="input w-full border mt-2 flex-1" name="KODE_PROYEK" required>
+                            </div>
+                            <div class="col-span-12"> 
+                                <label class="font-semibold text-lg">Nama Proyek</label>
+                                <input type="text" class="input w-full border mt-2 flex-1" name="NAMA_PROYEK" required>
+                            </div>
+                            <div class="col-span-12"> 
+                                <label class="font-semibold text-lg">Start Proyek</label>
+                                    <div class="relative w-full mt-2 mx-auto"> 
+                                        <div class="absolute rounded-l w-10 h-full flex items-center justify-center bg-gray-100 border text-gray-600 dark:bg-dark-1 dark:border-dark-4"> 
+                                            <i data-feather="calendar" class="w-4 h-4"></i> 
+                                        </div> 
+                                        <input type="text" class="datepicker input pl-12 border" name="START_PROYEK" data-single-mode="true" required> 
+                                    </div> 
+                            </div>
+                            <div class="col-span-12"> 
+                                <label class="font-semibold text-lg">End Proyek</label>
+                                    <div class="relative w-full mt-2 mx-auto"> 
+                                        <div class="absolute rounded-l w-10 h-full flex items-center justify-center bg-gray-100 border text-gray-600 dark:bg-dark-1 dark:border-dark-4"> 
+                                            <i data-feather="calendar" class="w-4 h-4"></i> 
+                                        </div> 
+                                        <input type="text" class="datepicker input pl-12 border" name="END_PROYEK" data-single-mode="true" required> 
+                                    </div> 
+                            </div>
+                            <div class="col-span-12"> 
+                                <label class="font-semibold text-lg">Status</label>
+                                <input type="number" class="input w-full border mt-2 flex-1" name="STATUS" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer mt-5">
+                        <div class="text-right mr-5">
+                            <button type="button" class="button w-24 shadow-md mr-1 mb-2 bg-red-500 text-white" data-dismiss="modal">Cancel</button> 
+                            <button class="button items-right w-24 shadow-md mr-5 mb-2 justify-right bg-theme-1 text-white shadow-md" type="submit">Simpan</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
         
     </div>
     <!--/Card-->

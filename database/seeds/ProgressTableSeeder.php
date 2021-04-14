@@ -15,17 +15,18 @@ class ProgressTableSeeder extends Seeder
         
 
         \DB::table('progress')->delete();
-        $progres[] = [
+        \DB::table('progress')->insert([
             'TANGGAL' => date('Y-m-d'),
             'KODE_PROYEK' => "ABC45678",
-            'PV_VALUE' => "9227",
-            'EV_VALUE' => NULL,
-            'AC_VALUE' => NULL,
-            'RENCANA' => "80",
-            'REALISASI' => NULL,
-        ];
-        DB::table('progress')->insert($progres);
-        
+            'ID_TIPE' => '1',
+            'VALUE' => '9845',
+        ]);
+        \DB::table('progress')->insert([
+            'TANGGAL' => date('Y-m-d'),
+            'KODE_PROYEK' => "ABC45678",
+            'ID_TIPE' => '4',
+            'VALUE' => '456',
+        ]);
         
     }
 }
