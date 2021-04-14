@@ -91,6 +91,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
         {{ Session::get('success') }}
     </div>
     @endif
+    <br>
     <div class="intro-y block sm:flex items-center h-10">
         <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
             <a href ="javascript:;" data-toggle="modal" data-target="#tambah_realisasi">
@@ -206,20 +207,16 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                                 <input disabled id="rencana_value" type="text" class="input w-full border mt-2 flex-1" name="RENCANA_VALUE">
                             </div>
                             <div class="col-span-12"> 
-                                <label class="font-semibold text-lg">Tipe</label>
-                                <select data-search="true" class="tail-select w-full" name="TIPE" required>
-                                    <option selected disabled>Pilih tipe.....</option>
-                                    @foreach($tipe as $t)
-                                        <option value="{{ $t->ID_TIPE }}">{{ $t->NAMA_TIPE }}</option>
-                                    @endforeach
-                                </select>
-                                @if($errors->has('TIPE'))
-                                <small class="text-theme-6">Tipe Wajib Diisi.</small>
-                                @endif
+                                <label class="font-semibold text-lg">EV</label>
+                                <input type="number" class="input w-full border mt-2 flex-1" name="EV_VALUE" required>
                             </div>
                             <div class="col-span-12"> 
-                                <label class="font-semibold text-lg">Value</label>
-                                <input type="number" class="input w-full border mt-2 flex-1" name="VALUE" required>
+                                <label class="font-semibold text-lg">AC</label>
+                                <input type="number" class="input w-full border mt-2 flex-1" name="AC_VALUE" required>
+                            </div>
+                            <div class="col-span-12"> 
+                                <label class="font-semibold text-lg">Realisasi</label>
+                                <input type="number" class="input w-full border mt-2 flex-1" name="REALISASI_VALUE" required>
                             </div>
                         </div>
                     </div>
@@ -258,19 +255,23 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                             </div>
                             <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">PV</label>
-                                <input disabled type="number" class="input w-full border mt-2 flex-1" name="PV_VALUE_EDIT" value="{{ $p->PV_VALUE }}" readonly>
+                                <input disabled type="number" class="input w-full border mt-2 flex-1" name="PV_VALUE_EDIT" value="{{ $p->PV }}" readonly>
+                            </div>
+                            <div class="col-span-12"> 
+                                <label class="font-semibold text-lg">Rencana</label>
+                                <input disabled type="number" class="input w-full border mt-2 flex-1" name="RENCANA_VALUE_EDIT" value="{{ $p->Rencana }}" readonly>
                             </div>
                             <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">EV</label>
-                                <input type="number" class="input w-full border mt-2 flex-1" name="EV_VALUE_EDIT" value="{{ $p->EV_VALUE }}" required>
+                                <input type="number" class="input w-full border mt-2 flex-1" name="EV_VALUE_EDIT" value="{{ $p->EV }}" required>
                             </div>
                             <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">AC</label>
-                                <input type="number" class="input w-full border mt-2 flex-1" name="AC_VALUE_EDIT" value="{{ $p->AC_VALUE }}" required>
+                                <input type="number" class="input w-full border mt-2 flex-1" name="AC_VALUE_EDIT" value="{{ $p->AC }}" required>
                             </div>
                             <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">Realisasi</label>
-                                <input type="number" class="input w-full border mt-2 flex-1" name="REALISASI_EDIT" value="{{ $p->REALISASI }}" required>
+                                <input type="number" class="input w-full border mt-2 flex-1" name="REALISASI_VALUE_EDIT" value="{{ $p->Realisasi }}" required>
                             </div>
                         </div>
                     </div>
@@ -298,7 +299,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                     @csrf
                     @method('DELETE')
                     <div class="text-base mt-5 ml-3">
-                        Apakah Anda yakin ingin menghapus realisasi pada tanggal {{ date('d-m-Y', strtotime($p->TANGGAL)) }} ?
+                        Apakah Anda yakin ingin menghapus nilai EV, AC dan realisasi pada tanggal {{ date('d-m-Y', strtotime($p->TANGGAL)) }} ?
                     </div>
                     <input type="hidden" name="TANGGAL_DELETE" value="{{ $p->TANGGAL }}">
                     <div class="text-base text-theme-6 ml-3">Data yang dihapus tidak dapat dikembalikan.</div>
