@@ -121,51 +121,11 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                 <tr>
                     <td>{{ $loop->iteration  }}</td>
                     <td>{{ date('d-m-Y', strtotime($p->TANGGAL))}}</td>
-                    <td>
-                    @if($p->ID_TIPE == 1)
-                        @if(isset($p->VALUE))
-                            {{$p->VALUE}}
-                        @else
-                            -
-                        @endif 
-                    @endif
-                    </td>
-                    <td>
-                    @if($p->ID_TIPE == 2)
-                        @if(isset($p->VALUE))
-                            {{$p->VALUE}}
-                        @else
-                            -
-                        @endif 
-                    @endif 
-                    </td>
-                    <td>
-                    @if($p->ID_TIPE == 3)
-                        @if(isset($p->VALUE))
-                            {{$p->VALUE}}
-                        @else
-                            -
-                        @endif 
-                    @endif 
-                    </td>
-                    <td>
-                    @if($p->ID_TIPE == 4)
-                        @if(isset($p->VALUE))
-                            {{$p->VALUE}}%
-                        @else
-                            -
-                        @endif 
-                    @endif 
-                    </td>
-                    <td>
-                    @if($p->ID_TIPE == 5)
-                        @if(isset($p->VALUE))
-                            {{$p->VALUE}}%
-                        @else
-                            -
-                        @endif 
-                    @endif
-                    </td>
+                    <td>{{$p->PV}}</td>
+                    <td>{{$p->EV}}</td>
+                    <td>{{$p->AC}}</td>
+                    <td>{{$p->Rencana}}</td>
+                    <td>{{$p->Realisasi}}</td>
                     <td>
                     <div class="flex" style="justify-content: center;">
                         <a data-toggle="modal" data-target="#edit_{{ date('d-m-Y', strtotime($p->TANGGAL)) }}">
@@ -226,15 +186,15 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
 
                         <div class="p-5 grid grid-cols-12 gap-4 row-gap-3">
                             <div class="col-span-12"> 
-                                <label class="font-semibold text-lg">Tanggal</label>
+                                <label class="font-semibold text-lg">Bulan</label>
                                 <select id="select_tanggal" data-search="true" class="tail-select w-full" name="TANGGAL" required>
-                                    <option selected disabled>Pilih tanggal.....</option>
+                                    <option selected disabled>Pilih bulan.....</option>
                                     @foreach($tgl_progress as $t)
                                         <option value="{{ $t->TANGGAL }}">{{ tgl_indo($t->TANGGAL) }}</option>
                                     @endforeach
                                 </select>
                                 @if($errors->has('TANGGAL'))
-                                <small class="text-theme-6">Tanggal Wajib Diisi.</small>
+                                <small class="text-theme-6">Bulan Wajib Diisi.</small>
                                 @endif
                             </div>
                             <div class="col-span-12"> 
