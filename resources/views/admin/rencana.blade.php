@@ -165,7 +165,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                              <label class="font-semibold text-lg">Tanggal</label> 
                                     <div class="relative mx-auto mt-2 mb-5"> 
                                         <div class="absolute rounded-l w-10 h-full flex items-center justify-center bg-gray-100 border text-gray-600 dark:bg-dark-1 dark:border-dark-4"><i data-feather="calendar" class="w-4 h-4"></i></div> 
-                                            <input type="text" class="datepicker input pl-12 border" data-single-mode="true" name="TANGGAL"> 
+                                            <input type="text" class="datepicker-m input pl-12 border" data-single-mode="true" name="TANGGAL"> 
                                     </div>
                         </div>
                     </div>
@@ -196,7 +196,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
 
 
         @foreach($progress as $p)
-        <div class="modal" id="#edit_{{ date('d-m-Y', strtotime($p->TANGGAL)) }}">
+        <div class="modal" id="edit_{{ date('d-m-Y', strtotime($p->TANGGAL)) }}">
             <div class="modal__content modal__content--lg py-5 pl-5 pr-5 ml-auto">
                 <div class="modal-header">
                     <div class="modal__content relative"> 
@@ -217,7 +217,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                              <label class="font-semibold text-lg">Tanggal</label> 
                                     <div class="relative mx-auto mt-2 mb-5"> 
                                         <div class="absolute rounded-l w-10 h-full flex items-center justify-center bg-gray-100 border text-gray-600 dark:bg-dark-1 dark:border-dark-4"><i data-feather="calendar" class="w-4 h-4"></i></div> 
-                                            <input type="text" class="datepicker input pl-12 border" data-single-mode="true" name="TANGGAL"> 
+                                            <input type="text" class="datepicker-m input pl-12 border" data-single-mode="true" name="TANGGAL"> 
                                     </div>
                         </div>
                     </div>
