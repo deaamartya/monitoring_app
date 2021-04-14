@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class RencanaController extends Controller
 {
-    public function index($id){
+    public function show($id){
         $progress = Progress::where('KODE_PROYEK', $id)
         ->whereNotNull('TANGGAL')
         ->orWhereNotNull('PV_VALUE')
@@ -15,6 +15,7 @@ class RencanaController extends Controller
         ->orderByDesc('TANGGAL')
         ->get();
         $kode_proyek =$id;
+        $tipe= 
         $nama_proyek = Proyek::where('KODE_PROYEK', $id)->value('NAMA_PROYEK');
         return view('admin.rencana',compact('progress', 'nama_proyek', 'kode_proyek'));
     }

@@ -26,7 +26,9 @@ Route::prefix('admin')->middleware(['auth'])->group(function(){
 
     Route::resource('user','UserController');
 
-    Route::get('/rencana/{id}','RencanaController@index');
+    Route::resource('/rencana','RencanaController');
+    
+
     Route::resource('realisasi','RealisasiController');
     Route::post('/realisasi/get-rencana','RealisasiController@getRencana');
 });
