@@ -109,7 +109,6 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                     <th>#</th>
                     <th data-priority="1">Tanggal</th>
                     <th data-priority="2">PV</th>
-                
                     <th data-priority="3">Rencana</th>
         
                     <th data-priority="4"style="width: 20%;">Aksi</th>
@@ -120,8 +119,24 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                 <tr>
                     <td>{{ $loop->iteration  }}</td>
                     <td>{{ date('d-m-Y', strtotime($p->TANGGAL))}}</td>
-                    <td>{{$p->PV_VALUE}}</td>
-                    <td>{{$p->RENCANA}}%</td>
+                    <td>
+                    @if($p->ID_TIPE == 1)
+                        @if(isset($p->VALUE))
+                            {{$p->VALUE}}
+                        @else
+                            -
+                        @endif 
+                    @endif
+                    </td>
+                    <td>
+                    @if($p->ID_TIPE == 4)
+                        @if(isset($p->VALUE))
+                            {{$p->VALUE}}%
+                        @else
+                            -
+                        @endif 
+                    @endif 
+                    </td>
                     <td>
                     <div class="flex" style="justify-content: center;">
                         <a data-toggle="modal" data-target="#edit_{{ date('d-m-Y', strtotime($p->TANGGAL)) }}">
@@ -160,12 +175,13 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                 <form action="{{ route('rencana.store') }}" method="POST" class="needs-validation" novalidate id="tambah-rencana">
                     @csrf
                     
+                    <input type="hidden" name="KODE_PROYEK" value="{{ $kode_proyek }}">
                     <div class="mr-5 mb-5 grid grid-cols-12 gap-4 row-gap-3">
                         <div class="col-span-12">
                              <label class="font-semibold text-lg">Tanggal</label> 
                                     <div class="relative mx-auto mt-2 mb-5"> 
                                         <div class="absolute rounded-l w-10 h-full flex items-center justify-center bg-gray-100 border text-gray-600 dark:bg-dark-1 dark:border-dark-4"><i data-feather="calendar" class="w-4 h-4"></i></div> 
-                                            <input type="text" class="datepicker-m input pl-12 border" data-single-mode="true" name="TANGGAL"> 
+                                            <input type="text" class="datepicker input pl-12 border" data-single-mode="true" name="TANGGAL"> 
                                     </div>
                         </div>
                     </div>
@@ -217,7 +233,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                              <label class="font-semibold text-lg">Tanggal</label> 
                                     <div class="relative mx-auto mt-2 mb-5"> 
                                         <div class="absolute rounded-l w-10 h-full flex items-center justify-center bg-gray-100 border text-gray-600 dark:bg-dark-1 dark:border-dark-4"><i data-feather="calendar" class="w-4 h-4"></i></div> 
-                                            <input type="text" class="datepicker-m input pl-12 border" data-single-mode="true" name="TANGGAL"> 
+                                            <input type="text" class="datepicker input pl-12 border" data-single-mode="true" name="TANGGAL"> 
                                     </div>
                         </div>
                     </div>
@@ -258,11 +274,14 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                         <a data-dismiss="modal" href="javascript:;" class="mr-3 ml-auto"><i data-feather="x" class="w-8 h-8 text-gray-500"></i></a>
                     </div>
                 </div>
+
                 <form action="{{ route('rencana.destroy', $p->KODE_PROYEK) }}" method="POST">
                     @method('DELETE')
                     @csrf
+                    <input type="hidden" value="{{$p->TANGGAL}}"name="TANGGAL">
+                    <input type="hidden" value="{{$p->ID_TIPE}}" name="ID_TIPE">
                     <div class="text-base mt-5">
-                        Apakah Anda yakin ingin menghapus rencana "{{ $p->NAMA_PROYEK }}" ?
+                        Apakah Anda yakin ingin menghapus rencana proyek "{{ $p->proyek->NAMA_PROYEK }}" untuk bulan {{ date('F Y',strtotime($p->TANGGAL)) }} ?
                     </div>
                     <div class="text-base text-theme-6">Data yang dihapus tidak dapat dikembalikan.</div>
                     <div class="modal-footer mt-5">
