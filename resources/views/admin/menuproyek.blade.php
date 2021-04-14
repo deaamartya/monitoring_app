@@ -95,9 +95,10 @@
     <!--Card-->
     <div class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
     
-        <table id="view" class="stripe hover display cell-border" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
+        <table id="view" class="stripe hover display cell-border" style="width:100%; padding-top: 1em;  padding-bottom: 1em;" >
             <thead>
                 <tr>
+                    <th>No.</th>
                     <th data-priority="1">Kode Proyek</th>
                     <th data-priority="2">Nama Proyek</th>
                     <th data-priority="3">Start Proyek</th>
@@ -110,11 +111,12 @@
             <tbody>
             @foreach($proyek as $p)
                 <tr>
-                    <td>{{$p->KODE_PROYEK}}</td>
+                    <td style="text-align:center">{{ $loop->iteration }}</td>
+                    <td >{{$p->KODE_PROYEK}}</td>
                     <td>{{$p->NAMA_PROYEK}}</td>
-                    <td>{{ date('d-m-Y',strtotime($p->START_PROYEK)) }}</td>
-                    <td>{{ date('d-m-Y',strtotime($p->END_PROYEK)) }}</td>
-                    <td>{{$p->STATUS}}</td>
+                    <td style="text-align:center">{{ date('d-m-Y',strtotime($p->START_PROYEK)) }}</td>
+                    <td style="text-align:center">{{ date('d-m-Y',strtotime($p->END_PROYEK)) }}</td>
+                    <td style="text-align:center">{{$p->STATUS}}</td>
                     <td>{{$p->LAST_UPDATE}}</td>
                     <td style="text-align: center;">
                         <div class="flex" style="justify-content: center;">
