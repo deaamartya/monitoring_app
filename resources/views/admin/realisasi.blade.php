@@ -121,27 +121,49 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                 <tr>
                     <td>{{ $loop->iteration  }}</td>
                     <td>{{ date('d-m-Y', strtotime($p->TANGGAL))}}</td>
-                    <td>{{$p->PV_VALUE}}</td>
                     <td>
-                    @if(isset($p->EV_VALUE))
-                        {{$p->EV_VALUE}}
-                    @else
-                        -
+                    @if($p->ID_TIPE == 1)
+                        @if(isset($p->VALUE))
+                            {{$p->VALUE}}
+                        @else
+                            -
+                        @endif 
+                    @endif
+                    </td>
+                    <td>
+                    @if($p->ID_TIPE == 2)
+                        @if(isset($p->VALUE))
+                            {{$p->VALUE}}
+                        @else
+                            -
+                        @endif 
                     @endif 
                     </td>
                     <td>
-                    @if(isset($p->AC_VALUE))
-                        {{$p->AC_VALUE}}
-                    @else
-                        -
+                    @if($p->ID_TIPE == 3)
+                        @if(isset($p->VALUE))
+                            {{$p->VALUE}}
+                        @else
+                            -
+                        @endif 
                     @endif 
                     </td>
-                    <td>{{$p->RENCANA}}%</td>
                     <td>
-                    @if(isset($p->REALISASI)) 
-                        {{$p->REALISASI}}%
-                    @else
-                        -
+                    @if($p->ID_TIPE == 4)
+                        @if(isset($p->VALUE))
+                            {{$p->VALUE}}%
+                        @else
+                            -
+                        @endif 
+                    @endif 
+                    </td>
+                    <td>
+                    @if($p->ID_TIPE == 5)
+                        @if(isset($p->VALUE))
+                            {{$p->VALUE}}%
+                        @else
+                            -
+                        @endif 
                     @endif
                     </td>
                     <td>
@@ -179,16 +201,36 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                 </div>
                 <form action="{{ route('realisasi.store') }}" method="POST">
                     @csrf
-                    <input type="hidden" name="KODE_PROYEK" value="{{ $kode_proyek }}">
+                    <input id="kode_proyek" type="hidden" name="KODE_PROYEK" value="{{ $kode_proyek }}">
                     <div class="modal-body">
+                    <?php
+                        function tgl_indo($tanggal){
+                            $bulan = array (
+                                1 =>   'Januari',
+                                'Februari',
+                                'Maret',
+                                'April',
+                                'Mei',
+                                'Juni',
+                                'Juli',
+                                'Agustus',
+                                'September',
+                                'Oktober',
+                                'November',
+                                'Desember'
+                            );
+                            $pecahkan = explode('-', $tanggal);
+                            return $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
+                        }
+                    ?>
 
                         <div class="p-5 grid grid-cols-12 gap-4 row-gap-3">
                             <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">Tanggal</label>
-                                <select id="select_tanggal" class="input border mr-2 w-full mt-2" name="TANGGAL" required>
+                                <select id="select_tanggal" data-search="true" class="tail-select w-full" name="TANGGAL" required>
                                     <option selected disabled>Pilih tanggal.....</option>
                                     @foreach($tgl_progress as $t)
-                                        <option value="{{ $t->TANGGAL }}">{{ date('d-m-Y',strtotime($t->TANGGAL)) }}</option>
+                                        <option value="{{ $t->TANGGAL }}">{{ tgl_indo($t->TANGGAL) }}</option>
                                     @endforeach
                                 </select>
                                 @if($errors->has('TANGGAL'))
@@ -200,16 +242,24 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                                 <input disabled id="pv_value" type="text" class="input w-full border mt-2 flex-1" name="PV_VALUE">
                             </div>
                             <div class="col-span-12"> 
-                                <label class="font-semibold text-lg">EV</label>
-                                <input type="number" class="input w-full border mt-2 flex-1" name="EV_VALUE" required>
+                                <label class="font-semibold text-lg">Rencana</label>
+                                <input disabled id="rencana_value" type="text" class="input w-full border mt-2 flex-1" name="RENCANA_VALUE">
                             </div>
                             <div class="col-span-12"> 
-                                <label class="font-semibold text-lg">AC</label>
-                                <input type="number" class="input w-full border mt-2 flex-1" name="AC_VALUE" required>
+                                <label class="font-semibold text-lg">Tipe</label>
+                                <select data-search="true" class="tail-select w-full" name="TIPE" required>
+                                    <option selected disabled>Pilih tipe.....</option>
+                                    @foreach($tipe as $t)
+                                        <option value="{{ $t->ID_TIPE }}">{{ $t->NAMA_TIPE }}</option>
+                                    @endforeach
+                                </select>
+                                @if($errors->has('TIPE'))
+                                <small class="text-theme-6">Tipe Wajib Diisi.</small>
+                                @endif
                             </div>
                             <div class="col-span-12"> 
-                                <label class="font-semibold text-lg">Realisasi</label>
-                                <input type="number" class="input w-full border mt-2 flex-1" name="REALISASI" required>
+                                <label class="font-semibold text-lg">Value</label>
+                                <input type="number" class="input w-full border mt-2 flex-1" name="VALUE" required>
                             </div>
                         </div>
                     </div>
@@ -326,7 +376,8 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
     });
 
     $('#select_tanggal').on('change', function(e){
-      var key = $('#select_tanggal').val();
+      var tgl = $('#select_tanggal').val();
+      var kd_proyek = $('#kode_proyek').val();
           $.ajaxSetup({
             headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -337,12 +388,14 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                 type:"POST",
                 url:"{{ url('admin/realisasi/get-rencana') }}",
                 data:{
-                  "key":key,
+                  "tgl":tgl,
+                  "kd_proyek":kd_proyek,
                   "_token": "{{ csrf_token() }}",//harus ada ini jika menggunakan metode POST
                 },
                 success : function(results) {
                   //console.log(JSON.stringify(results)); //print_r
                     $('#pv_value').val(results.pv_val);
+                    $('#rencana_value').val(results.rencana_val);
                 },
                 error: function(data) {
                     console.log(data);
