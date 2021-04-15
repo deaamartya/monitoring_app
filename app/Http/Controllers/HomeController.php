@@ -38,27 +38,22 @@ class HomeController extends Controller
         ->join('TIPE', 'tipe.ID_TIPE', '=', 'progress.ID_TIPE')
         ->where('progress.ID_TIPE', '=', 1)
         ->get();
-        $ev = Progress::
-        select('progress.VALUE', 'tipe.NAMA_TIPE')
-        ->join('TIPE', 'tipe.ID_TIPE', '=', 'progress.ID_TIPE')
-        ->where('progress.ID_TIPE', '=', 2)
-        ->get();
-        $ac = Progress::
-        select('progress.VALUE', 'tipe.NAMA_TIPE')
-        ->join('TIPE', 'tipe.ID_TIPE', '=', 'progress.ID_TIPE')
-        ->where('progress.ID_TIPE', '=', 3)
-        ->get();
-        $rencana= Progress::
-        select('progress.VALUE', 'tipe.NAMA_TIPE')
-        ->join('TIPE', 'tipe.ID_TIPE', '=', 'progress.ID_TIPE')
-        ->where('progress.ID_TIPE', '=', 4)
-        ->get();
-        $realisasi = Progress::
-        select('progress.VALUE', 'tipe.NAMA_TIPE')
-        ->join('TIPE', 'tipe.ID_TIPE', '=', 'progress.ID_TIPE')
-        ->where('progress.ID_TIPE', '=', 5)
-        ->get();
 
-        return view('dashboard', compact('progress', 'current_year', 'jml_proyek_this_month', 'jml_proyek_last_month', 'pv', 'ev', 'ac', 'rencana', 'realisasi'));
+        $current_year = date('Y');
+
+        $januari = Progress::whereMonth('TANGGAL','01')->whereYear('TANGGAL',date('Y'))->count();
+        $februari = Progress::whereMonth('TANGGAL','02')->whereYear('TANGGAL',date('Y'))->count();
+        $maret = Progress::whereMonth('TANGGAL','03')->whereYear('TANGGAL',date('Y'))->count();
+        $april= Progress::whereMonth('TANGGAL','04')->whereYear('TANGGAL',date('Y'))->count();
+        $mei = Progress::whereMonth('TANGGAL','05')->whereYear('TANGGAL',date('Y'))->count();
+        $juni = Progress::whereMonth('TANGGAL','06')->whereYear('TANGGAL',date('Y'))->count();
+        $juli = Progress::whereMonth('TANGGAL','07')->whereYear('TANGGAL',date('Y'))->count();
+        $agustus = Progress::whereMonth('TANGGAL','08')->whereYear('TANGGAL',date('Y'))->count();
+        $september= Progress::whereMonth('TANGGAL','09')->whereYear('TANGGAL',date('Y'))->count();
+        $oktober= Progress::whereMonth('TANGGAL','10')->whereYear('TANGGAL',date('Y'))->count();
+        $november = Progress::whereMonth('TANGGAL','11')->whereYear('TANGGAL',date('Y'))->count();
+        $desember = Progress::whereMonth('TANGGAL','12')->whereYear('TANGGAL',date('Y'))->count();
+
+        return view('dashboard', compact('progress', 'current_year', 'jml_proyek_this_month', 'jml_proyek_last_month', 'januari', 'februari', 'maret', 'april', 'mei', 'juni', 'juli', 'agustus', 'september', 'oktober', 'november', 'desember'));
     }
 }

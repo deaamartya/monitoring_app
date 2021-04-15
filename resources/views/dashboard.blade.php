@@ -41,16 +41,23 @@
 <script>
 var ctx = document.getElementById('line-chart').getContext('2d');
 var myChart = new Chart(ctx, {
-  type: 'line', 
+  type: 'line',
   data: {
-    labels: ['PV','EV','AC','RENCANA','REALISASI'],
+    labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct', 'Nov', 'Dec'],
     datasets: [{ 
         data: [
-            <?php echo $pv ?>,
-            <?php echo $ev ?>,
-            <?php echo $ac ?>,
-            <?php echo $rencana ?>,
-            <?php echo $realisasi ?>,
+            <?php echo $januari ?>,
+            <?php echo $februari ?>,
+            <?php echo $maret ?>,
+            <?php echo $april ?>,
+            <?php echo $mei ?>,
+            <?php echo $juni ?>,
+            <?php echo $juli ?>,
+            <?php echo $agustus ?>,
+            <?php echo $september ?>,
+            <?php echo $oktober ?>,
+            <?php echo $november ?>,
+            <?php echo $desember ?>
         ],
         borderColor: "#3e95cd",
         fill: false
@@ -62,6 +69,5 @@ var myChart = new Chart(ctx, {
     }
   }
 });
-
 </script>
 @endsection
