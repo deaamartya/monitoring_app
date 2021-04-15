@@ -36,8 +36,6 @@ class Proyek extends Model
 	];
 
 	protected $dates = [
-		'START_PROYEK',
-		'END_PROYEK',
 		'LAST_UPDATE'
 	];
 

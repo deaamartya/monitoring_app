@@ -17,7 +17,7 @@ class CreateProgressTable extends Migration
             $table->date('TANGGAL');
             $table->integer('ID_TIPE')->index('FK_MEMILIKI3');
             $table->string('KODE_PROYEK', 10)->index('FK_MEMILIKI');
-            $table->float('VALUE', 13, 2);
+            $table->float('VALUE', 13, 2)->nullable();
             $table->primary(['TANGGAL', 'ID_TIPE', 'KODE_PROYEK']);
         });
     }
