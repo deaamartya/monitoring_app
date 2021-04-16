@@ -91,6 +91,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
         {{ Session::get('success') }}
     </div>
     @endif
+    <br>
     <div class="intro-y block sm:flex items-center h-10">
         <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
             <a href ="javascript:;" data-toggle="modal" data-target="#tambah_realisasi">
@@ -121,29 +122,11 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                 <tr>
                     <td>{{ $loop->iteration  }}</td>
                     <td>{{ date('d-m-Y', strtotime($p->TANGGAL))}}</td>
-                    <td>{{$p->PV_VALUE}}</td>
-                    <td>
-                    @if(isset($p->EV_VALUE))
-                        {{$p->EV_VALUE}}
-                    @else
-                        -
-                    @endif 
-                    </td>
-                    <td>
-                    @if(isset($p->AC_VALUE))
-                        {{$p->AC_VALUE}}
-                    @else
-                        -
-                    @endif 
-                    </td>
-                    <td>{{$p->RENCANA}}%</td>
-                    <td>
-                    @if(isset($p->REALISASI)) 
-                        {{$p->REALISASI}}%
-                    @else
-                        -
-                    @endif
-                    </td>
+                    <td>{{$p->PV}}</td>
+                    <td>{{$p->EV}}</td>
+                    <td>{{$p->AC}}</td>
+                    <td>{{$p->Rencana}}</td>
+                    <td>{{$p->Realisasi}}</td>
                     <td>
                     <div class="flex" style="justify-content: center;">
                         <a data-toggle="modal" data-target="#edit_{{ date('d-m-Y', strtotime($p->TANGGAL)) }}">
@@ -179,25 +162,49 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                 </div>
                 <form action="{{ route('realisasi.store') }}" method="POST">
                     @csrf
-                    <input type="hidden" name="KODE_PROYEK" value="{{ $kode_proyek }}">
+                    <input id="kode_proyek" type="hidden" name="KODE_PROYEK" value="{{ $kode_proyek }}">
                     <div class="modal-body">
+                    <?php
+                        function tgl_indo($tanggal){
+                            $bulan = array (
+                                1 =>   'Januari',
+                                'Februari',
+                                'Maret',
+                                'April',
+                                'Mei',
+                                'Juni',
+                                'Juli',
+                                'Agustus',
+                                'September',
+                                'Oktober',
+                                'November',
+                                'Desember'
+                            );
+                            $pecahkan = explode('-', $tanggal);
+                            return $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
+                        }
+                    ?>
 
                         <div class="p-5 grid grid-cols-12 gap-4 row-gap-3">
                             <div class="col-span-12"> 
-                                <label class="font-semibold text-lg">Tanggal</label>
-                                <select id="select_tanggal" class="input border mr-2 w-full mt-2" name="TANGGAL" required>
-                                    <option selected disabled>Pilih tanggal.....</option>
+                                <label class="font-semibold text-lg">Bulan</label>
+                                <select id="select_tanggal" data-search="true" class="tail-select w-full" name="TANGGAL" required>
+                                    <option selected disabled>Pilih bulan.....</option>
                                     @foreach($tgl_progress as $t)
-                                        <option value="{{ $t->TANGGAL }}">{{ date('d-m-Y',strtotime($t->TANGGAL)) }}</option>
+                                        <option value="{{ $t->TANGGAL }}">{{ tgl_indo($t->TANGGAL) }}</option>
                                     @endforeach
                                 </select>
                                 @if($errors->has('TANGGAL'))
-                                <small class="text-theme-6">Tanggal Wajib Diisi.</small>
+                                <small class="text-theme-6">Bulan Wajib Diisi.</small>
                                 @endif
                             </div>
                             <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">PV</label>
                                 <input disabled id="pv_value" type="text" class="input w-full border mt-2 flex-1" name="PV_VALUE">
+                            </div>
+                            <div class="col-span-12"> 
+                                <label class="font-semibold text-lg">Rencana</label>
+                                <input disabled id="rencana_value" type="text" class="input w-full border mt-2 flex-1" name="RENCANA_VALUE">
                             </div>
                             <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">EV</label>
@@ -209,7 +216,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                             </div>
                             <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">Realisasi</label>
-                                <input type="number" class="input w-full border mt-2 flex-1" name="REALISASI" required>
+                                <input type="number" class="input w-full border mt-2 flex-1" name="REALISASI_VALUE" required>
                             </div>
                         </div>
                     </div>
@@ -248,19 +255,23 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                             </div>
                             <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">PV</label>
-                                <input disabled type="number" class="input w-full border mt-2 flex-1" name="PV_VALUE_EDIT" value="{{ $p->PV_VALUE }}" readonly>
+                                <input disabled type="number" class="input w-full border mt-2 flex-1" name="PV_VALUE_EDIT" value="{{ $p->PV }}" readonly>
+                            </div>
+                            <div class="col-span-12"> 
+                                <label class="font-semibold text-lg">Rencana</label>
+                                <input disabled type="number" class="input w-full border mt-2 flex-1" name="RENCANA_VALUE_EDIT" value="{{ $p->Rencana }}" readonly>
                             </div>
                             <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">EV</label>
-                                <input type="number" class="input w-full border mt-2 flex-1" name="EV_VALUE_EDIT" value="{{ $p->EV_VALUE }}" required>
+                                <input type="number" class="input w-full border mt-2 flex-1" name="EV_VALUE_EDIT" value="{{ $p->EV }}" required>
                             </div>
                             <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">AC</label>
-                                <input type="number" class="input w-full border mt-2 flex-1" name="AC_VALUE_EDIT" value="{{ $p->AC_VALUE }}" required>
+                                <input type="number" class="input w-full border mt-2 flex-1" name="AC_VALUE_EDIT" value="{{ $p->AC }}" required>
                             </div>
                             <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">Realisasi</label>
-                                <input type="number" class="input w-full border mt-2 flex-1" name="REALISASI_EDIT" value="{{ $p->REALISASI }}" required>
+                                <input type="number" class="input w-full border mt-2 flex-1" name="REALISASI_VALUE_EDIT" value="{{ $p->Realisasi }}" required>
                             </div>
                         </div>
                     </div>
@@ -288,7 +299,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                     @csrf
                     @method('DELETE')
                     <div class="text-base mt-5 ml-3">
-                        Apakah Anda yakin ingin menghapus realisasi pada tanggal {{ date('d-m-Y', strtotime($p->TANGGAL)) }} ?
+                        Apakah Anda yakin ingin menghapus nilai EV, AC dan realisasi pada tanggal {{ date('d-m-Y', strtotime($p->TANGGAL)) }} ?
                     </div>
                     <input type="hidden" name="TANGGAL_DELETE" value="{{ $p->TANGGAL }}">
                     <div class="text-base text-theme-6 ml-3">Data yang dihapus tidak dapat dikembalikan.</div>
@@ -326,7 +337,8 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
     });
 
     $('#select_tanggal').on('change', function(e){
-      var key = $('#select_tanggal').val();
+      var tgl = $('#select_tanggal').val();
+      var kd_proyek = $('#kode_proyek').val();
           $.ajaxSetup({
             headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -337,12 +349,14 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                 type:"POST",
                 url:"{{ url('admin/realisasi/get-rencana') }}",
                 data:{
-                  "key":key,
+                  "tgl":tgl,
+                  "kd_proyek":kd_proyek,
                   "_token": "{{ csrf_token() }}",//harus ada ini jika menggunakan metode POST
                 },
                 success : function(results) {
                   //console.log(JSON.stringify(results)); //print_r
                     $('#pv_value').val(results.pv_val);
+                    $('#rencana_value').val(results.rencana_val);
                 },
                 error: function(data) {
                     console.log(data);

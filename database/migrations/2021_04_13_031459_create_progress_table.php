@@ -15,13 +15,10 @@ class CreateProgressTable extends Migration
     {
         Schema::create('progress', function (Blueprint $table) {
             $table->date('TANGGAL');
+            $table->integer('ID_TIPE')->index('FK_MEMILIKI3');
             $table->string('KODE_PROYEK', 10)->index('FK_MEMILIKI');
-            $table->float('PV_VALUE', 15)->nullable();
-            $table->float('EV_VALUE', 15)->nullable();
-            $table->float('AC_VALUE', 15)->nullable();
-            $table->integer('RENCANA')->nullable();
-            $table->integer('REALISASI')->nullable();
-            $table->primary(['TANGGAL', 'KODE_PROYEK']);
+            $table->float('VALUE', 13, 2)->nullable();
+            $table->primary(['TANGGAL', 'ID_TIPE', 'KODE_PROYEK']);
         });
     }
 

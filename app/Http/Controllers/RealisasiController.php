@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Progress;
 use App\Models\Proyek;
+use App\Models\Tipe;
+use DB;
 
 class RealisasiController extends Controller
 {
@@ -15,30 +17,34 @@ class RealisasiController extends Controller
      */
     public function show($id)
     {
-        // $progress = Progress::where('KODE_PROYEK', $id)
-        // ->whereNotNull('EV_VALUE')
-        // ->orWhereNotNull('AC_VALUE')
-        // ->orWhereNotNull('REALISASI')
-        // ->orderByDesc('TANGGAL')
-        // ->get();
-        $progress = Progress::where('KODE_PROYEK', $id)
-        ->orderByDesc('TANGGAL')
+        $progress = Proyek::select('proyek.KODE_PROYEK', 'p1.TANGGAL', DB::raw('COALESCE(p1.VALUE,"-") AS PV'), 
+        DB::raw('COALESCE(p2.VALUE,"-") AS EV'), DB::raw('COALESCE(p3.VALUE,"-") AS AC'), DB::raw('COALESCE(p4.VALUE,"-") AS Rencana'), DB::raw('COALESCE(p5.VALUE,"-") AS Realisasi'))
+        ->join('progress as p1', 'p1.KODE_PROYEK', 'proyek.KODE_PROYEK')
+        ->join('progress as p2', 'p2.KODE_PROYEK','proyek.KODE_PROYEK')
+        ->join('progress as p3', 'p3.KODE_PROYEK','proyek.KODE_PROYEK')
+        ->join('progress as p4', 'p4.KODE_PROYEK', 'proyek.KODE_PROYEK')
+        ->join('progress as p5', 'p5.KODE_PROYEK', 'proyek.KODE_PROYEK')
+        ->where(['proyek.KODE_PROYEK' => $id, 'p1.ID_TIPE' => 1, 'p2.ID_TIPE' => 2, 'p3.ID_TIPE'  => 3,'p4.ID_TIPE' =>4, 'p5.ID_TIPE'  =>5,
+            "p2.TANGGAL" => DB::raw("(DATE_FORMAT(p1.TANGGAL,'%Y-%m-%d'))"), "p3.TANGGAL" => DB::raw("(DATE_FORMAT(p1.TANGGAL,'%Y-%m-%d'))"),"p4.TANGGAL" => DB::raw("(DATE_FORMAT(p1.TANGGAL,'%Y-%m-%d'))"),"p5.TANGGAL" => DB::raw("(DATE_FORMAT(p1.TANGGAL,'%Y-%m-%d'))")])
+        ->orderByDesc('p1.TANGGAL')
         ->get();
+        $tipe = Tipe::all();
         $tgl_progress = Progress::where('KODE_PROYEK', $id)
-        ->whereNull('EV_VALUE')
-        ->orWhereNull('AC_VALUE')
-        ->orWhereNull('REALISASI')
+        ->where(['ID_TIPE' => 2, 'VALUE' => NULL])
+        ->orWhere(['ID_TIPE' => 3, 'VALUE' => NULL])
+        ->orWhere(['ID_TIPE' => 5, 'VALUE' => NULL])
         ->orderByDesc('TANGGAL')
         ->get();
-        $kode_proyek =$id;
+        $kode_proyek = $id;
         $nama_proyek = Proyek::where('KODE_PROYEK', $id)->value('NAMA_PROYEK');
-        return view('admin.realisasi',compact('progress', 'nama_proyek', 'kode_proyek', 'tgl_progress'));
+        return view('admin.realisasi',compact('progress', 'nama_proyek', 'kode_proyek', 'tgl_progress','tipe'));
     }
 
     public function getRencana(Request $req)
     {
-        $pv_val = Progress::where('TANGGAL', $req->key)->value('PV_VALUE');
-        return response()->json(['pv_val'=>$pv_val]);
+        $pv_val = Progress::where([['TANGGAL', $req->tgl], ['KODE_PROYEK', $req->kd_proyek], ['ID_TIPE', '1']])->value('VALUE');
+        $rencana_val = Progress::where([['TANGGAL', $req->tgl], ['KODE_PROYEK', $req->kd_proyek], ['ID_TIPE', '4']])->value('VALUE');
+        return response()->json(['pv_val'=>$pv_val, 'rencana_val'=>$rencana_val]);
     }
 
     /**
@@ -50,17 +56,24 @@ class RealisasiController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'TANGGAL' => 'required',
-            'EV_VALUE' => 'required',
-            'AC_VALUE' => 'required',
-            'REALISASI' => 'required'
+            'TANGGAL' => 'required'
         ]);
 
-        Progress::where('KODE_PROYEK',$request->KODE_PROYEK)->where('TANGGAL', $request->TANGGAL)->update([
-            'EV_VALUE' => $request->EV_VALUE,
-            'AC_VALUE' => $request->AC_VALUE,
-            'REALISASI' => $request->REALISASI
+        Progress::where('KODE_PROYEK',$request->KODE_PROYEK)->where('TANGGAL', $request->TANGGAL)
+        ->where('ID_TIPE', '2')->update([
+            'VALUE' => $request->EV_VALUE,
         ]);
+
+        Progress::where('KODE_PROYEK',$request->KODE_PROYEK)->where('TANGGAL', $request->TANGGAL)
+        ->where('ID_TIPE', '3')->update([
+            'VALUE' => $request->AC_VALUE,
+        ]);
+
+        Progress::where('KODE_PROYEK',$request->KODE_PROYEK)->where('TANGGAL', $request->TANGGAL)
+        ->where('ID_TIPE', '5')->update([
+            'VALUE' => $request->REALISASI_VALUE,
+        ]);
+
         
         return redirect()->back()->with('success','Data realisasi berhasil ditambahkan.');
     }
@@ -75,16 +88,25 @@ class RealisasiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'EV_VALUE_EDIT' => 'required',
-            'AC_VALUE_EDIT' => 'required',
-            'REALISASI_EDIT' => 'required'
+        // $request->validate([
+        //     'EV_VALUE_EDIT' => 'required',
+        //     'AC_VALUE_EDIT' => 'required',
+        //     'REALISASI_EDIT' => 'required'
+        // ]);
+
+        Progress::where('KODE_PROYEK',$request->KODE_PROYEK)->where('TANGGAL', $request->TANGGAL_EDIT)
+        ->where('ID_TIPE', '2')->update([
+            'VALUE' => $request->EV_VALUE_EDIT,
         ]);
 
-        Progress::where('KODE_PROYEK',$request->KODE_PROYEK)->where('TANGGAL', $request->TANGGAL_EDIT)->update([
-            'EV_VALUE' => $request->EV_VALUE_EDIT,
-            'AC_VALUE' => $request->AC_VALUE_EDIT,
-            'REALISASI' => $request->REALISASI_EDIT
+        Progress::where('KODE_PROYEK',$request->KODE_PROYEK)->where('TANGGAL', $request->TANGGAL_EDIT)
+        ->where('ID_TIPE', '3')->update([
+            'VALUE' => $request->AC_VALUE_EDIT,
+        ]);
+
+        Progress::where('KODE_PROYEK',$request->KODE_PROYEK)->where('TANGGAL', $request->TANGGAL_EDIT)
+        ->where('ID_TIPE', '5')->update([
+            'VALUE' => $request->REALISASI_VALUE_EDIT,
         ]);
 
         return redirect()->back()->with('success','Data realisasi berhasil diupdate.');
@@ -98,10 +120,20 @@ class RealisasiController extends Controller
      */
     public function destroy($id, Request $request)
     {
-        Progress::where('KODE_PROYEK',$id)->where('TANGGAL', $request->TANGGAL_DELETE)->update([
-            'EV_VALUE' => NULL,
-            'AC_VALUE' => NULL,
-            'REALISASI' => NULL
+        
+        Progress::where('KODE_PROYEK',$id)->where('TANGGAL', $request->TANGGAL_DELETE)
+        ->where('ID_TIPE', '2')->update([
+            'VALUE' => NULL,
+        ]);
+
+        Progress::where('KODE_PROYEK',$id)->where('TANGGAL', $request->TANGGAL_DELETE)
+        ->where('ID_TIPE', '3')->update([
+            'VALUE' => NULL,
+        ]);
+
+        Progress::where('KODE_PROYEK',$id)->where('TANGGAL', $request->TANGGAL_DELETE)
+        ->where('ID_TIPE', '5')->update([
+            'VALUE' => NULL,
         ]);
 
         return redirect()->back()->with('success','Data realisasi berhasil dihapus.');

@@ -15,6 +15,7 @@ class AddForeignKeysToProgressTable extends Migration
     {
         Schema::table('progress', function (Blueprint $table) {
             $table->foreign('KODE_PROYEK', 'FK_MEMILIKI')->references('KODE_PROYEK')->on('proyek')->onUpdate('RESTRICT')->onDelete('RESTRICT');
+            $table->foreign('ID_TIPE', 'FK_MEMILIKI3')->references('ID_TIPE')->on('tipe')->onUpdate('RESTRICT')->onDelete('RESTRICT');
         });
     }
 
@@ -27,6 +28,7 @@ class AddForeignKeysToProgressTable extends Migration
     {
         Schema::table('progress', function (Blueprint $table) {
             $table->dropForeign('FK_MEMILIKI');
+            $table->dropForeign('FK_MEMILIKI3');
         });
     }
 }
