@@ -125,8 +125,17 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                     <td>{{$p->PV}}</td>
                     <td>{{$p->EV}}</td>
                     <td>{{$p->AC}}</td>
+                    @if($p->Rencana == "-")
                     <td>{{$p->Rencana}}</td>
+                    @else
+                    <td>{{$p->Rencana}}%</td>
+                    @endif
+
+                    @if($p->Realisasi == "-")
                     <td>{{$p->Realisasi}}</td>
+                    @else
+                    <td>{{$p->Realisasi}}%</td>
+                    @endif
                     <td>
                     <div class="flex" style="justify-content: center;">
                         <a data-toggle="modal" data-target="#edit_{{ date('d-m-Y', strtotime($p->TANGGAL)) }}">
@@ -208,15 +217,15 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                             </div>
                             <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">EV</label>
-                                <input type="number" class="input w-full border mt-2 flex-1" name="EV_VALUE" required>
+                                <input type="number" class="input w-full border mt-2 flex-1" name="EV_VALUE">
                             </div>
                             <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">AC</label>
-                                <input type="number" class="input w-full border mt-2 flex-1" name="AC_VALUE" required>
+                                <input type="number" class="input w-full border mt-2 flex-1" name="AC_VALUE">
                             </div>
                             <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">Realisasi</label>
-                                <input type="number" class="input w-full border mt-2 flex-1" name="REALISASI_VALUE" required>
+                                <input type="number" class="input w-full border mt-2 flex-1" name="REALISASI_VALUE">
                             </div>
                         </div>
                     </div>
@@ -263,15 +272,15 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                             </div>
                             <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">EV</label>
-                                <input type="number" class="input w-full border mt-2 flex-1" name="EV_VALUE_EDIT" value="{{ $p->EV }}" required>
+                                <input type="number" class="input w-full border mt-2 flex-1" name="EV_VALUE_EDIT" value="{{ $p->EV }}">
                             </div>
                             <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">AC</label>
-                                <input type="number" class="input w-full border mt-2 flex-1" name="AC_VALUE_EDIT" value="{{ $p->AC }}" required>
+                                <input type="number" class="input w-full border mt-2 flex-1" name="AC_VALUE_EDIT" value="{{ $p->AC }}">
                             </div>
                             <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">Realisasi</label>
-                                <input type="number" class="input w-full border mt-2 flex-1" name="REALISASI_VALUE_EDIT" value="{{ $p->Realisasi }}" required>
+                                <input type="number" class="input w-full border mt-2 flex-1" name="REALISASI_VALUE_EDIT" value="{{ $p->Realisasi }}">
                             </div>
                         </div>
                     </div>
@@ -326,6 +335,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
 <!--Datatables -->
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
     $(document).ready(function() {
         var table = $('#example').DataTable( {
@@ -355,8 +365,19 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                 },
                 success : function(results) {
                   //console.log(JSON.stringify(results)); //print_r
-                    $('#pv_value').val(results.pv_val);
-                    $('#rencana_value').val(results.rencana_val);
+                    
+                    if(results.pesan_error != ""){
+                        Swal.fire({
+                            title: 'Kesalahan !',
+                            text: results.pesan_error,
+                            icon: 'error',
+                        });
+                        $('#pv_value').val("");
+                        $('#rencana_value').val("");
+                    }else{
+                        $('#pv_value').val(results.pv_val);
+                        $('#rencana_value').val(results.rencana_val+"%");
+                    }
                 },
                 error: function(data) {
                     console.log(data);
