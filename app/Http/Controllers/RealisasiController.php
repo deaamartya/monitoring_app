@@ -61,9 +61,9 @@ class RealisasiController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'TANGGAL' => 'required'
+            'TANGGAL' => 'required',
         ]);
-
+        
         Progress::where('KODE_PROYEK',$request->KODE_PROYEK)->where('TANGGAL', $request->TANGGAL)
         ->where('ID_TIPE', '2')->update([
             'VALUE' => $request->EV_VALUE,
@@ -79,8 +79,10 @@ class RealisasiController extends Controller
             'VALUE' => $request->REALISASI_VALUE,
         ]);
 
-        
         return redirect()->back()->with('success','Data realisasi berhasil ditambahkan.');
+      
+        
+        
     }
 
 

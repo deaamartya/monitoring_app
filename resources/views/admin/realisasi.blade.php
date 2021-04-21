@@ -69,7 +69,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
 @endsection
 @section('content')
 <?php
-                        function tgl_indo($tanggal){
+                        function tgl_indo_table($tanggal){
                             $bulan = array (
                                 1 =>   'Januari',
                                 'Februari',
@@ -86,6 +86,27 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                             );
                             $pecahkan = explode('-', $tanggal);
                             return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
+                        }
+                    ?>
+
+<?php
+                        function tgl_indo($tanggal){
+                            $bulan = array (
+                                1 =>   'Januari',
+                                'Februari',
+                                'Maret',
+                                'April',
+                                'Mei',
+                                'Juni',
+                                'Juli',
+                                'Agustus',
+                                'September',
+                                'Oktober',
+                                'November',
+                                'Desember'
+                            );
+                            $pecahkan = explode('-', $tanggal);
+                            return $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
                         }
                     ?>
 <div class="intro-y box p-5 mt-5 sm:mt-5 bg-blue-400 text-white" style="background-color: #1c3faa;">                        
@@ -132,7 +153,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                     <th data-priority="2">PV</th>
                     <th data-priority="3">EV</th>
                     <th data-priority="4">AC</th>
-                    <th data-priority="5">Rencana</th>
+                    <th data-priority="5">Progress Plan</th>
                     <th data-priority="6">Realisasi</th>
                     <th data-priority="7"style="width: 20%;">Aksi</th>
                 </tr>
@@ -141,7 +162,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
             @foreach($progress as $p)
                 <tr>
                     <td>{{ $loop->iteration  }}</td>
-                    <td>{{ tgl_indo($p->TANGGAL) }}</td>
+                    <td>{{ tgl_indo_table($p->TANGGAL) }}</td>
                     <td>{{$p->PV}}</td>
                     <td>{{$p->EV}}</td>
                     <td>{{$p->AC}}</td>
@@ -213,7 +234,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                                 <input disabled id="pv_value" type="text" class="input w-full border mt-2 flex-1" name="PV_VALUE">
                             </div>
                             <div class="col-span-12"> 
-                                <label class="font-semibold text-lg">Rencana</label>
+                                <label class="font-semibold text-lg">Progress Plan (%)</label>
                                 <input disabled id="rencana_value" type="text" class="input w-full border mt-2 flex-1" name="RENCANA_VALUE">
                             </div>
                             <div class="col-span-12"> 
@@ -225,7 +246,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                                 <input type="number" class="input w-full border mt-2 flex-1" name="AC_VALUE">
                             </div>
                             <div class="col-span-12"> 
-                                <label class="font-semibold text-lg">Realisasi</label>
+                                <label class="font-semibold text-lg">Realisasi (%)</label>
                                 <input type="number" class="input w-full border mt-2 flex-1" name="REALISASI_VALUE">
                             </div>
                         </div>
@@ -260,7 +281,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                         <div class="p-5 grid grid-cols-12 gap-4 row-gap-3">
                             <div class="col-span-12"> 
                             <label class="font-semibold text-lg">Tanggal</label>
-                            <input disabled class="input border mr-2 w-full mt-2"  value="{{ date('d-m-Y', strtotime($p->TANGGAL)) }}">
+                            <input disabled class="input border mr-2 w-full mt-2"  value="{{ tgl_indo_table($p->TANGGAL) }}">
                             <input type="hidden" class="input border mr-2 w-full mt-2" name="TANGGAL_EDIT" value="{{ $p->TANGGAL }}">
                             </div>
                             <div class="col-span-12"> 
@@ -268,7 +289,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                                 <input disabled type="number" class="input w-full border mt-2 flex-1" name="PV_VALUE_EDIT" value="{{ $p->PV }}" readonly>
                             </div>
                             <div class="col-span-12"> 
-                                <label class="font-semibold text-lg">Rencana</label>
+                                <label class="font-semibold text-lg">Progress Plan (%)</label>
                                 <input disabled type="number" class="input w-full border mt-2 flex-1" name="RENCANA_VALUE_EDIT" value="{{ $p->Rencana }}" readonly>
                             </div>
                             <div class="col-span-12"> 
@@ -280,7 +301,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                                 <input type="number" class="input w-full border mt-2 flex-1" name="AC_VALUE_EDIT" value="{{ $p->AC }}">
                             </div>
                             <div class="col-span-12"> 
-                                <label class="font-semibold text-lg">Realisasi</label>
+                                <label class="font-semibold text-lg">Realisasi (%)</label>
                                 <input type="number" class="input w-full border mt-2 flex-1" name="REALISASI_VALUE_EDIT" value="{{ $p->Realisasi }}">
                             </div>
                         </div>
@@ -309,7 +330,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                     @csrf
                     @method('DELETE')
                     <div class="text-base mt-5 ml-3">
-                        Apakah Anda yakin ingin menghapus nilai EV, AC dan realisasi pada tanggal {{ date('d-m-Y', strtotime($p->TANGGAL)) }} ?
+                        Apakah Anda yakin ingin menghapus nilai EV, AC dan realisasi pada tanggal {{ tgl_indo_table($p->TANGGAL) }} ?
                     </div>
                     <input type="hidden" name="TANGGAL_DELETE" value="{{ $p->TANGGAL }}">
                     <div class="text-base text-theme-6 ml-3">Data yang dihapus tidak dapat dikembalikan.</div>
@@ -377,7 +398,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                         $('#rencana_value').val("");
                     }else{
                         $('#pv_value').val(results.pv_val);
-                        $('#rencana_value').val(results.rencana_val+"%");
+                        $('#rencana_value').val(results.rencana_val);
                     }
                 },
                 error: function(data) {
