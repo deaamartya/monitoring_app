@@ -76,7 +76,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
 </div>
 
 <div class="intro-y box p-5 mt-5">
-@if($errors->any())
+    @if($errors->any())
         <div class="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-31 text-theme-6">
             <i data-feather="alert-octagon" class="w-6 h-6 mr-2"></i>
             Data tidak berhasil disimpan. Mohon cek form kembali.
@@ -91,8 +91,8 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
    
     <div class="intro-y block sm:flex items-center h-10">
         <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
-            <a href ="javascript:;" data-toggle="modal" data-target="#tambah_rencana">
-                <button class="ml-3 button box flex items-center shadow-md bg-blue-200 text-gray-700 buttons-html5 buttons-pdf"> <i data-feather="plus-circle" class="hidden sm:block w-4 h-4 mr-2"></i> Tambah Rencana </button>
+            <a data-toggle="modal" data-target="#tambah_rencana">
+                <button class="ml-3 button box flex items-center shadow-md bg-blue-200 text-gray-700 buttons-html5 buttons-pdf" href="#" type="button"> <i data-feather="plus-circle" class="hidden sm:block w-4 h-4 mr-2"></i> Tambah Rencana </button>
             </a>
         </div>
     </div> 
@@ -105,8 +105,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                     <th>#</th>
                     <th data-priority="1">Tanggal</th>
                     <th data-priority="2">PV</th>
-                    <th data-priority="3">Rencana</th>
-        
+                    <th data-priority="3">Progress Plan</th>
                     <th data-priority="4"style="width: 20%;">Aksi</th>
                 </tr>
             </thead>
@@ -116,7 +115,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                     <td>{{ $loop->iteration  }}</td>
                     <td>{{ date('d F Y', strtotime($p->TANGGAL))}}</td>
                     <td>{{$p->PV}}</td>
-                    <td>{{$p->Rencana}}</td>
+                    <td>{{$p->Rencana}}%</td>
                     <td>
                     <div class="flex" style="justify-content: center;">
                         <a data-toggle="modal" data-target="#edit_{{ date('d-m-Y', strtotime($p->TANGGAL)) }}">
@@ -140,7 +139,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
             </tbody>
         </table>
         <div class="modal" id="tambah_rencana">
-        <div class="modal__content modal__content py-5 pl-3 pr-1 ml-auto">
+            <div class="modal__content modal__content py-5 pl-3 pr-1 ml-auto">
                 <div class="modal-header">
                     <div class="modal__content relative"> 
                     </div>
@@ -181,6 +180,12 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                                     ?>
                             </select>
                         </div>
+
+                        <div class="col-span-12">
+                        @error('messages')
+                        <small class="text-theme-6">Sudah terdapat rencana pada bulan dan tahun tersebut.</small>
+                         @enderror           
+                        </div>
                     
                     <div class="col-span-12"> 
                         <label class="font-semibold text-lg">PV</label>
@@ -188,7 +193,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                     </div>
 
                     <div class="col-span-12"> 
-                        <label class="font-semibold text-lg">Rencana</label>
+                        <label class="font-semibold text-lg">Progress Plan</label>
                         <input type="number" class="input w-full border mt-2 flex-1" name="RENCANA_VALUE" required>
                     </div>
                 
@@ -227,7 +232,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                     </div>
 
                     <div class="col-span-12"> 
-                        <label class="font-semibold text-lg">Rencana</label>
+                        <label class="font-semibold text-lg">Progress Plan</label>
                         <input type="number" class="input w-full border mt-2 flex-1" name="RENCANA_VALUE_EDIT" value="{{ $p->Realisasi }}" required>
                     </div>
                     <div class="modal-footer mt-5">
@@ -270,46 +275,21 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
             </div>
         </div>
         @endforeach
-
-        </div>
     </div>
+</div>
 @endsection
 
 @section('script')
 <!--Datatables -->
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script>
 $(document).ready(function() {
-
-    var table = $('#example').DataTable( {
-            order: [[ 4, "asc" ], [0,"asc"]],
+    var table = $('#example').DataTable({
             responsive: true
-        } )
+        })
         .columns.adjust()
         .responsive.recalc();
-    
-// var ctx = document.getElementById('line-chart').getContext('2d');
-// var myChart = new Chart(ctx, {
-//   type: 'line', 
-//   data: {
-//     labels: ['PV','EV','AC','RENCANA','REALISASI'],
-//     datasets: [{ 
-//         data: [
-           
-//         ],
-//         borderColor: "#3e95cd",
-//         fill: false
-//       }]
-//   },
-//   options: {
-//     legend: {
-//         display: false
-//     }
-//   }
-// }); 
 });
-
 </script>
 @endsection
