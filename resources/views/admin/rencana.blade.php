@@ -68,6 +68,26 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
 </style>
 @endsection
 @section('content')
+<?php
+                        function tgl_indo_table($tanggal){
+                            $bulan = array (
+                                1 =>   'Januari',
+                                'Februari',
+                                'Maret',
+                                'April',
+                                'Mei',
+                                'Juni',
+                                'Juli',
+                                'Agustus',
+                                'September',
+                                'Oktober',
+                                'November',
+                                'Desember'
+                            );
+                            $pecahkan = explode('-', $tanggal);
+                            return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
+                        }
+                    ?>
 <div class="intro-y box p-5 mt-5 sm:mt-5 bg-blue-400 text-white" style="background-color: #1c3faa;">                        
     <div class="flex flex-row">
         <i data-feather="list"></i>
@@ -76,99 +96,10 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
 </div>
 
 <div class="intro-y box p-5 mt-5">
-
-
-
-<div class="intro-y box mt-5">
-    <!--Container-->
-    <!--Card-->
-
-    <!-- Grafik Rencana -->
-    <div class="col-span-12 lg:col-span-8 mt-8 ml-8 mr-8">
-            <div class="intro-y block sm:flex items-center h-10">
-                <h2 class="text-lg font-medium truncate mr-5">
-                    Grafik Rencana Proyek Tahun {{ $current_year }}
-                </h2>
-            </div>
-            <div class="intro-y box p-5 mt-12 sm:mt-5">
-                <div class="flex flex-col xl:flex-row xl:items-center">
-                    <div class="flex mb-5">
-                        <div>
-                            <div class="text-theme-20 dark:text-gray-300 text-lg xl:text-xl font-bold">{{ $jml_proyek_this_month }}</div>
-                            <div class="text-gray-600 dark:text-gray-600">Bulan Ini</div>
-                        </div>
-                        <div class="w-px h-12 border border-r border-dashed border-gray-300 dark:border-dark-5 mx-4 xl:mx-6"></div>
-                        <div>
-                            <div class="text-gray-600 dark:text-gray-600 text-lg xl:text-xl font-medium">{{ $jml_proyek_last_month }}</div>
-                            <div class="text-gray-600 dark:text-gray-600">Bulan Lalu</div>
-                        </div>
-                    </div>
-                    <!--
-                    <div class="dropdown xl:ml-auto mt-5 xl:mt-0">
-                        <button class="dropdown-toggle button font-normal border dark:border-dark-5 text-white dark:text-gray-300 relative flex items-center text-gray-700"> Filter by Category <i data-feather="chevron-down" class="w-4 h-4 ml-2"></i> </button>
-                        <div class="dropdown-box w-40">
-                            <div class="dropdown-box__content box dark:bg-dark-1 p-2 overflow-y-auto h-32"> <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">PC & Laptop</a> <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">Smartphone</a> <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">Electronic</a> <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">Photography</a> <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">Sport</a> </div>
-                        </div>
-                    </div>
-                    -->
-                </div>
-                <div class="report-chart">
-                <!--
-                    <canvas id="report-line-chart" height="160" class="mt-6"></canvas>
-                    -->
-                    <canvas id="line-chart" height="160" class="mt-6"></canvas>
-                </div>
-            </div>
-        </div>
-
-    <!-- End Grafik Rencana -->
-    <br>
-    <hr>
-    
-    <a href ="javascript:;" data-toggle="modal" data-target="#tambah_rencana" class="button mb-5 mr-6 mt-4 flex items-center justify-center bg-theme-1 text-white tombol-tambah-rencana" style="float:right;" ><i data-feather="plus-circle" class="w-6 h-6 mr-2"></i>Tambah Rencana Proyek</a>
-    
-    <div class="container w-full">
-
-        <div class="p-6 mt-6 lg:mt-0 rounded shadow">
-            <table id="example" class="stripe hover display cell-border" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
-                <thead>
-                    <tr>
-                       
-                        <th data-priority="1">Tanggal</th>
-                        <th data-priority="2">Ptosentase</th>
-                        <th data-priority="3">Planning Value</th>
-                        <th data-priority="4">Aksi</th>
-                    </tr>
-                </thead>
-
-                <tbody style="text-align: center;">
-                @foreach($progress as $p)
-                    <tr>
-                        <td>{{$p->TANGGAL}}</td>
-                        <td>{{$p->PV_VALUE}}</td>
-                        <td>{{$p->RENCANA}}</td>
-                        <td>
-                        <div class="flex" style="justify-content: center;">
-                            <a data-toggle="modal" data-target="#editRencana_{{ $p->TANGGAL }}">
-                                <button href="javascript:;" title="Edit Rencana" type="button" class="tooltip button px-2 mr-1 mb-2 bg-green-300 dark:text-gray-300">
-                                    <span class="w-5 h-5 flex items-center justify-center">
-                                        <i data-feather="edit" class="w-4 h-4 "></i>
-                                    </span>
-                                </button>
-                            </a>
-                            <a data-toggle="modal" data-target="#deleteRencana_{{$p->TANGGAL}}">
-                                <button href="javascript:;" title="Hapus Rencana" type="button" class="tooltip button px-2 mr-1 mb-2 bg-red-300 dark:text-gray-300">
-                                    <span class="w-5 h-5 flex items-center justify-center">
-                                        <i data-feather="trash-2" class="w-5 h-5 "></i>
-                                    </span>
-                                </button>
-                            </a>
-                        </div>
-                        </td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
+    @if($errors->any())
+        <div class="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-31 text-theme-6">
+            <i data-feather="alert-octagon" class="w-6 h-6 mr-2"></i>
+            Data tidak berhasil disimpan. Mohon cek form kembali.
         </div>
     @endif
     @if(Session::has('success'))
@@ -177,26 +108,24 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
         {{ Session::get('success') }}
     </div>
     @endif
+   
     <div class="intro-y block sm:flex items-center h-10">
         <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
-            <a href ="javascript:;" data-toggle="modal" data-target="#tambah_rencana">
-                <button class="ml-3 button box flex items-center shadow-md bg-blue-200 text-gray-700 buttons-html5 buttons-pdf"> <i data-feather="plus-circle" class="hidden sm:block w-4 h-4 mr-2"></i> Tambah Rencana </button>
+            <a data-toggle="modal" data-target="#tambah_rencana">
+                <button class="ml-3 button box flex items-center shadow-md bg-blue-200 text-gray-700 buttons-html5 buttons-pdf" href="#" type="button"> <i data-feather="plus-circle" class="hidden sm:block w-4 h-4 mr-2"></i> Tambah Rencana </button>
             </a>
         </div>
     </div> 
     <br>
     <!--Card-->
     <div class="px-2 py-1">
-       
-
         <table id="example" class="stripe hover display cell-border" style="width:100%; padding-top: 1em;  padding-bottom: 1em; text-align:center;">
             <thead>
                 <tr>
                     <th>#</th>
                     <th data-priority="1">Tanggal</th>
                     <th data-priority="2">PV</th>
-                    <th data-priority="3">Rencana</th>
-        
+                    <th data-priority="3">Progress Plan(%)</th>
                     <th data-priority="4"style="width: 20%;">Aksi</th>
                 </tr>
             </thead>
@@ -204,25 +133,9 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
             @foreach($progress as $p)
                 <tr>
                     <td>{{ $loop->iteration  }}</td>
-                    <td>{{ date('d-m-Y', strtotime($p->TANGGAL))}}</td>
-                    <td>
-                    @if($p->ID_TIPE == 1)
-                        @if(isset($p->VALUE))
-                            {{$p->VALUE}}
-                        @else
-                            -
-                        @endif 
-                    @endif
-                    </td>
-                    <td>
-                    @if($p->ID_TIPE == 4)
-                        @if(isset($p->VALUE))
-                            {{$p->VALUE}}%
-                        @else
-                            -
-                        @endif 
-                    @endif 
-                    </td>
+                    <td>{{ tgl_indo_table($p->TANGGAL) }}</td>
+                    <td>{{$p->PV}}</td>
+                    <td>{{$p->Rencana}}%</td>
                     <td>
                     <div class="flex" style="justify-content: center;">
                         <a data-toggle="modal" data-target="#edit_{{ date('d-m-Y', strtotime($p->TANGGAL)) }}">
@@ -245,10 +158,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
             @endforeach
             </tbody>
         </table>
-
-   
-
-<div class="modal" id="tambah_rencana">
+        <div class="modal" id="tambah_rencana">
             <div class="modal__content modal__content py-5 pl-3 pr-1 ml-auto">
                 <div class="modal-header">
                     <div class="modal__content relative"> 
@@ -260,42 +170,69 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                 </div>
                 <form action="{{ route('rencana.store') }}" method="POST" class="needs-validation" novalidate id="tambah-rencana">
                     @csrf
-                    
-                    <input type="hidden" name="KODE_PROYEK" value="{{ $kode_proyek }}">
-                    <div class="mr-5 mb-5 grid grid-cols-12 gap-4 row-gap-3">
-                        <div class="col-span-12">
-                             <label class="font-semibold text-lg">Tanggal</label> 
-                                    <div class="relative mx-auto mt-2 mb-5"> 
-                                        <div class="absolute rounded-l w-10 h-full flex items-center justify-center bg-gray-100 border text-gray-600 dark:bg-dark-1 dark:border-dark-4"><i data-feather="calendar" class="w-4 h-4"></i></div> 
-                                            <input type="text" class="datepicker input pl-12 border" data-single-mode="true" name="TANGGAL"> 
-                                    </div>
-                        </div>
+                    <div class="intro-y box p-3 mt-3 sm:mt-3 mr-3 bg-blue-400 text-white" style="background-color: #1c3faa;">     
+                    <div class="col-span-12">
+      
+        <h2 class="font-medium mr-auto ml-3"  >Pelaksanaan Proyek : {{ tgl_indo_table($start_proyek) }} - {{ tgl_indo_table($end_proyek)}} </h2>
+    </div>
                     </div>
-                 
-                    <div class="grid grid-cols-12 gap-4 row-gap-3 mt-3">
-                        <div class="col-span-12">
-                            <label class="font-semibold text-lg mr-auto mt-3">Planning Value</label> 
-                                <input type="number" class="input w-full border mt-2 flex-1" placeholder="Planning Value" name="PV_VALUE" required >
+                    <input type="hidden" name="KODE_PROYEK" value="{{ $kode_proyek }}">
+                    <div class="mr-5 mb-5 grid grid-cols-12 gap-4 row-gap-3 p-3">
+                        <div class="col-span-6">
+                                <label class="font-semibold text-lg">Bulan</label> 
+                             
+                                <select data-search="true" class="tail-select w-full" name="bln"  placeholder="Select Bulan...">
+                                <option selected disabled>Pilih Bulan.....</option>
+                                    <?php
+                                    $bulan=array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember");
+                                    $jlh_bln=count($bulan);
+                                    for($c=0; $c<$jlh_bln; $c+=1){
+                                        $i = $c+1;
+                                        echo"<option value=$i> $bulan[$c] </option>";
+                                    }
+                                    ?>
+                                </select>
                         </div>
+
+                        <div class="col-span-6">
+                            <label class="font-semibold text-lg">Tahun</label> 
+                            <select data-search="true" class="tail-select w-full" name="thn"  placeholder="Select Tahun...">
+                                <option selected disabled>Pilih Tahun.....</option>
+                                <?php
+                                    $now=date('Y');
+                                    for ($a=$now; $a<$now+10; $a++){ 
+                                        echo "<option value=$a >$a</option>";
+                                    }
+                                    ?>
+                            </select>
+                        </div>
+
+                        <div class="col-span-12">
+                        @error('messages')
+                        <small class="text-theme-6">Sudah terdapat rencana pada bulan dan tahun tersebut.</small>
+                         @enderror           
+                        </div>
+                    
+                    <div class="col-span-12"> 
+                        <label class="font-semibold text-lg">PV</label>
+                        <input type="number" class="input w-full border mt-2 flex-1" name="PV_VALUE" required>
                     </div>
 
-                    <div class="grid grid-cols-12 gap-4 row-gap-3 mt-3">
-                        <div class="col-span-12">
-                            <label class="font-semibold text-lg mr-auto mt-3">Prosentase</label> 
-                                <input type="number" class="input w-full border mt-2 flex-1" placeholder="Prosentase" name="RENCANA" required >
+                    <div class="col-span-12"> 
+                        <label class="font-semibold text-lg">Progress Plan (%)</label>
+                        <input type="number" class="input w-full border mt-2 flex-1" name="RENCANA_VALUE" required>
+                    </div>
+                
+                    <div class="modal-footer mt-5">
+                        <div class="text-right mr-5">
+                        <button type="button" class="button w-24 shadow-md mr-1 mb-2 bg-red-500 text-white" data-dismiss="modal">Cancel</button> 
+                        <button class="button items-right w-24 shadow-md mr-5 mb-2 justify-right bg-theme-1 text-white shadow-md" type="submit">Simpan</button>
+                       
                         </div>
                     </div>
-               
-                    <div class="text-right"> 
-                        <button class="button items-right w-24 shadow-md mr-1 mb-2 justify-right bg-theme-1 text-white shadow-md" type="submit">Simpan</button>
-                    </div>
-              
                 </form>
             </div>
         </div>
-
-
-
 
         @foreach($progress as $p)
         <div class="modal" id="edit_{{ date('d-m-Y', strtotime($p->TANGGAL)) }}">
@@ -304,7 +241,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                     <div class="modal__content relative"> 
                     </div>
                     <div class="flex px-2 sm:pb-3 sm:pt-1 border-b border-gray-200 dark:border-dark-5">
-                        <h2 class="font-bold text-2xl flex"><i data-feather="info" class="w-8 h-8 mr-2"></i>Edit Rencana #{{ $p->TANGGAL }}</h2>
+                        <h2 class="font-bold text-2xl flex"><i data-feather="info" class="w-8 h-8 mr-2"></i>Edit Rencana #{{ $loop->iteration }}</h2>
                         <a data-dismiss="modal" href="javascript:;" class="mr-3 ml-auto" id="close_{{$p->TANGGAL}}"><i data-feather="x" class="w-8 h-8 text-gray-500"></i></a>
                     </div>
                 </div>
@@ -313,44 +250,32 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                     @method('PUT')
                     @csrf
                     <input type="hidden" name="KODE_PROYEK" value="{{ $kode_proyek }}">
-                    <div class="modal-body">
-                    <div class="mr-5 mb-5 grid grid-cols-12 gap-4 row-gap-3">
-                        <div class="col-span-12">
-                             <label class="font-semibold text-lg">Tanggal</label> 
-                                    <div class="relative mx-auto mt-2 mb-5"> 
-                                        <div class="absolute rounded-l w-10 h-full flex items-center justify-center bg-gray-100 border text-gray-600 dark:bg-dark-1 dark:border-dark-4"><i data-feather="calendar" class="w-4 h-4"></i></div> 
-                                            <input type="text" class="datepicker input pl-12 border" data-single-mode="true" name="TANGGAL"> 
-                                    </div>
-                        </div>
+                    <div class="col-span-12"> 
+                        <label class="font-semibold text-lg">Tanggal</label>
+                        <input disabled class="input border mr-2 w-full mt-2"  value="{{ tgl_indo_table($p->TANGGAL) }}">
+                        <input type="hidden" class="input border mr-2 w-full mt-2" name="TANGGAL_EDIT" value="{{ $p->TANGGAL }}">
                     </div>
-                 
-                    <div class="grid grid-cols-12 gap-4 row-gap-3 mt-3">
-                        <div class="col-span-12">
-                            <label class="font-semibold text-lg mr-auto mt-3">Planning Value</label> 
-                                <input type="number" class="input w-full border mt-2 flex-1" placeholder="Planning Value" name="PV_VALUE" required >
-                        </div>
+                
+                    <div class="col-span-12"> 
+                        <label class="font-semibold text-lg">PV</label>
+                        <input type="number" class="input w-full border mt-2 flex-1" name="PV_VALUE_EDIT" value="{{ $p->PV }}" required>
                     </div>
 
-                    <div class="grid grid-cols-12 gap-4 row-gap-3 mt-3">
-                        <div class="col-span-12">
-                            <label class="font-semibold text-lg mr-auto mt-3">Prosentase</label> 
-                                <input type="number" class="input w-full border mt-2 flex-1" placeholder="Prosentase" name="RENCANA" required >
+                    <div class="col-span-12"> 
+                        <label class="font-semibold text-lg">Progress Plan (%)</label>
+                        <input type="number" class="input w-full border mt-2 flex-1" name="RENCANA_VALUE_EDIT" value="{{ $p->Rencana }}" required>
+                    </div>
+                    <div class="modal-footer mt-5">
+                        <div class="text-right">
+                            <button type="button" class="button w-24 shadow-md mr-1 mb-2 bg-red-500 text-white" data-dismiss="modal">Cancel</button> 
+                            <button class="button items-right w-24 shadow-md mr-1 mb-2 justify-right bg-theme-1 text-white shadow-md" type="submit">Simpan</button>
                         </div>
                     </div>
-                    </div>
-                <div class="modal-footer mt-5">
-                    <div class="text-right">
-                    <button type="button" class="button w-24 shadow-md mr-1 mb-2 bg-red-500 text-white" data-dismiss="modal">Cancel</button> 
-                    <button class="button items-right w-24 shadow-md mr-1 mb-2 justify-right bg-theme-1 text-white shadow-md" type="submit">Simpan</button>
-                   
-                    </div>
-                </div>
-
                 </form>
             </div>
         </div>
 
-        <div class="modal editModal" id="delete_{{ date('d-m-Y', strtotime($p->TANGGAL)) }}">
+        <div class="modal" id="delete_{{ date('d-m-Y', strtotime($p->TANGGAL)) }}">
             <div class="modal__content modal__content--lg p-5 ml-auto">
                 <div class="modal-header">
                     <div class="modal__content relative"> 
@@ -364,10 +289,10 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                 <form action="{{ route('rencana.destroy', $p->KODE_PROYEK) }}" method="POST">
                     @method('DELETE')
                     @csrf
-                    <input type="hidden" value="{{$p->TANGGAL}}"name="TANGGAL">
+                    <input type="hidden" value="{{$p->TANGGAL}}"name="TANGGAL_DELETE">
                     <input type="hidden" value="{{$p->ID_TIPE}}" name="ID_TIPE">
                     <div class="text-base mt-5">
-                        Apakah Anda yakin ingin menghapus rencana proyek "{{ $p->proyek->NAMA_PROYEK }}" untuk bulan {{ date('F Y',strtotime($p->TANGGAL)) }} ?
+                        Apakah Anda yakin ingin menghapus rencana proyek  untuk bulan {{ date('F Y',strtotime($p->TANGGAL)) }} ?
                     </div>
                     <div class="text-base text-theme-6">Data yang dihapus tidak dapat dikembalikan.</div>
                     <div class="modal-footer mt-5">
@@ -380,51 +305,21 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
             </div>
         </div>
         @endforeach
-
-
-
-
+    </div>
+</div>
 @endsection
 
 @section('script')
 <!--Datatables -->
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script>
 $(document).ready(function() {
-
-    var table = $('#example').DataTable( {
-            order: [[ 4, "asc" ], [0,"asc"]],
+    var table = $('#example').DataTable({
             responsive: true
-        } )
+        })
         .columns.adjust()
         .responsive.recalc();
-    
-var ctx = document.getElementById('line-chart').getContext('2d');
-var myChart = new Chart(ctx, {
-  type: 'line', 
-  data: {
-    labels: ['PV','EV','AC','RENCANA','REALISASI'],
-    datasets: [{ 
-        data: [
-            <?php echo $pv ?>,
-            <?php echo $ev ?>,
-            <?php echo $ac ?>,
-            <?php echo $rencana ?>,
-            <?php echo $realisasi ?>,
-        ],
-        borderColor: "#3e95cd",
-        fill: false
-      }]
-  },
-  options: {
-    legend: {
-        display: false
-    }
-  }
-}); 
 });
-
 </script>
 @endsection

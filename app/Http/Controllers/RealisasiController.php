@@ -56,9 +56,6 @@ class RealisasiController extends Controller
         ->get();
         $tipe = Tipe::all();
         $tgl_progress = Progress::where('KODE_PROYEK', $id)
-        ->where(['ID_TIPE' => 2, 'VALUE' => NULL])
-        ->orWhere(['ID_TIPE' => 3, 'VALUE' => NULL])
-        ->orWhere(['ID_TIPE' => 5, 'VALUE' => NULL])
         ->orderByDesc('TANGGAL')
         ->get();
         $kode_proyek = $id;
@@ -70,7 +67,15 @@ class RealisasiController extends Controller
     {
         $pv_val = Progress::where([['TANGGAL', $req->tgl], ['KODE_PROYEK', $req->kd_proyek], ['ID_TIPE', '1']])->value('VALUE');
         $rencana_val = Progress::where([['TANGGAL', $req->tgl], ['KODE_PROYEK', $req->kd_proyek], ['ID_TIPE', '4']])->value('VALUE');
-        return response()->json(['pv_val'=>$pv_val, 'rencana_val'=>$rencana_val]);
+        $ev_val = Progress::where([['TANGGAL', $req->tgl], ['KODE_PROYEK', $req->kd_proyek], ['ID_TIPE', '2']])->value('VALUE');
+        $ac_val = Progress::where([['TANGGAL', $req->tgl], ['KODE_PROYEK', $req->kd_proyek], ['ID_TIPE', '3']])->value('VALUE');
+        $realisasi_val = Progress::where([['TANGGAL', $req->tgl], ['KODE_PROYEK', $req->kd_proyek], ['ID_TIPE', '5']])->value('VALUE');
+        if($ev_val != null || $ac_val != null || $realisasi_val != null){
+            $pesan_error = "Data sudah ada pada bulan dan tahun yang sama. Pilih bulan dan tahun lainnya.";
+        }else{
+            $pesan_error = "";
+        }
+        return response()->json(['pv_val'=>$pv_val, 'rencana_val'=>$rencana_val, 'pesan_error'=>$pesan_error]);
     }
 
     /**
@@ -82,9 +87,9 @@ class RealisasiController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'TANGGAL' => 'required'
+            'TANGGAL' => 'required',
         ]);
-
+        
         Progress::where('KODE_PROYEK',$request->KODE_PROYEK)->where('TANGGAL', $request->TANGGAL)
         ->where('ID_TIPE', '2')->update([
             'VALUE' => $request->EV_VALUE,
@@ -100,8 +105,10 @@ class RealisasiController extends Controller
             'VALUE' => $request->REALISASI_VALUE,
         ]);
 
-        
         return redirect()->back()->with('success','Data realisasi berhasil ditambahkan.');
+      
+        
+        
     }
 
 

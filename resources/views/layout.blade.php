@@ -81,7 +81,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     </li>
                     <li>
                     
-                        <a href="{{url('/admin/menuproyek')}}" class="side-menu @if(request() -> segment(1) == 'users' && request()->segment(2) == 'permohonan') side-menu--active @endif">
+                        <a href="{{url('/admin/menuproyek')}}" class="side-menu @if(request() -> segment(1) == 'admin' && request()->segment(2) == 'menuproyek') side-menu--active @endif">
                             <div class="side-menu__icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                             </div>
@@ -148,9 +148,9 @@ License: You must have a valid license purchased only from themeforest(the above
         </div>
 
         <!-- BEGIN: JS Assets-->
-        {{-- <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script> --}}
+        <!-- <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script> -->
         <script src="{{asset('dist/js/app.js')}}"></script>
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <!-- END: JS Assets-->
 
         @yield('script')

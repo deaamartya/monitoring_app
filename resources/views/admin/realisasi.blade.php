@@ -68,43 +68,47 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
 </style>
 @endsection
 @section('content')
+<?php
+                        function tgl_indo_table($tanggal){
+                            $bulan = array (
+                                1 =>   'Januari',
+                                'Februari',
+                                'Maret',
+                                'April',
+                                'Mei',
+                                'Juni',
+                                'Juli',
+                                'Agustus',
+                                'September',
+                                'Oktober',
+                                'November',
+                                'Desember'
+                            );
+                            $pecahkan = explode('-', $tanggal);
+                            return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
+                        }
+                    ?>
 
-<div class="col-span-12 lg:col-span-8 mt-8">
-            <div class="intro-y block sm:flex items-center h-10">
-                <h2 class="text-lg font-medium truncate mr-5">
-                    Grafik Jumlah Proyek Tahun {{ $current_year }}
-                </h2>
-            </div>
-            <div class="intro-y box p-5 mt-12 sm:mt-5">
-                <div class="flex flex-col xl:flex-row xl:items-center">
-                    <div class="flex mb-5">
-                        <div>
-                            <div class="text-theme-20 dark:text-gray-300 text-lg xl:text-xl font-bold">{{ $jml_proyek_this_month }}</div>
-                            <div class="text-gray-600 dark:text-gray-600">Bulan Ini</div>
-                        </div>
-                        <div class="w-px h-12 border border-r border-dashed border-gray-300 dark:border-dark-5 mx-4 xl:mx-6"></div>
-                        <div>
-                            <div class="text-gray-600 dark:text-gray-600 text-lg xl:text-xl font-medium">{{ $jml_proyek_last_month }}</div>
-                            <div class="text-gray-600 dark:text-gray-600">Bulan Lalu</div>
-                        </div>
-                    </div>
-                    <!--
-                    <div class="dropdown xl:ml-auto mt-5 xl:mt-0">
-                        <button class="dropdown-toggle button font-normal border dark:border-dark-5 text-white dark:text-gray-300 relative flex items-center text-gray-700"> Filter by Category <i data-feather="chevron-down" class="w-4 h-4 ml-2"></i> </button>
-                        <div class="dropdown-box w-40">
-                            <div class="dropdown-box__content box dark:bg-dark-1 p-2 overflow-y-auto h-32"> <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">PC & Laptop</a> <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">Smartphone</a> <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">Electronic</a> <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">Photography</a> <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">Sport</a> </div>
-                        </div>
-                    </div>
-                    -->
-                </div>
-                <div class="report-chart">
-                <!--
-                    <canvas id="report-line-chart" height="160" class="mt-6"></canvas>
-                    -->
-                    <canvas id="line-chart" height="160" class="mt-6"></canvas>
-                </div>
-            </div>
-        </div>
+<?php
+                        function tgl_indo($tanggal){
+                            $bulan = array (
+                                1 =>   'Januari',
+                                'Februari',
+                                'Maret',
+                                'April',
+                                'Mei',
+                                'Juni',
+                                'Juli',
+                                'Agustus',
+                                'September',
+                                'Oktober',
+                                'November',
+                                'Desember'
+                            );
+                            $pecahkan = explode('-', $tanggal);
+                            return $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
+                        }
+                    ?>
 
 <div class="intro-y box p-5 mt-5 sm:mt-5 bg-blue-400 text-white" style="background-color: #1c3faa;">                        
     <div class="flex flex-row">
@@ -150,7 +154,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                     <th data-priority="2">PV</th>
                     <th data-priority="3">EV</th>
                     <th data-priority="4">AC</th>
-                    <th data-priority="5">Rencana</th>
+                    <th data-priority="5">Progress Plan</th>
                     <th data-priority="6">Realisasi</th>
                     <th data-priority="7"style="width: 20%;">Aksi</th>
                 </tr>
@@ -159,12 +163,21 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
             @foreach($progress as $p)
                 <tr>
                     <td>{{ $loop->iteration  }}</td>
-                    <td>{{ date('d-m-Y', strtotime($p->TANGGAL))}}</td>
+                    <td>{{ tgl_indo_table($p->TANGGAL) }}</td>
                     <td>{{$p->PV}}</td>
                     <td>{{$p->EV}}</td>
                     <td>{{$p->AC}}</td>
+                    @if($p->Rencana == "-")
                     <td>{{$p->Rencana}}</td>
+                    @else
+                    <td>{{$p->Rencana}}%</td>
+                    @endif
+
+                    @if($p->Realisasi == "-")
                     <td>{{$p->Realisasi}}</td>
+                    @else
+                    <td>{{$p->Realisasi}}%</td>
+                    @endif
                     <td>
                     <div class="flex" style="justify-content: center;">
                         <a data-toggle="modal" data-target="#edit_{{ date('d-m-Y', strtotime($p->TANGGAL)) }}">
@@ -202,26 +215,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                     @csrf
                     <input id="kode_proyek" type="hidden" name="KODE_PROYEK" value="{{ $kode_proyek }}">
                     <div class="modal-body">
-                    <?php
-                        function tgl_indo($tanggal){
-                            $bulan = array (
-                                1 =>   'Januari',
-                                'Februari',
-                                'Maret',
-                                'April',
-                                'Mei',
-                                'Juni',
-                                'Juli',
-                                'Agustus',
-                                'September',
-                                'Oktober',
-                                'November',
-                                'Desember'
-                            );
-                            $pecahkan = explode('-', $tanggal);
-                            return $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
-                        }
-                    ?>
+                   
 
                         <div class="p-5 grid grid-cols-12 gap-4 row-gap-3">
                             <div class="col-span-12"> 
@@ -241,20 +235,20 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                                 <input disabled id="pv_value" type="text" class="input w-full border mt-2 flex-1" name="PV_VALUE">
                             </div>
                             <div class="col-span-12"> 
-                                <label class="font-semibold text-lg">Rencana</label>
+                                <label class="font-semibold text-lg">Progress Plan (%)</label>
                                 <input disabled id="rencana_value" type="text" class="input w-full border mt-2 flex-1" name="RENCANA_VALUE">
                             </div>
                             <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">EV</label>
-                                <input type="number" class="input w-full border mt-2 flex-1" name="EV_VALUE" required>
+                                <input type="number" class="input w-full border mt-2 flex-1" name="EV_VALUE">
                             </div>
                             <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">AC</label>
-                                <input type="number" class="input w-full border mt-2 flex-1" name="AC_VALUE" required>
+                                <input type="number" class="input w-full border mt-2 flex-1" name="AC_VALUE">
                             </div>
                             <div class="col-span-12"> 
-                                <label class="font-semibold text-lg">Realisasi</label>
-                                <input type="number" class="input w-full border mt-2 flex-1" name="REALISASI_VALUE" required>
+                                <label class="font-semibold text-lg">Realisasi (%)</label>
+                                <input type="number" class="input w-full border mt-2 flex-1" name="REALISASI_VALUE">
                             </div>
                         </div>
                     </div>
@@ -288,7 +282,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                         <div class="p-5 grid grid-cols-12 gap-4 row-gap-3">
                             <div class="col-span-12"> 
                             <label class="font-semibold text-lg">Tanggal</label>
-                            <input disabled class="input border mr-2 w-full mt-2"  value="{{ date('d-m-Y', strtotime($p->TANGGAL)) }}">
+                            <input disabled class="input border mr-2 w-full mt-2"  value="{{ tgl_indo_table($p->TANGGAL) }}">
                             <input type="hidden" class="input border mr-2 w-full mt-2" name="TANGGAL_EDIT" value="{{ $p->TANGGAL }}">
                             </div>
                             <div class="col-span-12"> 
@@ -296,20 +290,20 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                                 <input disabled type="number" class="input w-full border mt-2 flex-1" name="PV_VALUE_EDIT" value="{{ $p->PV }}" readonly>
                             </div>
                             <div class="col-span-12"> 
-                                <label class="font-semibold text-lg">Rencana</label>
+                                <label class="font-semibold text-lg">Progress Plan (%)</label>
                                 <input disabled type="number" class="input w-full border mt-2 flex-1" name="RENCANA_VALUE_EDIT" value="{{ $p->Rencana }}" readonly>
                             </div>
                             <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">EV</label>
-                                <input type="number" class="input w-full border mt-2 flex-1" name="EV_VALUE_EDIT" value="{{ $p->EV }}" required>
+                                <input type="number" class="input w-full border mt-2 flex-1" name="EV_VALUE_EDIT" value="{{ $p->EV }}">
                             </div>
                             <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">AC</label>
-                                <input type="number" class="input w-full border mt-2 flex-1" name="AC_VALUE_EDIT" value="{{ $p->AC }}" required>
+                                <input type="number" class="input w-full border mt-2 flex-1" name="AC_VALUE_EDIT" value="{{ $p->AC }}">
                             </div>
                             <div class="col-span-12"> 
-                                <label class="font-semibold text-lg">Realisasi</label>
-                                <input type="number" class="input w-full border mt-2 flex-1" name="REALISASI_VALUE_EDIT" value="{{ $p->Realisasi }}" required>
+                                <label class="font-semibold text-lg">Realisasi (%)</label>
+                                <input type="number" class="input w-full border mt-2 flex-1" name="REALISASI_VALUE_EDIT" value="{{ $p->Realisasi }}">
                             </div>
                         </div>
                     </div>
@@ -337,7 +331,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                     @csrf
                     @method('DELETE')
                     <div class="text-base mt-5 ml-3">
-                        Apakah Anda yakin ingin menghapus nilai EV, AC dan realisasi pada tanggal {{ date('d-m-Y', strtotime($p->TANGGAL)) }} ?
+                        Apakah Anda yakin ingin menghapus nilai EV, AC dan realisasi pada tanggal {{ tgl_indo_table($p->TANGGAL) }} ?
                     </div>
                     <input type="hidden" name="TANGGAL_DELETE" value="{{ $p->TANGGAL }}">
                     <div class="text-base text-theme-6 ml-3">Data yang dihapus tidak dapat dikembalikan.</div>
@@ -365,6 +359,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
     $(document).ready(function() {
         var table = $('#example').DataTable( {
@@ -394,8 +389,19 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                 },
                 success : function(results) {
                   //console.log(JSON.stringify(results)); //print_r
-                    $('#pv_value').val(results.pv_val);
-                    $('#rencana_value').val(results.rencana_val);
+                    
+                    if(results.pesan_error != ""){
+                        Swal.fire({
+                            title: 'Kesalahan !',
+                            text: results.pesan_error,
+                            icon: 'error',
+                        });
+                        $('#pv_value').val("");
+                        $('#rencana_value').val("");
+                    }else{
+                        $('#pv_value').val(results.pv_val);
+                        $('#rencana_value').val(results.rencana_val);
+                    }
                 },
                 error: function(data) {
                     console.log(data);

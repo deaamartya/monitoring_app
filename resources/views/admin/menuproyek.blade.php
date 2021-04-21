@@ -68,6 +68,26 @@
 </style>
 @endsection
 @section('content')
+    <?php
+        function tgl_indo($tanggal){
+            $bulan = array (
+                1 =>   'Januari',
+                'Februari',
+                'Maret',
+                'April',
+                'Mei',
+                'Juni',
+                'Juli',
+                'Agustus',
+                'September',
+                'Oktober',
+                'November',
+                'Desember'
+            );
+            $pecahkan = explode('-', $tanggal);
+            return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
+        }
+    ?>
 <div class="intro-y box p-5 mt-5 sm:mt-5 bg-blue-400 text-white" style="background-color: #1c3faa;">                        
     <div class="flex flex-row">
         <i data-feather="list"></i>
@@ -114,8 +134,8 @@
                     <td style="text-align:center">{{ $loop->iteration }}</td>
                     <td >{{$p->KODE_PROYEK}}</td>
                     <td>{{$p->NAMA_PROYEK}}</td>
-                    <td style="text-align:center">{{ date('d-m-Y',strtotime($p->START_PROYEK)) }}</td>
-                    <td style="text-align:center">{{ date('d-m-Y',strtotime($p->END_PROYEK)) }}</td>
+                    <td style="text-align:center">{{ tgl_indo($p->START_PROYEK) }}</td>
+                    <td style="text-align:center">{{ tgl_indo($p->END_PROYEK) }}</td>
                     <td style="text-align:center">{{$p->STATUS}}</td>
                     <td>{{$p->LAST_UPDATE}}</td>
                     <td style="text-align: center;">
