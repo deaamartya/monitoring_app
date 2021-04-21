@@ -18,6 +18,6 @@ class ProyekExport implements FromCollection
         $proyek = Proyek::get('KODE_PROYEK','NAMA_PROYEK');
         $progress = Progress::get('TANGGAL','VALUE');
         $tipe = Tipe::where('ID_TIPE')->value('NAMA_TIPE');
-        return view( compact('proyek', 'progress', 'tipe') );
+        return view('admin.exportexcel', compact('proyek', 'progress', 'tipe') );
     }
 }
