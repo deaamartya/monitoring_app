@@ -69,7 +69,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
 @endsection
 @section('content')
 <?php
-                        function tgl_indo($tanggal){
+                        function tgl_indo_table($tanggal){
                             $bulan = array (
                                 1 =>   'Januari',
                                 'Februari',
@@ -86,6 +86,27 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                             );
                             $pecahkan = explode('-', $tanggal);
                             return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
+                        }
+                    ?>
+
+<?php
+                        function tgl_indo($tanggal){
+                            $bulan = array (
+                                1 =>   'Januari',
+                                'Februari',
+                                'Maret',
+                                'April',
+                                'Mei',
+                                'Juni',
+                                'Juli',
+                                'Agustus',
+                                'September',
+                                'Oktober',
+                                'November',
+                                'Desember'
+                            );
+                            $pecahkan = explode('-', $tanggal);
+                            return $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
                         }
                     ?>
 <div class="intro-y box p-5 mt-5 sm:mt-5 bg-blue-400 text-white" style="background-color: #1c3faa;">                        
@@ -141,7 +162,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
             @foreach($progress as $p)
                 <tr>
                     <td>{{ $loop->iteration  }}</td>
-                    <td>{{ tgl_indo($p->TANGGAL) }}</td>
+                    <td>{{ tgl_indo_table($p->TANGGAL) }}</td>
                     <td>{{$p->PV}}</td>
                     <td>{{$p->EV}}</td>
                     <td>{{$p->AC}}</td>
