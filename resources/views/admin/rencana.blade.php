@@ -100,12 +100,12 @@ function tgl_indo_table($tanggal){
                 <div class="flex flex-col xl:flex-row xl:items-center">
                     <div class="flex mb-3">
                         <div>
-                            <div class="text-theme-20 dark:text-gray-300 text-lg xl:text-xl font-bold">{{ $jml_proyek_this_month }}</div>
+                            <div class="text-theme-20 dark:text-gray-300 text-lg xl:text-xl font-bold">{{ $jml_rencana_this_month }}</div>
                             <div class="text-gray-600 dark:text-gray-600">Bulan Ini</div>
                         </div>
                         <div class="w-px h-12 border border-r border-dashed border-gray-300 dark:border-dark-5 mx-4 xl:mx-6"></div>
                         <div>
-                            <div class="text-gray-600 dark:text-gray-600 text-lg xl:text-xl font-medium">{{ $jml_proyek_last_month }}</div>
+                            <div class="text-gray-600 dark:text-gray-600 text-lg xl:text-xl font-medium">{{ $jml_rencana_last_month }}</div>
                             <div class="text-gray-600 dark:text-gray-600">Bulan Lalu</div>
                         </div>
                     </div>
