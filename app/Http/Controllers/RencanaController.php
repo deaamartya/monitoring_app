@@ -6,6 +6,7 @@ use App\Models\Progress;
 use App\Models\Tipe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Validation\ValidationException;
 use DB;
 
 class RencanaController extends Controller
@@ -40,10 +41,13 @@ class RencanaController extends Controller
             'thn' => 'required'
         ]);
 
-        $request->bln = ($request->bln > 10) ? "0".$request->bln : $request->bln;
-
+        $request->bln = ($request->bln < 10) ? "0".$request->bln : $request->bln;
         $date= $request->thn."-".$request->bln."-01";
 
+        if(Progress::where('TANGGAL', '=' , $date)->exists()){
+            throw ValidationException::withMessages(['messages' => 'Sudah terdapat rencana pada bulan dan tahun tersebut.']);
+        }
+        else{
         // Insert PV
         Progress::insert([
             'TANGGAL' =>$date,
@@ -79,6 +83,7 @@ class RencanaController extends Controller
             'VALUE' => null,
             'KODE_PROYEK' => $request->KODE_PROYEK
         ]);
+        }
 
         return redirect()->back()->with('success','Data rencana berhasil ditambahkan.');
     }

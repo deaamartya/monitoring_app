@@ -76,12 +76,19 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
 </div>
 
 <div class="intro-y box p-5 mt-5">
+@if($errors->any())
+        <div class="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-31 text-theme-6">
+            <i data-feather="alert-octagon" class="w-6 h-6 mr-2"></i>
+            Data tidak berhasil disimpan. Mohon cek form kembali.
+        </div>
+    @endif
     @if(Session::has('success'))
     <div class="rounded-md w-35 flex items-center px-5 py-4 mb-2 bg-theme-18 text-theme-9">
         <i data-feather="alert-circle" class="w-6 h-6 mr-2"></i>
         {{ Session::get('success') }}
     </div>
     @endif
+   
     <div class="intro-y block sm:flex items-center h-10">
         <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
             <a href ="javascript:;" data-toggle="modal" data-target="#tambah_rencana">
@@ -155,7 +162,8 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                                     $bulan=array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember");
                                     $jlh_bln=count($bulan);
                                     for($c=0; $c<$jlh_bln; $c+=1){
-                                        echo"<option value=$c> $bulan[$c] </option>";
+                                        $i = $c+1;
+                                        echo"<option value=$i> $bulan[$c] </option>";
                                     }
                                     ?>
                                 </select>
@@ -171,15 +179,6 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                                         echo "<option value=$a >$a</option>";
                                     }
                                     ?>
-<!-- 
-                                    @php $now=date('Y'); 
-                                    @endphp
-                                    @php
-                                        for ($a=$now;$a<$now+10;$a++)
-                                        {
-                                    @endphp
-                                    <option value="{{$a}}" @if($a == $now) selected @endif>{{$a}}</option>
-                                    @php } @endphp -->
                             </select>
                         </div>
                     
