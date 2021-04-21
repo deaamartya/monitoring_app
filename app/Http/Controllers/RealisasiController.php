@@ -16,9 +16,27 @@ class RealisasiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(){
-        $progress=Progress::all();
-        $current_year = date('Y');
+    public function show($id)
+    {
+        $progress = Proyek::select('proyek.KODE_PROYEK', 'p1.TANGGAL', DB::raw('COALESCE(p1.VALUE,"-") AS PV'), 
+        DB::raw('COALESCE(p2.VALUE,"-") AS EV'), DB::raw('COALESCE(p3.VALUE,"-") AS AC'), DB::raw('COALESCE(p4.VALUE,"-") AS Rencana'), DB::raw('COALESCE(p5.VALUE,"-") AS Realisasi'))
+        ->join('progress as p1', 'p1.KODE_PROYEK', 'proyek.KODE_PROYEK')
+        ->join('progress as p2', 'p2.KODE_PROYEK','proyek.KODE_PROYEK')
+        ->join('progress as p3', 'p3.KODE_PROYEK','proyek.KODE_PROYEK')
+        ->join('progress as p4', 'p4.KODE_PROYEK', 'proyek.KODE_PROYEK')
+        ->join('progress as p5', 'p5.KODE_PROYEK', 'proyek.KODE_PROYEK')
+        ->where(['proyek.KODE_PROYEK' => $id, 'p1.ID_TIPE' => 1, 'p2.ID_TIPE' => 2, 'p3.ID_TIPE'  => 3,'p4.ID_TIPE' =>4, 'p5.ID_TIPE'  =>5,
+            "p2.TANGGAL" => DB::raw("(DATE_FORMAT(p1.TANGGAL,'%Y-%m-%d'))"), "p3.TANGGAL" => DB::raw("(DATE_FORMAT(p1.TANGGAL,'%Y-%m-%d'))"),"p4.TANGGAL" => DB::raw("(DATE_FORMAT(p1.TANGGAL,'%Y-%m-%d'))"),"p5.TANGGAL" => DB::raw("(DATE_FORMAT(p1.TANGGAL,'%Y-%m-%d'))")])
+        ->orderByDesc('p1.TANGGAL')
+        ->get();
+        $tipe = Tipe::all();
+        $tgl_progress = Progress::where('KODE_PROYEK', $id)
+        ->orderByDesc('TANGGAL')
+        ->get();
+        $kode_proyek = $id;
+        $nama_proyek = Proyek::where('KODE_PROYEK', $id)->value('NAMA_PROYEK');
+
+        $progress2=Progress::all();
         $jml_proyek_this_month  = Proyek::all()->count();
         $jml_proyek_last_month  = Proyek::whereMonth(
             'START_PROYEK', '=', Carbon::now()->subMonth()->month
@@ -39,28 +57,8 @@ class RealisasiController extends Controller
         $november = Progress::whereMonth('TANGGAL','11')->whereYear('TANGGAL',date('Y'))->count();
         $desember = Progress::whereMonth('TANGGAL','12')->whereYear('TANGGAL',date('Y'))->count();
 
-        return view('realisasi', compact('progress', 'current_year', 'jml_proyek_this_month', 'jml_proyek_last_month', 'januari', 'februari', 'maret', 'april', 'mei', 'juni', 'juli', 'agustus', 'september', 'oktober', 'november', 'desember'));
-    }
-    public function show($id)
-    {
-        $progress = Proyek::select('proyek.KODE_PROYEK', 'p1.TANGGAL', DB::raw('COALESCE(p1.VALUE,"-") AS PV'), 
-        DB::raw('COALESCE(p2.VALUE,"-") AS EV'), DB::raw('COALESCE(p3.VALUE,"-") AS AC'), DB::raw('COALESCE(p4.VALUE,"-") AS Rencana'), DB::raw('COALESCE(p5.VALUE,"-") AS Realisasi'))
-        ->join('progress as p1', 'p1.KODE_PROYEK', 'proyek.KODE_PROYEK')
-        ->join('progress as p2', 'p2.KODE_PROYEK','proyek.KODE_PROYEK')
-        ->join('progress as p3', 'p3.KODE_PROYEK','proyek.KODE_PROYEK')
-        ->join('progress as p4', 'p4.KODE_PROYEK', 'proyek.KODE_PROYEK')
-        ->join('progress as p5', 'p5.KODE_PROYEK', 'proyek.KODE_PROYEK')
-        ->where(['proyek.KODE_PROYEK' => $id, 'p1.ID_TIPE' => 1, 'p2.ID_TIPE' => 2, 'p3.ID_TIPE'  => 3,'p4.ID_TIPE' =>4, 'p5.ID_TIPE'  =>5,
-            "p2.TANGGAL" => DB::raw("(DATE_FORMAT(p1.TANGGAL,'%Y-%m-%d'))"), "p3.TANGGAL" => DB::raw("(DATE_FORMAT(p1.TANGGAL,'%Y-%m-%d'))"),"p4.TANGGAL" => DB::raw("(DATE_FORMAT(p1.TANGGAL,'%Y-%m-%d'))"),"p5.TANGGAL" => DB::raw("(DATE_FORMAT(p1.TANGGAL,'%Y-%m-%d'))")])
-        ->orderByDesc('p1.TANGGAL')
-        ->get();
-        $tipe = Tipe::all();
-        $tgl_progress = Progress::where('KODE_PROYEK', $id)
-        ->orderByDesc('TANGGAL')
-        ->get();
-        $kode_proyek = $id;
-        $nama_proyek = Proyek::where('KODE_PROYEK', $id)->value('NAMA_PROYEK');
-        return view('admin.realisasi',compact('progress', 'nama_proyek', 'kode_proyek', 'tgl_progress','tipe'));
+
+        return view('admin.realisasi',compact('progress', 'nama_proyek', 'kode_proyek', 'tgl_progress','tipe', 'progress2', 'current_year', 'jml_proyek_this_month', 'jml_proyek_last_month', 'januari', 'februari', 'maret', 'april', 'mei', 'juni', 'juli', 'agustus', 'september', 'oktober', 'november', 'desember'));
     }
 
     public function getRencana(Request $req)
