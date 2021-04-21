@@ -68,6 +68,26 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
 </style>
 @endsection
 @section('content')
+<?php
+                        function tgl_indo_table($tanggal){
+                            $bulan = array (
+                                1 =>   'Januari',
+                                'Februari',
+                                'Maret',
+                                'April',
+                                'Mei',
+                                'Juni',
+                                'Juli',
+                                'Agustus',
+                                'September',
+                                'Oktober',
+                                'November',
+                                'Desember'
+                            );
+                            $pecahkan = explode('-', $tanggal);
+                            return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
+                        }
+                    ?>
 <div class="intro-y box p-5 mt-5 sm:mt-5 bg-blue-400 text-white" style="background-color: #1c3faa;">                        
     <div class="flex flex-row">
         <i data-feather="list"></i>
@@ -105,7 +125,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                     <th>#</th>
                     <th data-priority="1">Tanggal</th>
                     <th data-priority="2">PV</th>
-                    <th data-priority="3">Progress Plan</th>
+                    <th data-priority="3">Progress Plan(%)</th>
                     <th data-priority="4"style="width: 20%;">Aksi</th>
                 </tr>
             </thead>
@@ -113,7 +133,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
             @foreach($progress as $p)
                 <tr>
                     <td>{{ $loop->iteration  }}</td>
-                    <td>{{ date('d F Y', strtotime($p->TANGGAL))}}</td>
+                    <td>{{ tgl_indo_table($p->TANGGAL) }}</td>
                     <td>{{$p->PV}}</td>
                     <td>{{$p->Rencana}}%</td>
                     <td>
@@ -150,6 +170,12 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                 </div>
                 <form action="{{ route('rencana.store') }}" method="POST" class="needs-validation" novalidate id="tambah-rencana">
                     @csrf
+                    <div class="intro-y box p-3 mt-3 sm:mt-3 mr-3 bg-blue-400 text-white" style="background-color: #1c3faa;">     
+                    <div class="col-span-12">
+      
+        <h2 class="font-medium mr-auto ml-3"  >Pelaksanaan Proyek : {{ tgl_indo_table($start_proyek) }} - {{ tgl_indo_table($end_proyek)}} </h2>
+    </div>
+                    </div>
                     <input type="hidden" name="KODE_PROYEK" value="{{ $kode_proyek }}">
                     <div class="mr-5 mb-5 grid grid-cols-12 gap-4 row-gap-3 p-3">
                         <div class="col-span-6">
@@ -193,12 +219,16 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                     </div>
 
                     <div class="col-span-12"> 
-                        <label class="font-semibold text-lg">Progress Plan</label>
+                        <label class="font-semibold text-lg">Progress Plan (%)</label>
                         <input type="number" class="input w-full border mt-2 flex-1" name="RENCANA_VALUE" required>
                     </div>
                 
-                    <div class="text-right"> 
-                        <button class="button items-right w-24 shadow-md mr-1 mb-2 justify-right bg-theme-1 text-white shadow-md" type="submit">Simpan</button>
+                    <div class="modal-footer mt-5">
+                        <div class="text-right mr-5">
+                        <button type="button" class="button w-24 shadow-md mr-1 mb-2 bg-red-500 text-white" data-dismiss="modal">Cancel</button> 
+                        <button class="button items-right w-24 shadow-md mr-5 mb-2 justify-right bg-theme-1 text-white shadow-md" type="submit">Simpan</button>
+                       
+                        </div>
                     </div>
                 </form>
             </div>
@@ -211,7 +241,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                     <div class="modal__content relative"> 
                     </div>
                     <div class="flex px-2 sm:pb-3 sm:pt-1 border-b border-gray-200 dark:border-dark-5">
-                        <h2 class="font-bold text-2xl flex"><i data-feather="info" class="w-8 h-8 mr-2"></i>Edit Rencana #{{ $p->TANGGAL }}</h2>
+                        <h2 class="font-bold text-2xl flex"><i data-feather="info" class="w-8 h-8 mr-2"></i>Edit Rencana #{{ $loop->iteration }}</h2>
                         <a data-dismiss="modal" href="javascript:;" class="mr-3 ml-auto" id="close_{{$p->TANGGAL}}"><i data-feather="x" class="w-8 h-8 text-gray-500"></i></a>
                     </div>
                 </div>
@@ -222,18 +252,18 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                     <input type="hidden" name="KODE_PROYEK" value="{{ $kode_proyek }}">
                     <div class="col-span-12"> 
                         <label class="font-semibold text-lg">Tanggal</label>
-                        <input disabled class="input border mr-2 w-full mt-2"  value="{{ date('d-m-Y', strtotime($p->TANGGAL)) }}">
+                        <input disabled class="input border mr-2 w-full mt-2"  value="{{ tgl_indo_table($p->TANGGAL) }}">
                         <input type="hidden" class="input border mr-2 w-full mt-2" name="TANGGAL_EDIT" value="{{ $p->TANGGAL }}">
                     </div>
                 
                     <div class="col-span-12"> 
                         <label class="font-semibold text-lg">PV</label>
-                        <input type="number" class="input w-full border mt-2 flex-1" name="PV_VALUE_EDIT" value="{{ $p->EV }}" required>
+                        <input type="number" class="input w-full border mt-2 flex-1" name="PV_VALUE_EDIT" value="{{ $p->PV }}" required>
                     </div>
 
                     <div class="col-span-12"> 
-                        <label class="font-semibold text-lg">Progress Plan</label>
-                        <input type="number" class="input w-full border mt-2 flex-1" name="RENCANA_VALUE_EDIT" value="{{ $p->Realisasi }}" required>
+                        <label class="font-semibold text-lg">Progress Plan (%)</label>
+                        <input type="number" class="input w-full border mt-2 flex-1" name="RENCANA_VALUE_EDIT" value="{{ $p->Rencana }}" required>
                     </div>
                     <div class="modal-footer mt-5">
                         <div class="text-right">

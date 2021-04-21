@@ -21,6 +21,8 @@ class RencanaController extends Controller
         ->get();
         $kode_proyek = $id;
         $nama_proyek = Proyek::where('KODE_PROYEK', $id)->value('NAMA_PROYEK');
+        $start_proyek = Proyek::where('KODE_PROYEK', $id)->value('START_PROYEK');
+        $end_proyek = Proyek::where('KODE_PROYEK', $id)->value('END_PROYEK');
         
         $current_year = date('Y');
         $jml_proyek_this_month  = Progress::whereMonth(
@@ -31,7 +33,7 @@ class RencanaController extends Controller
         )->whereYear('TANGGAL', date('Y'))->count();
       
 
-        return view('admin.rencana',compact('progress', 'current_year', 'jml_proyek_this_month', 'jml_proyek_last_month', 'nama_proyek', 'kode_proyek'));
+        return view('admin.rencana',compact('progress', 'current_year', 'jml_proyek_this_month', 'jml_proyek_last_month', 'nama_proyek', 'kode_proyek', 'start_proyek', 'end_proyek'));
     }
 
     public function store(Request $request)
