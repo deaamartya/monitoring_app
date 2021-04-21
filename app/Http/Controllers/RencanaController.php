@@ -36,12 +36,14 @@ class RencanaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'TANGGAL' => 'required'
+            'bln' => 'required',
+            'thn' => 'required'
         ]);
 
-        $date=Carbon::parse($request->TANGGAL);
-        $date->format('d-m-Y'); 
-        
+        $request->bln = ($request->bln > 10) ? "0".$request->bln : $request->bln;
+
+        $date= $request->thn."-".$request->bln."-01";
+
         // Insert PV
         Progress::insert([
             'TANGGAL' =>$date,

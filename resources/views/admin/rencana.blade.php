@@ -155,7 +155,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                                     $bulan=array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember");
                                     $jlh_bln=count($bulan);
                                     for($c=0; $c<$jlh_bln; $c+=1){
-                                        echo"<option value=$bulan[$c]> $bulan[$c] </option>";
+                                        echo"<option value=$c> $bulan[$c] </option>";
                                     }
                                     ?>
                                 </select>
@@ -164,20 +164,23 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                         <div class="col-span-6">
                             <label class="font-semibold text-lg">Tahun</label> 
                             <select data-search="true" class="tail-select w-full" name="thn"  placeholder="Select Tahun...">
-                            <option selected disabled>Pilih Tahun.....</option>
-                                @php $now=date('Y'); @endphp
-                                @php
-                                    for ($a=$now;$a<$now+10;$a++)
-                                    {
-                                @endphp
-                                <option value="{{$a}}" @if($a == $now) selected @endif>{{$a}}</option>
-                                @php } @endphp
+                                <option selected disabled>Pilih Tahun.....</option>
+                                <?php
+                                    $now=date('Y');
+                                    for ($a=$now; $a<$now+10; $a++){ 
+                                        echo "<option value=$a >$a</option>";
+                                    }
+                                    ?>
+<!-- 
+                                    @php $now=date('Y'); 
+                                    @endphp
+                                    @php
+                                        for ($a=$now;$a<$now+10;$a++)
+                                        {
+                                    @endphp
+                                    <option value="{{$a}}" @if($a == $now) selected @endif>{{$a}}</option>
+                                    @php } @endphp -->
                             </select>
-                            <!-- <label class="font-semibold text-lg">Bulan</label>
-                            <select id="select_tanggal" data-search="true" class="tail-select w-full" name="TANGGAL" required>
-                                <option selected disabled>Pilih bulan.....</option>
-                                <option value="2021-04-20">2021-04-20</option>
-                            </select> -->
                         </div>
                     
                     <div class="col-span-12"> 
