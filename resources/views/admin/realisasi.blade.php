@@ -68,6 +68,26 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
 </style>
 @endsection
 @section('content')
+<?php
+                        function tgl_indo($tanggal){
+                            $bulan = array (
+                                1 =>   'Januari',
+                                'Februari',
+                                'Maret',
+                                'April',
+                                'Mei',
+                                'Juni',
+                                'Juli',
+                                'Agustus',
+                                'September',
+                                'Oktober',
+                                'November',
+                                'Desember'
+                            );
+                            $pecahkan = explode('-', $tanggal);
+                            return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
+                        }
+                    ?>
 <div class="intro-y box p-5 mt-5 sm:mt-5 bg-blue-400 text-white" style="background-color: #1c3faa;">                        
     <div class="flex flex-row">
         <i data-feather="list"></i>
@@ -121,7 +141,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
             @foreach($progress as $p)
                 <tr>
                     <td>{{ $loop->iteration  }}</td>
-                    <td>{{ date('d-m-Y', strtotime($p->TANGGAL))}}</td>
+                    <td>{{ tgl_indo($p->TANGGAL) }}</td>
                     <td>{{$p->PV}}</td>
                     <td>{{$p->EV}}</td>
                     <td>{{$p->AC}}</td>
@@ -173,26 +193,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
                     @csrf
                     <input id="kode_proyek" type="hidden" name="KODE_PROYEK" value="{{ $kode_proyek }}">
                     <div class="modal-body">
-                    <?php
-                        function tgl_indo($tanggal){
-                            $bulan = array (
-                                1 =>   'Januari',
-                                'Februari',
-                                'Maret',
-                                'April',
-                                'Mei',
-                                'Juni',
-                                'Juli',
-                                'Agustus',
-                                'September',
-                                'Oktober',
-                                'November',
-                                'Desember'
-                            );
-                            $pecahkan = explode('-', $tanggal);
-                            return $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
-                        }
-                    ?>
+                   
 
                         <div class="p-5 grid grid-cols-12 gap-4 row-gap-3">
                             <div class="col-span-12"> 
