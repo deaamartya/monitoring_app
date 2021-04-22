@@ -37,7 +37,8 @@
             </div>
         </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script>
 var ctx = document.getElementById('line-chart').getContext('2d');
 var myChart = new Chart(ctx, {

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Progress;
 use App\Models\Proyek;
 use App\Models\Tipe;
+use Illuminate\Support\Carbon;
 use DB;
 
 class RealisasiController extends Controller
@@ -34,7 +35,30 @@ class RealisasiController extends Controller
         ->get();
         $kode_proyek = $id;
         $nama_proyek = Proyek::where('KODE_PROYEK', $id)->value('NAMA_PROYEK');
-        return view('admin.realisasi',compact('progress', 'nama_proyek', 'kode_proyek', 'tgl_progress','tipe'));
+
+        $progress2=Progress::all();
+        $jml_proyek_this_month  = Proyek::all()->count();
+        $jml_proyek_last_month  = Proyek::whereMonth(
+            'START_PROYEK', '=', Carbon::now()->subMonth()->month
+        )->whereYear('START_PROYEK', date('Y'))->count();
+
+        $current_year = date('Y');
+
+        $januari = Progress::whereMonth('TANGGAL','01')->whereYear('TANGGAL',date('Y'))->count();
+        $februari = Progress::whereMonth('TANGGAL','02')->whereYear('TANGGAL',date('Y'))->count();
+        $maret = Progress::whereMonth('TANGGAL','03')->whereYear('TANGGAL',date('Y'))->count();
+        $april= Progress::whereMonth('TANGGAL','04')->whereYear('TANGGAL',date('Y'))->count();
+        $mei = Progress::whereMonth('TANGGAL','05')->whereYear('TANGGAL',date('Y'))->count();
+        $juni = Progress::whereMonth('TANGGAL','06')->whereYear('TANGGAL',date('Y'))->count();
+        $juli = Progress::whereMonth('TANGGAL','07')->whereYear('TANGGAL',date('Y'))->count();
+        $agustus = Progress::whereMonth('TANGGAL','08')->whereYear('TANGGAL',date('Y'))->count();
+        $september= Progress::whereMonth('TANGGAL','09')->whereYear('TANGGAL',date('Y'))->count();
+        $oktober= Progress::whereMonth('TANGGAL','10')->whereYear('TANGGAL',date('Y'))->count();
+        $november = Progress::whereMonth('TANGGAL','11')->whereYear('TANGGAL',date('Y'))->count();
+        $desember = Progress::whereMonth('TANGGAL','12')->whereYear('TANGGAL',date('Y'))->count();
+
+
+        return view('admin.realisasi',compact('progress', 'nama_proyek', 'kode_proyek', 'tgl_progress','tipe', 'progress2', 'current_year', 'jml_proyek_this_month', 'jml_proyek_last_month', 'januari', 'februari', 'maret', 'april', 'mei', 'juni', 'juli', 'agustus', 'september', 'oktober', 'november', 'desember'));
     }
 
     public function getRencana(Request $req)
