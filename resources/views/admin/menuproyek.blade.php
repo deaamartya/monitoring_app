@@ -124,7 +124,8 @@
                     <th data-priority="3">Start Proyek</th>
                     <th data-priority="4">End Proyek</th>
                     <th data-priority="5">Last Update</th>
-                    <th data-priority="6">Aksi</th>
+                    <th data-priority="6">Created At</th>
+                    <th data-priority="7">Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -136,6 +137,7 @@
                     <td style="text-align:center">{{ tgl_indo($p->START_PROYEK) }}</td>
                     <td style="text-align:center">{{ tgl_indo($p->END_PROYEK) }}</td>
                     <td>{{$p->LAST_UPDATE}}</td>
+                    <td>{{$p->CREATED_AT}}</td>
                     <td style="text-align: center;">
                         <div class="flex" style="justify-content: center;">
                             <a href="{{url('/admin/rencana/'.$p->KODE_PROYEK)}}">

@@ -113,8 +113,8 @@
                     <th data-priority="2">Nama Proyek</th>
                     <th data-priority="3">Start Proyek</th>
                     <th data-priority="4">End Proyek</th>
-                    {{-- <th data-priority="5">Status</th> --}}
                     <th data-priority="6">Last Update</th>
+                    <th data-priority="6">Created At</th>
                     <th data-priority="7">Aksi</th>
                 </tr>
             </thead>
@@ -126,18 +126,30 @@
                     <td>{{$p->NAMA_PROYEK}}</td>
                     <td style="text-align:center">{{ tgl_indo($p->START_PROYEK) }}</td>
                     <td style="text-align:center">{{ tgl_indo($p->END_PROYEK) }}</td>
-                    {{-- <td style="text-align:center">{{$p->STATUS}}</td> --}}
                     <td>{{$p->LAST_UPDATE}}</td>
-                    <td style="text-align: center;">
-                        <div class="flex" style="justify-content: center;">
-                            <a href="{{url('/admin/rencana/'.$p->KODE_PROYEK)}}">
-                                <button href="javascript:;" title="Detail" type="button" class="tooltip button px-2 mr-1 mb-2 bg-green-300 dark:text-gray-300">
-                                    <span class="w-5 h-5 flex items-center justify-center">
-                                        <i data-feather="more-vertical" class="w-4 h-4 "></i>
-                                    </span>
-                                </button>
-                            </a>
-                        </div>
+                    <td>{{$p->CREATED_AT}}</td>
+                    <td style="text-align: center;" width="18%">
+                        <a href="{{url('/admin/rencana/'.$p->KODE_PROYEK)}}">
+                            <button href="javascript:;" title="Detail" type="button" class="tooltip button px-2 mr-1 mb-2 bg-green-300 dark:text-gray-300">
+                                <span class="w-5 h-5 flex items-center justify-center">
+                                    <i data-feather="more-vertical" class="w-4 h-4 "></i>
+                                </span>
+                            </button>
+                        </a>
+                        <a href="{{url('/admin/rencana/'.$p->KODE_PROYEK)}}">
+                            <button href="javascript:;" title="Edit" type="button" class="tooltip button px-2 mr-1 mb-2 bg-orange-300 dark:text-gray-300">
+                                <span class="w-5 h-5 flex items-center justify-center">
+                                    <i data-feather="edit" class="w-4 h-4 "></i>
+                                </span>
+                            </button>
+                        </a>
+                        <a href="{{url('/admin/rencana/'.$p->KODE_PROYEK)}}">
+                            <button href="javascript:;" title="Delete" type="button" class="tooltip button px-2 mr-1 mb-2 bg-red-300 dark:text-gray-300">
+                                <span class="w-5 h-5 flex items-center justify-center">
+                                    <i data-feather="trash-2" class="w-4 h-4 "></i>
+                                </span>
+                            </button>
+                        </a>
                     </td>
                 </tr>
             @endforeach
