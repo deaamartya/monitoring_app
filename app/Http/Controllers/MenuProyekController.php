@@ -44,6 +44,6 @@ class MenuProyekController extends Controller
 
     public function exportexcel()
 	{
-		return Excel::download(new ProyekExport, 'S_Curve.xlsx');
+		return Excel::download(new ProyekExport, 'S-Curve.xlsx');
 	}
 }
