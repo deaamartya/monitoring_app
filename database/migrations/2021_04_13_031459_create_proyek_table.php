@@ -14,7 +14,8 @@ class CreateProyekTable extends Migration
     public function up()
     {
         Schema::create('proyek', function (Blueprint $table) {
-            $table->string('KODE_PROYEK', 10)->primary();
+            $table->integer('ID_PROYEK',true);
+            $table->string('KODE_PROYEK', 10)->unique();
             $table->string('NAMA_PROYEK', 200);
             $table->date('START_PROYEK');
             $table->date('END_PROYEK');

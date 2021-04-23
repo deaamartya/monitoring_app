@@ -3,21 +3,49 @@
 namespace App\Exports;
 
 use App\Models\Proyek;
-use App\Models\Progress;
-use App\Models\Tipe;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use DB;
+use Maatwebsite\Excel\Concerns\WithStyles;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class ProyekExport implements FromCollection
+class ProyekExport implements FromCollection, WithHeadings, ShouldAutoSize, WithStyles
 {
+    public function headings(): array
+    {
+        return [
+            'No',
+            'Kode Proyek',
+            'Nama Proyek',
+            'Tanggal',
+            'Tipe',
+            'Value',
+        ];
+    }
+
+    public function styles(Worksheet $sheet)
+    {
+        return [
+            1    => ['font' => ['bold' => true, 'size' => 12]],
+            'A:F' => ['alignment' => ['horizontal' => 'center']],
+        ];
+    }
+
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
-        // $nama_proyek = Proyek::where('KODE_PROYEK')->value('NAMA_PROYEK');
-        $proyek = Proyek::get('KODE_PROYEK','NAMA_PROYEK');
-        $progress = Progress::get('TANGGAL','VALUE');
-        $tipe = Tipe::where('ID_TIPE')->value('NAMA_TIPE');
-        return view('admin.exportexcel', compact('proyek', 'progress', 'tipe') );
+        $data = Proyek::select('proyek.ID_PROYEK as Nomor','proyek.KODE_PROYEK','proyek.NAMA_PROYEK','p.TANGGAL as Tanggal','t.NAMA_TIPE','p.VALUE as Value')->rightJoin('progress as p', 'p.KODE_PROYEK','proyek.KODE_PROYEK')->join('tipe as t','t.ID_TIPE','p.ID_TIPE')->orderBy('proyek.ID_PROYEK')->orderBy('p.TANGGAL')->orderBy('p.ID_TIPE')->get();
+        $i=1;
+        foreach($data as $d){
+            $d->Nomor = $i;
+            if($d->NAMA_TIPE == "Rencana" || $d->NAMA_TIPE == "Realisasi"){
+                $d->Value = $d->Value."%";
+            }
+            $i++;
+        }
+        return $data;
     }
 }

@@ -27,8 +27,8 @@ use Illuminate\Database\Eloquent\Model;
 class Proyek extends Model
 {
 	protected $table = 'proyek';
-	protected $primaryKey = 'KODE_PROYEK';
-	public $incrementing = false;
+	protected $primaryKey = 'ID_PROYEK';
+	public $incrementing = true;
 	public $timestamps = false;
 
 	protected $casts = [
@@ -40,6 +40,7 @@ class Proyek extends Model
 	];
 
 	protected $fillable = [
+		'KODE_PROYEK',
 		'NAMA_PROYEK',
 		'START_PROYEK',
 		'END_PROYEK',
