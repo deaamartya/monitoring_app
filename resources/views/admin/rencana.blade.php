@@ -177,7 +177,7 @@ function tgl_indo_table($tanggal){
                     <td>{{ $loop->iteration  }}</td>
                     <td>{{ tgl_indo_table($p->TANGGAL) }}</td>
                     <td>{{$p->PV}}</td>
-                    <td>{{ intval($p->Rencana) }}%</td>
+                    <td>{{ $p->Rencana }}%</td>
                     <td>
                     <div class="flex" style="justify-content: center;">
                         <a data-toggle="modal" data-target="#edit_{{ date('d-m-Y', strtotime($p->TANGGAL)) }}">
@@ -267,10 +267,9 @@ function tgl_indo_table($tanggal){
                     </div>
                 
                     <div class="modal-footer mt-5">
-                        <div class="text-right mr-5">
-                        <button type="button" class="button w-24 shadow-md mr-1 mb-2 bg-red-500 text-white" data-dismiss="modal">Cancel</button> 
-                        <button class="button items-right w-24 shadow-md mr-5 mb-2 justify-right bg-theme-1 text-white shadow-md" type="submit">Simpan</button>
-                       
+                        <div class="text-right">
+                            <button type="button" class="button w-24 shadow-md mr-1 mb-2 bg-red-500 text-white" data-dismiss="modal">Cancel</button> 
+                            <button class="button items-right w-24 shadow-md mr-1 mb-2 justify-right bg-theme-1 text-white shadow-md" type="submit">Simpan</button>
                         </div>
                     </div>
                 </form>
