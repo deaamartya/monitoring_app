@@ -94,8 +94,8 @@ function tgl_indo_table($tanggal){
         <h2 class="text-lg font-medium mr-auto ml-3">Rencana Proyek {{ $nama_proyek }}</h2>
     </div>
 </div>
-
-<div class="col-span-12 lg:col-span-8 mt-2">
+<div class="grid grid-cols-12 gap-6">
+        <div class="col-span-6 lg:col-span-6 mt-2">
             <div class="intro-y box p-5 mt-12 sm:mt-5">
                 <div class="flex flex-col xl:flex-row xl:items-center">
                     <div class="flex mb-3">
@@ -126,23 +126,54 @@ function tgl_indo_table($tanggal){
                 </div>
             </div>
         </div>
-
-
-<div class="intro-y box p-5 mt-5">
-    @if($errors->any())
-        <div class="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-31 text-theme-6">
-            <i data-feather="alert-octagon" class="w-6 h-6 mr-2"></i>
-            Data tidak berhasil disimpan. Mohon cek form kembali.
+        <div class="col-span-6 lg:col-span-6 mt-2">
+            <div class="intro-y box p-5 mt-12 sm:mt-5">
+                <div class="flex flex-col xl:flex-row xl:items-center">
+                    <div class="flex mb-3">
+                        <div>
+                            <div class="text-theme-20 dark:text-gray-300 text-lg xl:text-xl font-bold">{{ $jml_rencana_this_month }}</div>
+                            <div class="text-gray-600 dark:text-gray-600">Bulan Ini</div>
+                        </div>
+                        <div class="w-px h-12 border border-r border-dashed border-gray-300 dark:border-dark-5 mx-4 xl:mx-6"></div>
+                        <div>
+                            <div class="text-gray-600 dark:text-gray-600 text-lg xl:text-xl font-medium">{{ $jml_rencana_last_month }}</div>
+                            <div class="text-gray-600 dark:text-gray-600">Bulan Lalu</div>
+                        </div>
+                    </div>
+                    <!--
+                    <div class="dropdown xl:ml-auto mt-5 xl:mt-0">
+                        <button class="dropdown-toggle button font-normal border dark:border-dark-5 text-white dark:text-gray-300 relative flex items-center text-gray-700"> Filter by Category <i data-feather="chevron-down" class="w-4 h-4 ml-2"></i> </button>
+                        <div class="dropdown-box w-40">
+                            <div class="dropdown-box__content box dark:bg-dark-1 p-2 overflow-y-auto h-32"> <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">PC & Laptop</a> <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">Smartphone</a> <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">Electronic</a> <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">Photography</a> <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">Sport</a> </div>
+                        </div>
+                    </div>
+                    -->
+                </div>
+                <div class="report-chart">
+                <!--
+                    <canvas id="report-line-chart" height="160" class="mt-6"></canvas>
+                    -->
+                    <canvas id="line-chart2" height="100" class="mt-6"></canvas>
+                </div>
+            </div>
         </div>
-    @endif
-    @if(Session::has('success'))
-    <div class="rounded-md w-35 flex items-center px-5 py-4 mb-2 bg-theme-18 text-theme-9">
-        <i data-feather="alert-circle" class="w-6 h-6 mr-2"></i>
-        {{ Session::get('success') }}
-    </div>
-    @endif
+</div>
+<div class="col-span-6 lg:col-span-8 mt-2">
+    <div class="intro-y box p-5 mt-5">
+        @if($errors->any())
+            <div class="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-31 text-theme-6">
+                <i data-feather="alert-octagon" class="w-6 h-6 mr-2"></i>
+                Data tidak berhasil disimpan. Mohon cek form kembali.
+            </div>
+        @endif
+        @if(Session::has('success'))
+        <div class="rounded-md w-35 flex items-center px-5 py-4 mb-2 bg-theme-18 text-theme-9">
+            <i data-feather="alert-circle" class="w-6 h-6 mr-2"></i>
+            {{ Session::get('success') }}
+        </div>
+        @endif
    
-    <div class="intro-y block sm:flex items-center h-10">
+    <div class="col-span-6 intro-y block sm:flex items-center h-10">
         <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
             <a data-toggle="modal" data-target="#tambah_rencana">
                 <button class="ml-3 button box flex items-center shadow-md bg-blue-200 text-gray-700 buttons-html5 buttons-pdf" href="#" type="button"> <i data-feather="plus-circle" class="hidden sm:block w-4 h-4 mr-2"></i> Tambah Rencana </button>
@@ -340,6 +371,7 @@ function tgl_indo_table($tanggal){
         @endforeach
     </div>
 </div>
+    </div>
 @endsection
 
 @section('script')
@@ -361,6 +393,70 @@ var myChart = new Chart(ctx, {
   data: {
     labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct', 'Nov', 'Dec'],
     datasets: [{ 
+        label: "PV",
+        fill: false,
+        lineTension: 0.1,
+        backgroundColor: 'transparent',
+        pointBorderColor: 'transparent',
+        borderColor: "red", // The main line color
+        borderCapStyle: 'square',
+        borderDash: [], // try [5, 15] for instance
+        borderDashOffset: 0.0,
+        borderJoinStyle: 'miter',
+        pointBorderColor: "black",
+        pointBorderWidth: 1,
+        pointHoverRadius: 8,
+        pointHoverBackgroundColor: "yellow",
+        pointHoverBorderColor: "brown",
+        pointHoverBorderWidth: 2,
+        pointRadius: 4,
+        pointHitRadius: 10,
+        // notice the gap in the data and the spanGaps: true
+        data: [65, 59, 80, 81, 56, 55, 40,60,55,30,78, 90],
+        spanGaps: true,
+        }, {
+        label: "EV",
+        fill: true,
+        lineTension: 0.1,
+        backgroundColor: "transparent",
+        borderColor: "rgb(167, 105, 0)",
+        borderCapStyle: 'square',
+        borderDash: [],
+        borderDashOffset: 0.0,
+        borderJoinStyle: 'miter',
+        pointBorderColor: "black",
+        pointBackgroundColor: "transparent",
+        pointBorderWidth: 1,
+        pointHoverRadius: 8,
+        pointHoverBackgroundColor: "yellow",
+        pointHoverBorderColor: "brown",
+        pointHoverBorderWidth: 2,
+        pointRadius: 4,
+        pointHitRadius: 10,
+        // notice the gap in the data and the spanGaps: false
+        data: [10, 20, 60, 95, 60, 78, 90,70,40,70,89,29],
+        spanGaps: false,
+        },{
+        label: "AC",
+        fill: false,
+        lineTension: 0.1,
+        backgroundColor: "transparent",
+        borderColor: "green",
+        borderCapStyle: 'butt',
+        borderDash: [],
+        borderDashOffset: 0.0,
+        borderJoinStyle: 'miter',
+        pointBorderColor: "black",
+        pointBackgroundColor: "transparent",
+        pointBorderWidth: 1,
+        pointHoverRadius: 8,
+        pointHoverBackgroundColor: "brown",
+        pointHoverBorderColor: "yellow",
+        pointHoverBorderWidth: 2,
+        pointRadius: 4,
+        pointHitRadius: 10,
+        // notice the gap in the data and the spanGaps: false
+    
         data: [
             <?php echo $januari ?>,
             <?php echo $februari ?>,
@@ -375,15 +471,71 @@ var myChart = new Chart(ctx, {
             <?php echo $november ?>,
             <?php echo $desember ?>
         ],
-        borderColor: "#3e95cd",
-        fill: false
+        spanGaps: true,
       }]
   },
-  options: {
-    legend: {
-        display: false
-    }
-  }
+});
+var ctx = document.getElementById('line-chart2').getContext('2d');
+var myChart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct', 'Nov', 'Dec'],
+    datasets: [{ 
+        label: "Progress Plan",
+        fill: true,
+        lineTension: 0.1,
+        backgroundColor: 'transparent',
+        pointBorderColor: 'black',
+        borderColor: "blue", // The main line color
+        borderCapStyle: 'square',
+        borderDash: [], // try [5, 15] for instance
+        borderDashOffset: 0.0,
+        borderJoinStyle: 'miter',
+        pointBorderWidth: 1,
+        pointHoverRadius: 8,
+        pointHoverBorderWidth: 2,
+        pointRadius: 4,
+        pointHitRadius: 10,
+        // notice the gap in the data and the spanGaps: true
+        data: [33, 40, 50, 45, 66, 75, 49,80,25,35,76, 40],
+        spanGaps: false,
+        },{
+        label: "Realisasi",
+        fill: false,
+        lineTension: 0.1,
+        backgroundColor: "transparent",
+        borderColor: "purple", // The main line color
+        borderCapStyle: 'square',
+        borderDash: [], // try [5, 15] for instance
+        borderDashOffset: 0.0,
+        borderJoinStyle: 'miter',
+        pointBorderColor: "black",
+        pointBackgroundColor: "transparent",
+        pointBorderWidth: 1,
+        pointHoverRadius: 8,
+        pointHoverBackgroundColor: "yellow",
+        pointHoverBorderColor: "brown",
+        pointHoverBorderWidth: 2,
+        pointRadius: 4,
+        pointHitRadius: 10,
+        
+        data: [
+            <?php echo $januari ?>,
+            <?php echo $februari ?>,
+            <?php echo $maret ?>,
+            <?php echo $april ?>,
+            <?php echo $mei ?>,
+            <?php echo $juni ?>,
+            <?php echo $juli ?>,
+            <?php echo $agustus ?>,
+            <?php echo $september ?>,
+            <?php echo $oktober ?>,
+            <?php echo $november ?>,
+            <?php echo $desember ?>
+        ],
+      }]
+  },
+
 });
 </script>
 @endsection
