@@ -201,7 +201,7 @@ function tgl_indo_table($tanggal){
             </tbody>
         </table>
         <div class="modal" id="tambah_rencana">
-            <div class="modal__content modal__content py-5 pl-3 pr-1 ml-auto">
+            <div class="modal__content modal__content py-5 pl-3 pr-3 ml-auto">
                 <div class="modal-header">
                     <div class="modal__content relative"> 
                     </div>
@@ -220,10 +220,9 @@ function tgl_indo_table($tanggal){
                     </div>
                     <input type="hidden" name="KODE_PROYEK" value="{{ $kode_proyek }}">
                     <br>
-                    <div class="mr-5 mb-5 grid grid-cols-12 gap-4 row-gap-3 p-3">
+                    <div class="grid grid-cols-12 gap-4 row-gap-3 p-3">
                         <div class="col-span-6">
                                 <label class="font-semibold text-lg">Bulan</label> 
-                             
                                 <select data-search="true" class="tail-select w-full" name="bln"  placeholder="Select Bulan...">
                                 <option selected disabled>Pilih Bulan.....</option>
                                     <?php
@@ -265,11 +264,13 @@ function tgl_indo_table($tanggal){
                         <label class="font-semibold text-lg">Progress Plan (%)</label>
                         <input type="number" class="input w-full border mt-2 flex-1" name="RENCANA_VALUE" required>
                     </div>
-                
-                    <div class="modal-footer mt-5">
-                        <div class="text-right">
-                            <button type="button" class="button w-24 shadow-md mr-1 mb-2 bg-red-500 text-white" data-dismiss="modal">Cancel</button> 
-                            <button class="button items-right w-24 shadow-md mr-1 mb-2 justify-right bg-theme-1 text-white shadow-md" type="submit">Simpan</button>
+                    
+                    <div class="col-span-12"> 
+                        <div class="modal-footer mt-5">
+                            <div class="text-right">
+                                <button type="button" class="button w-24 shadow-md mr-1 mb-2 bg-red-500 text-white" data-dismiss="modal">Cancel</button> 
+                                <button class="button items-right w-24 shadow-md mr-1 mb-2 justify-right bg-theme-1 text-white shadow-md" type="submit">Simpan</button>
+                            </div>
                         </div>
                     </div>
                 </form>
