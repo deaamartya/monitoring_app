@@ -17,7 +17,7 @@ class ProyekTableSeeder extends Seeder
         
         \DB::table('proyek')->insert([
             'KODE_PROYEK' => "ABC45678",
-            'NAMA_PROYEK' => "contoh proyek",
+            'NAMA_PROYEK' => "Kapal Niaga I",
             'START_PROYEK' => "2021-01-01",
             'END_PROYEK' => "2021-03-31",
             'STATUS' => "0",
@@ -26,9 +26,18 @@ class ProyekTableSeeder extends Seeder
 
         \DB::table('proyek')->insert([
             'KODE_PROYEK' => "DEF1234",
-            'NAMA_PROYEK' => "contoh proyek kedua",
-            'START_PROYEK' => "2021-02-01",
-            'END_PROYEK' => "2021-03-31",
+            'NAMA_PROYEK' => "Kapal Selam I",
+            'START_PROYEK' => "2021-04-01",
+            'END_PROYEK' => "2022-05-31",
+            'STATUS' => "0",
+            'LAST_UPDATE' => "2021-04-09 08:40:51",
+        ]);
+
+        \DB::table('proyek')->insert([
+            'KODE_PROYEK' => "KPW8973",
+            'NAMA_PROYEK' => "Kapal Selam II",
+            'START_PROYEK' => "2021-09-01",
+            'END_PROYEK' => "2023-05-31",
             'STATUS' => "0",
             'LAST_UPDATE' => "2021-04-09 08:40:51",
         ]);

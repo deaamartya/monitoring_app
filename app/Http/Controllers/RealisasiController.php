@@ -48,22 +48,53 @@ class RealisasiController extends Controller
         )->whereYear('START_PROYEK', date('Y'))->count();
 
         $current_year = date('Y');
+        
+        $start_proyek = Proyek::where('KODE_PROYEK', $id)->value('START_PROYEK');
+        $end_proyek = Proyek::where('KODE_PROYEK', $id)->value('END_PROYEK');
+        $start_proyek_tahun = date('Y',strtotime($start_proyek));
+        $end_proyek_tahun = date('Y',strtotime($end_proyek));
+        $start_proyek_bulan = intval(date('m',strtotime($start_proyek)));
+        $end_proyek_bulan = intval(date('m',strtotime($end_proyek)));
 
-        $januari = Progress::whereMonth('TANGGAL','01')->whereYear('TANGGAL',date('Y'))->count();
-        $februari = Progress::whereMonth('TANGGAL','02')->whereYear('TANGGAL',date('Y'))->count();
-        $maret = Progress::whereMonth('TANGGAL','03')->whereYear('TANGGAL',date('Y'))->count();
-        $april= Progress::whereMonth('TANGGAL','04')->whereYear('TANGGAL',date('Y'))->count();
-        $mei = Progress::whereMonth('TANGGAL','05')->whereYear('TANGGAL',date('Y'))->count();
-        $juni = Progress::whereMonth('TANGGAL','06')->whereYear('TANGGAL',date('Y'))->count();
-        $juli = Progress::whereMonth('TANGGAL','07')->whereYear('TANGGAL',date('Y'))->count();
-        $agustus = Progress::whereMonth('TANGGAL','08')->whereYear('TANGGAL',date('Y'))->count();
-        $september= Progress::whereMonth('TANGGAL','09')->whereYear('TANGGAL',date('Y'))->count();
-        $oktober= Progress::whereMonth('TANGGAL','10')->whereYear('TANGGAL',date('Y'))->count();
-        $november = Progress::whereMonth('TANGGAL','11')->whereYear('TANGGAL',date('Y'))->count();
-        $desember = Progress::whereMonth('TANGGAL','12')->whereYear('TANGGAL',date('Y'))->count();
+        $jml_tahun = $end_proyek_tahun - $start_proyek_tahun + 1;
+
+        for($a=1;$a<=5;$a++){
+            for($i=0;$i<$jml_tahun;$i++){
+                if($jml_tahun == 1){
+                    for($j=$start_proyek_bulan;$j<=$end_proyek_bulan;$j++){
+                        $data[$a][$i][$j] = new \stdClass();
+                        $data[$a][$i][$j]->VALUE = Progress::whereMonth('TANGGAL',$j)->whereYear('TANGGAL',($start_proyek_tahun+$i))->where(['ID_TIPE' => $a,'KODE_PROYEK' =>$id])->value('VALUE');
+                        $data[$a][$i][$j]->NAMA = date("M 'y",strtotime($start_proyek_tahun+$i."-".$j."-01"));
+                    }
+                }
+                elseif($jml_tahun > 1){
+                    if($i == 0){
+                        for($j=$start_proyek_bulan;$j<=12;$j++){
+                            $data[$a][$i][$j] = new \stdClass();
+                            $data[$a][$i][$j]->VALUE = Progress::whereMonth('TANGGAL',$j)->whereYear('TANGGAL',($start_proyek_tahun+$i))->where(['ID_TIPE' => $a,'KODE_PROYEK' =>$id])->value('VALUE');
+                            $data[$a][$i][$j]->NAMA = date("M 'y",strtotime($start_proyek_tahun+$i."-".$j."-01"));
+                        }
+                    }
+                    elseif($i != 0 && ($i != ($jml_tahun-1))){
+                        for($j=1;$j<=12;$j++){
+                            $data[$a][$i][$j] = new \stdClass();
+                            $data[$a][$i][$j]->VALUE = Progress::whereMonth('TANGGAL',$j)->whereYear('TANGGAL',($start_proyek_tahun+$i))->where(['ID_TIPE' => $a,'KODE_PROYEK' =>$id])->value('VALUE');
+                            $data[$a][$i][$j]->NAMA = date("M y",strtotime($start_proyek_tahun+$i."-".$j."-01"));
+                        }
+                    }
+                    elseif( $i == ($jml_tahun-1)){
+                        for($j=1;$j<=$end_proyek_bulan;$j++){
+                            $data[$a][$i][$j] = new \stdClass();
+                            $data[$a][$i][$j]->VALUE = Progress::whereMonth('TANGGAL',$j)->whereYear('TANGGAL',($start_proyek_tahun+$i))->where(['ID_TIPE' => $a,'KODE_PROYEK' =>$id])->value('VALUE');
+                            $data[$a][$i][$j]->NAMA = date("M y",strtotime($start_proyek_tahun+$i."-".$j."-01"));
+                        }
+                    }
+                }
+            }
+        }
 
 
-        return view('admin.realisasi',compact('progress', 'nama_proyek', 'kode_proyek', 'tgl_progress','tipe', 'progress2', 'current_year', 'jml_realisasi_this_month', 'jml_realisasi_last_month', 'januari', 'februari', 'maret', 'april', 'mei', 'juni', 'juli', 'agustus', 'september', 'oktober', 'november', 'desember'));
+        return view('admin.realisasi',compact('progress', 'nama_proyek', 'kode_proyek', 'tgl_progress','tipe', 'progress2', 'current_year', 'jml_realisasi_this_month', 'jml_realisasi_last_month', 'data'));
     }
 
     public function getRencana(Request $req)

@@ -371,95 +371,135 @@ var ctx = document.getElementById('line-chart').getContext('2d');
 var myChart = new Chart(ctx, {
   type: 'line',
   data: {
-    labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct', 'Nov', 'Dec'],
-    datasets: [{ 
-        label: "PV",
-        fill: false,
-        lineTension: 0.1,
-        backgroundColor: 'transparent',
-        pointBorderColor: 'transparent',
-        borderColor: "red", // The main line color
-        borderCapStyle: 'square',
-        borderDash: [], // try [5, 15] for instance
-        borderDashOffset: 0.0,
-        borderJoinStyle: 'miter',
-        pointBorderColor: "black",
-        pointBorderWidth: 1,
-        pointHoverRadius: 8,
-        pointHoverBackgroundColor: "yellow",
-        pointHoverBorderColor: "brown",
-        pointHoverBorderWidth: 2,
-        pointRadius: 4,
-        pointHitRadius: 10,
-        // notice the gap in the data and the spanGaps: true
-        data: [65, 59, 80, 81, 56, 55, 40,60,55,30,78, 90],
-        spanGaps: true,
-        }, {
-        label: "EV",
-        fill: true,
-        lineTension: 0.1,
-        backgroundColor: "transparent",
-        borderColor: "rgb(167, 105, 0)",
-        borderCapStyle: 'square',
-        borderDash: [],
-        borderDashOffset: 0.0,
-        borderJoinStyle: 'miter',
-        pointBorderColor: "black",
-        pointBackgroundColor: "transparent",
-        pointBorderWidth: 1,
-        pointHoverRadius: 8,
-        pointHoverBackgroundColor: "yellow",
-        pointHoverBorderColor: "brown",
-        pointHoverBorderWidth: 2,
-        pointRadius: 4,
-        pointHitRadius: 10,
-        // notice the gap in the data and the spanGaps: false
-        data: [10, 20, 60, 95, 60, 78, 90,70,40,70,89,29],
-        spanGaps: false,
-        },{
-        label: "AC",
-        fill: false,
-        lineTension: 0.1,
-        backgroundColor: "transparent",
-        borderColor: "green",
-        borderCapStyle: 'butt',
-        borderDash: [],
-        borderDashOffset: 0.0,
-        borderJoinStyle: 'miter',
-        pointBorderColor: "black",
-        pointBackgroundColor: "transparent",
-        pointBorderWidth: 1,
-        pointHoverRadius: 8,
-        pointHoverBackgroundColor: "brown",
-        pointHoverBorderColor: "yellow",
-        pointHoverBorderWidth: 2,
-        pointRadius: 4,
-        pointHitRadius: 10,
-        // notice the gap in the data and the spanGaps: false
-    
-        data: [
-            <?php echo $januari ?>,
-            <?php echo $februari ?>,
-            <?php echo $maret ?>,
-            <?php echo $april ?>,
-            <?php echo $mei ?>,
-            <?php echo $juni ?>,
-            <?php echo $juli ?>,
-            <?php echo $agustus ?>,
-            <?php echo $september ?>,
-            <?php echo $oktober ?>,
-            <?php echo $november ?>,
-            <?php echo $desember ?>
-        ],
-        spanGaps: true,
-      }]
+    labels: [<?php 
+            foreach($data[1] as $c){
+                foreach($c as $d){
+                    echo '"'.$d->NAMA.'"'.",";
+                }
+            }
+            ?>],
+    datasets: [
+        { 
+            label: "PV",
+            fill: false,
+            lineTension: 0.1,
+            backgroundColor: 'transparent',
+            pointBorderColor: 'transparent',
+            borderColor: "red", // The main line color
+            borderCapStyle: 'square',
+            borderDash: [], // try [5, 15] for instance
+            borderDashOffset: 0.0,
+            borderJoinStyle: 'miter',
+            pointBorderColor: "black",
+            pointBorderWidth: 1,
+            pointHoverRadius: 8,
+            pointHoverBackgroundColor: "yellow",
+            pointHoverBorderColor: "brown",
+            pointHoverBorderWidth: 2,
+            pointRadius: 4,
+            pointHitRadius: 10,
+            // notice the gap in the data and the spanGaps: true
+            data: [
+                <?php 
+                foreach($data[1] as $c){
+                    foreach($c as $d){
+                        if($d->VALUE == null){
+                            echo "0,";
+                        }
+                        else{
+                            echo $d->VALUE.",";
+                        }
+                    }
+                } 
+                ?>
+            ],
+            spanGaps: true,
+        }, 
+        {
+            label: "EV",
+            fill: true,
+            lineTension: 0.1,
+            backgroundColor: "transparent",
+            borderColor: "rgb(167, 105, 0)",
+            borderCapStyle: 'square',
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: 'miter',
+            pointBorderColor: "black",
+            pointBackgroundColor: "transparent",
+            pointBorderWidth: 1,
+            pointHoverRadius: 8,
+            pointHoverBackgroundColor: "yellow",
+            pointHoverBorderColor: "brown",
+            pointHoverBorderWidth: 2,
+            pointRadius: 4,
+            pointHitRadius: 10,
+            // notice the gap in the data and the spanGaps: false
+            data: [
+                <?php 
+                foreach($data[2] as $c){
+                    foreach($c as $d){
+                        if($d->VALUE == null){
+                            echo "0,";
+                        }
+                        else{
+                            echo $d->VALUE.",";
+                        }
+                    }
+                } 
+                ?>
+            ],
+            spanGaps: false,
+        },
+        {
+            label: "AC",
+            fill: false,
+            lineTension: 0.1,
+            backgroundColor: "transparent",
+            borderColor: "green",
+            borderCapStyle: 'butt',
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: 'miter',
+            pointBorderColor: "black",
+            pointBackgroundColor: "transparent",
+            pointBorderWidth: 1,
+            pointHoverRadius: 8,
+            pointHoverBackgroundColor: "brown",
+            pointHoverBorderColor: "yellow",
+            pointHoverBorderWidth: 2,
+            pointRadius: 4,
+            pointHitRadius: 10,
+            data: [
+                <?php 
+                foreach($data[3] as $c){
+                    foreach($c as $d){
+                        if($d->VALUE == null){
+                            echo "0,";
+                        }
+                        else{
+                            echo $d->VALUE.",";
+                        }
+                    }
+                } 
+                ?>
+            ],
+            spanGaps: true,
+        }
+    ]
   },
 });
 var ctx = document.getElementById('line-chart2').getContext('2d');
 var myChart = new Chart(ctx, {
   type: 'line',
   data: {
-    labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct', 'Nov', 'Dec'],
+    labels: [<?php 
+            foreach($data[1] as $c){
+                foreach($c as $d){
+                    echo '"'.$d->NAMA.'"'.",";
+                }
+            } 
+            ?>],
     datasets: [{ 
         label: "Progress Plan",
         fill: true,
@@ -477,7 +517,20 @@ var myChart = new Chart(ctx, {
         pointRadius: 4,
         pointHitRadius: 10,
         // notice the gap in the data and the spanGaps: true
-        data: [33, 40, 50, 45, 66, 75, 49,80,25,35,76, 40],
+        data: [
+            <?php 
+            foreach($data[4] as $c){
+                foreach($c as $d){
+                    if($d->VALUE == null){
+                        echo "0,";
+                    }
+                    else{
+                        echo $d->VALUE.",";
+                    }
+                }
+            } 
+            ?>
+        ],
         spanGaps: false,
         },{
         label: "Realisasi",
@@ -498,20 +551,19 @@ var myChart = new Chart(ctx, {
         pointHoverBorderWidth: 2,
         pointRadius: 4,
         pointHitRadius: 10,
-        
         data: [
-            <?php echo $januari ?>,
-            <?php echo $februari ?>,
-            <?php echo $maret ?>,
-            <?php echo $april ?>,
-            <?php echo $mei ?>,
-            <?php echo $juni ?>,
-            <?php echo $juli ?>,
-            <?php echo $agustus ?>,
-            <?php echo $september ?>,
-            <?php echo $oktober ?>,
-            <?php echo $november ?>,
-            <?php echo $desember ?>
+            <?php 
+            foreach($data[5] as $c){
+                foreach($c as $d){
+                    if($d->VALUE == null){
+                        echo "0,";
+                    }
+                    else{
+                        echo $d->VALUE.",";
+                    }
+                }
+            } 
+            ?>
         ],
       }]
   },

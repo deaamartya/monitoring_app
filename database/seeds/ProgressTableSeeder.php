@@ -16,64 +16,64 @@ class ProgressTableSeeder extends Seeder
 
         \DB::table('progress')->delete();
         \DB::table('progress')->insert([
-            'TANGGAL' => date('Y-m-d'),
+            'TANGGAL' => '2021-01-01',
             'KODE_PROYEK' => "ABC45678",
             'ID_TIPE' => '1',
             'VALUE' => '9000',
         ]);
         \DB::table('progress')->insert([
-            'TANGGAL' => date('Y-m-d'),
+            'TANGGAL' => '2021-01-01',
             'KODE_PROYEK' => "ABC45678",
             'ID_TIPE' => '2',
             'VALUE' => '8000',
         ]);
         \DB::table('progress')->insert([
-            'TANGGAL' => date('Y-m-d'),
+            'TANGGAL' => '2021-01-01',
             'KODE_PROYEK' => "ABC45678",
             'ID_TIPE' => '3',
             'VALUE' => '7000',
         ]);
         \DB::table('progress')->insert([
-            'TANGGAL' => date('Y-m-d'),
+            'TANGGAL' => '2021-01-01',
             'KODE_PROYEK' => "ABC45678",
             'ID_TIPE' => '4',
-            'VALUE' => '6000',
+            'VALUE' => '60.54',
         ]);
         \DB::table('progress')->insert([
-            'TANGGAL' => date('Y-m-d'),
+            'TANGGAL' => '2021-01-01',
             'KODE_PROYEK' => "ABC45678",
             'ID_TIPE' => '5',
-            'VALUE' => '5000',
+            'VALUE' => '10.89',
         ]);
         \DB::table('progress')->insert([
-            'TANGGAL' => "2021-05-14",
+            'TANGGAL' => '2021-02-01',
             'KODE_PROYEK' => "ABC45678",
             'ID_TIPE' => '1',
             'VALUE' => '1000',
         ]);
         \DB::table('progress')->insert([
-            'TANGGAL' => "2021-05-14",
+            'TANGGAL' => '2021-02-01',
             'KODE_PROYEK' => "ABC45678",
             'ID_TIPE' => '2',
             'VALUE' => '2000',
         ]);
         \DB::table('progress')->insert([
-            'TANGGAL' => "2021-05-14",
+            'TANGGAL' => '2021-02-01',
             'KODE_PROYEK' => "ABC45678",
             'ID_TIPE' => '3',
             'VALUE' => '3000',
         ]);
         \DB::table('progress')->insert([
-            'TANGGAL' => "2021-05-14",
+            'TANGGAL' => '2021-02-01',
             'KODE_PROYEK' => "ABC45678",
             'ID_TIPE' => '4',
-            'VALUE' => '4000',
+            'VALUE' => '10.30',
         ]);
         \DB::table('progress')->insert([
-            'TANGGAL' => "2021-05-14",
+            'TANGGAL' => '2021-02-01',
             'KODE_PROYEK' => "ABC45678",
             'ID_TIPE' => '5',
-            'VALUE' => '5001',
+            'VALUE' => '20.30',
         ]);
     }
 }
