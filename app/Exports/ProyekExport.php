@@ -50,7 +50,7 @@ class ProyekExport implements FromCollection, WithHeadings, ShouldAutoSize, With
         $i=1;
         foreach($data as $d){
             $d->Nomor = $i;
-            if($d->NAMA_TIPE == "Rencana" || $d->NAMA_TIPE == "Realisasi"){
+            if(($d->NAMA_TIPE == "Rencana" || $d->NAMA_TIPE == "Realisasi") && $d->Value != ""){
                 $d->Value = $d->Value."%";
             }
             $i++;
