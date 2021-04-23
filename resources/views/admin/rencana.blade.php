@@ -213,26 +213,27 @@ function tgl_indo_table($tanggal){
                 <form action="{{ route('rencana.store') }}" method="POST" class="needs-validation" novalidate id="tambah-rencana">
                     @csrf
                     <div class="intro-y box p-3 mt-3 sm:mt-3 mr-3 bg-blue-400 text-white" style="background-color: #1c3faa;">     
-                        <div class="col-span-12">
-                            <h2 class="font-medium mr-auto ml-3"  >Pelaksanaan Proyek : {{ tgl_indo_table($start_proyek) }} - {{ tgl_indo_table($end_proyek)}} </h2>
-                        </div>
+                    <div class="col-span-12">
+      
+        <h2 class="font-medium mr-auto ml-3"  >Pelaksanaan Proyek : {{ tgl_indo_table($start_proyek) }} - {{ tgl_indo_table($end_proyek)}} </h2>
+    </div>
                     </div>
                     <input type="hidden" name="KODE_PROYEK" value="{{ $kode_proyek }}">
                     <br>
                     <div class="grid grid-cols-12 gap-4 row-gap-3 p-3">
                         <div class="col-span-6">
-                            <label class="font-semibold text-lg">Bulan</label> 
-                            <select data-search="true" class="tail-select w-full" name="bln"  placeholder="Select Bulan...">
-                            <option selected disabled>Pilih Bulan.....</option>
-                                <?php
-                                $bulan=array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember");
-                                $jlh_bln=count($bulan);
-                                for($c=0; $c<$jlh_bln; $c+=1){
-                                    $i = $c+1;
-                                    echo"<option value=$i> $bulan[$c] </option>";
-                                }
-                                ?>
-                            </select>
+                                <label class="font-semibold text-lg">Bulan</label> 
+                                <select data-search="true" class="tail-select w-full" name="bln"  placeholder="Select Bulan...">
+                                <option selected disabled>Pilih Bulan.....</option>
+                                    <?php
+                                    $bulan=array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember");
+                                    $jlh_bln=count($bulan);
+                                    for($c=0; $c<$jlh_bln; $c+=1){
+                                        $i = $c+1;
+                                        echo"<option value=$i> $bulan[$c] </option>";
+                                    }
+                                    ?>
+                                </select>
                         </div>
 
                         <div class="col-span-6">
@@ -254,22 +255,21 @@ function tgl_indo_table($tanggal){
                          @enderror           
                         </div>
                     
-                        <div class="col-span-12"> 
-                            <label class="font-semibold text-lg">PV</label>
-                            <input type="number" class="input w-full border mt-2 flex-1" name="PV_VALUE" required>
-                        </div>
+                    <div class="col-span-12"> 
+                        <label class="font-semibold text-lg">PV</label>
+                        <input type="number" class="input w-full border mt-2 flex-1" name="PV_VALUE" required>
+                    </div>
 
-                        <div class="col-span-12"> 
-                            <label class="font-semibold text-lg">Progress Plan (%)</label>
-                            <input type="number" class="input w-full border mt-2 flex-1" name="RENCANA_VALUE" required>
-                        </div>
-                        
-                        <div class="col-span-12"> 
-                            <div class="modal-footer mt-5">
-                                <div class="text-right">
-                                    <button type="button" class="button w-24 shadow-md mr-1 mb-2 bg-red-500 text-white" data-dismiss="modal">Cancel</button> 
-                                    <button class="button items-right w-24 shadow-md mr-1 mb-2 justify-right bg-theme-1 text-white shadow-md" type="submit">Simpan</button>
-                                </div>
+                    <div class="col-span-12"> 
+                        <label class="font-semibold text-lg">Progress Plan (%)</label>
+                        <input type="number" class="input w-full border mt-2 flex-1" name="RENCANA_VALUE" required>
+                    </div>
+                    
+                    <div class="col-span-12"> 
+                        <div class="modal-footer mt-5">
+                            <div class="text-right">
+                                <button type="button" class="button w-24 shadow-md mr-1 mb-2 bg-red-500 text-white" data-dismiss="modal">Cancel</button> 
+                                <button class="button items-right w-24 shadow-md mr-1 mb-2 justify-right bg-theme-1 text-white shadow-md" type="submit">Simpan</button>
                             </div>
                         </div>
                     </div>
