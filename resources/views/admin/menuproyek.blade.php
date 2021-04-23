@@ -141,7 +141,7 @@
                     <td style="text-align: center;">
                         <div class="flex" style="justify-content: center;">
                             <a href="{{url('/admin/rencana/'.$p->KODE_PROYEK)}}">
-                                <button href="javascript:;" title="Rencana" type="button" class="tooltip button px-2 mr-1 mb-2 bg-green-300 dark:text-gray-300">
+                                <button href="javascript:;" title="Progress Plan" type="button" class="tooltip button px-2 mr-1 mb-2 bg-green-300 dark:text-gray-300">
                                     <span class="w-5 h-5 flex items-center justify-center">
                                         <i data-feather="file-text" class="w-4 h-4 "></i>
                                     </span>
