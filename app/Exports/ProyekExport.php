@@ -9,9 +9,18 @@ use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use DB;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use Maatwebsite\Excel\Concerns\WithTitle;
 
-class ProyekExport implements FromCollection, WithHeadings, ShouldAutoSize, WithStyles
+class ProyekExport implements FromCollection, WithHeadings, ShouldAutoSize, WithStyles, WithTitle
 {
+    /**
+     * @return string
+     */
+    public function title(): string
+    {
+        return 'Sheet1';
+    }
+
     public function headings(): array
     {
         return [
