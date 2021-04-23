@@ -98,17 +98,6 @@ function tgl_indo_table($tanggal){
         <div class="col-span-6 lg:col-span-6 mt-2">
             <div class="intro-y box p-5 mt-12 sm:mt-5">
                 <div class="flex flex-col xl:flex-row xl:items-center">
-                    <div class="flex mb-3">
-                        <div>
-                            <div class="text-theme-20 dark:text-gray-300 text-lg xl:text-xl font-bold">{{ $jml_rencana_this_month }}</div>
-                            <div class="text-gray-600 dark:text-gray-600">Bulan Ini</div>
-                        </div>
-                        <div class="w-px h-12 border border-r border-dashed border-gray-300 dark:border-dark-5 mx-4 xl:mx-6"></div>
-                        <div>
-                            <div class="text-gray-600 dark:text-gray-600 text-lg xl:text-xl font-medium">{{ $jml_rencana_last_month }}</div>
-                            <div class="text-gray-600 dark:text-gray-600">Bulan Lalu</div>
-                        </div>
-                    </div>
                     <!--
                     <div class="dropdown xl:ml-auto mt-5 xl:mt-0">
                         <button class="dropdown-toggle button font-normal border dark:border-dark-5 text-white dark:text-gray-300 relative flex items-center text-gray-700"> Filter by Category <i data-feather="chevron-down" class="w-4 h-4 ml-2"></i> </button>
@@ -122,24 +111,13 @@ function tgl_indo_table($tanggal){
                 <!--
                     <canvas id="report-line-chart" height="160" class="mt-6"></canvas>
                     -->
-                    <canvas id="line-chart" height="100" class="mt-6"></canvas>
+                    <canvas id="line-chart" class="mt-6"></canvas>
                 </div>
             </div>
         </div>
         <div class="col-span-6 lg:col-span-6 mt-2">
             <div class="intro-y box p-5 mt-12 sm:mt-5">
                 <div class="flex flex-col xl:flex-row xl:items-center">
-                    <div class="flex mb-3">
-                        <div>
-                            <div class="text-theme-20 dark:text-gray-300 text-lg xl:text-xl font-bold">{{ $jml_rencana_this_month }}</div>
-                            <div class="text-gray-600 dark:text-gray-600">Bulan Ini</div>
-                        </div>
-                        <div class="w-px h-12 border border-r border-dashed border-gray-300 dark:border-dark-5 mx-4 xl:mx-6"></div>
-                        <div>
-                            <div class="text-gray-600 dark:text-gray-600 text-lg xl:text-xl font-medium">{{ $jml_rencana_last_month }}</div>
-                            <div class="text-gray-600 dark:text-gray-600">Bulan Lalu</div>
-                        </div>
-                    </div>
                     <!--
                     <div class="dropdown xl:ml-auto mt-5 xl:mt-0">
                         <button class="dropdown-toggle button font-normal border dark:border-dark-5 text-white dark:text-gray-300 relative flex items-center text-gray-700"> Filter by Category <i data-feather="chevron-down" class="w-4 h-4 ml-2"></i> </button>
@@ -153,7 +131,7 @@ function tgl_indo_table($tanggal){
                 <!--
                     <canvas id="report-line-chart" height="160" class="mt-6"></canvas>
                     -->
-                    <canvas id="line-chart2" height="100" class="mt-6"></canvas>
+                    <canvas id="line-chart2" class="mt-6"></canvas>
                 </div>
             </div>
         </div>

@@ -37,8 +37,8 @@ class RealisasiController extends Controller
         $nama_proyek = Proyek::where('KODE_PROYEK', $id)->value('NAMA_PROYEK');
 
         $progress2=Progress::all();
-        $jml_proyek_this_month  = Proyek::all()->count();
-        $jml_proyek_last_month  = Proyek::whereMonth(
+        $jml_realisasi_this_month  = Proyek::all()->count();
+        $jml_realisasi_last_month  = Proyek::whereMonth(
             'START_PROYEK', '=', Carbon::now()->subMonth()->month
         )->whereYear('START_PROYEK', date('Y'))->count();
 
@@ -58,7 +58,7 @@ class RealisasiController extends Controller
         $desember = Progress::whereMonth('TANGGAL','12')->whereYear('TANGGAL',date('Y'))->count();
 
 
-        return view('admin.realisasi',compact('progress', 'nama_proyek', 'kode_proyek', 'tgl_progress','tipe', 'progress2', 'current_year', 'jml_proyek_this_month', 'jml_proyek_last_month', 'januari', 'februari', 'maret', 'april', 'mei', 'juni', 'juli', 'agustus', 'september', 'oktober', 'november', 'desember'));
+        return view('admin.realisasi',compact('progress', 'nama_proyek', 'kode_proyek', 'tgl_progress','tipe', 'progress2', 'current_year', 'jml_realisasi_this_month', 'jml_realisasi_last_month', 'januari', 'februari', 'maret', 'april', 'mei', 'juni', 'juli', 'agustus', 'september', 'oktober', 'november', 'desember'));
     }
 
     public function getRencana(Request $req)
