@@ -79,14 +79,14 @@ class RealisasiController extends Controller
                         for($j=1;$j<=12;$j++){
                             $data[$a][$i][$j] = new \stdClass();
                             $data[$a][$i][$j]->VALUE = Progress::whereMonth('TANGGAL',$j)->whereYear('TANGGAL',($start_proyek_tahun+$i))->where(['ID_TIPE' => $a,'KODE_PROYEK' =>$id])->value('VALUE');
-                            $data[$a][$i][$j]->NAMA = date("M y",strtotime($start_proyek_tahun+$i."-".$j."-01"));
+                            $data[$a][$i][$j]->NAMA = date("M 'y",strtotime($start_proyek_tahun+$i."-".$j."-01"));
                         }
                     }
                     elseif( $i == ($jml_tahun-1)){
                         for($j=1;$j<=$end_proyek_bulan;$j++){
                             $data[$a][$i][$j] = new \stdClass();
                             $data[$a][$i][$j]->VALUE = Progress::whereMonth('TANGGAL',$j)->whereYear('TANGGAL',($start_proyek_tahun+$i))->where(['ID_TIPE' => $a,'KODE_PROYEK' =>$id])->value('VALUE');
-                            $data[$a][$i][$j]->NAMA = date("M y",strtotime($start_proyek_tahun+$i."-".$j."-01"));
+                            $data[$a][$i][$j]->NAMA = date("M 'y",strtotime($start_proyek_tahun+$i."-".$j."-01"));
                         }
                     }
                 }
