@@ -115,8 +115,10 @@ License: You must have a valid license purchased only from themeforest(the above
                 <div class="top-bar">
                     <!-- BEGIN: Breadcrumb -->
                     <div class="-intro-x breadcrumb mr-auto hidden sm:flex"> <a href="" class="">Aplikasi Monitoring Progres Proyek</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i> <a href="" class="breadcrumb--active">
-                        @if(request()->segment(2) != '')
+                        @if(request()->segment(2) != '' && request()->segment(2) != 'rencana')
                         {{ ucwords(request()->segment(2)) }}
+                        @elseif(request()->segment(2) == 'rencana')
+                        Progress Plan
                         @else
                         Dashboard
                         @endif
