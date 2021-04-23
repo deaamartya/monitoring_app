@@ -11,6 +11,11 @@ use DB;
 
 class RealisasiController extends Controller
 {
+    public function index(){
+        $proyek = Proyek::all();
+        return view('admin.realisasi_index',compact('proyek'));
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -86,6 +91,8 @@ class RealisasiController extends Controller
     {
         $request->validate([
             'TANGGAL' => 'required',
+            'PV_VALUE' => 'required',
+            'RENCANA_VALUE' => 'required'
         ]);
         
         Progress::where('KODE_PROYEK',$request->KODE_PROYEK)->where('TANGGAL', $request->TANGGAL)

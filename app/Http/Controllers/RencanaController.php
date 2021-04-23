@@ -11,6 +11,11 @@ use DB;
 
 class RencanaController extends Controller
 {
+    public function index(){
+        $proyek = Proyek::all();
+        return view('admin.rencana_index',compact('proyek'));
+    }
+
     public function show($id){
 
         $progress = Proyek::select('proyek.KODE_PROYEK', 'p1.TANGGAL', DB::raw('COALESCE(p1.VALUE,"-") AS PV'),  DB::raw('COALESCE(p2.VALUE,"-") AS Rencana'))

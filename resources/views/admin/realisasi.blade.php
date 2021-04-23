@@ -113,7 +113,7 @@ function tgl_indo($tanggal){
 <div class="intro-y box p-5 mt-5 sm:mt-5 bg-blue-400 text-white" style="background-color: #1c3faa;">                        
     <div class="flex flex-row">
         <i data-feather="list"></i>
-        <h2 class="text-lg font-medium mr-auto ml-3">Realisasi Proyek {{ $nama_proyek }}</h2>
+        <h2 class="text-lg font-medium mr-auto ml-3">Realisasi #{{ $kode_proyek }} - {{ $nama_proyek }}</h2>
     </div>
 </div>
 <div class="grid grid-cols-12 gap-6">
@@ -196,8 +196,8 @@ function tgl_indo($tanggal){
                     <th data-priority="2">PV</th>
                     <th data-priority="3">EV</th>
                     <th data-priority="4">AC</th>
-                    <th data-priority="5">Progress Plan</th>
-                    <th data-priority="6">Realisasi</th>
+                    <th data-priority="5">Progress Plan (%)</th>
+                    <th data-priority="6">Realisasi (%)</th>
                     <th data-priority="7"style="width: 20%;">Aksi</th>
                 </tr>
             </thead>
@@ -271,14 +271,17 @@ function tgl_indo($tanggal){
                                 @if($errors->has('TANGGAL'))
                                 <small class="text-theme-6">Bulan Wajib Diisi.</small>
                                 @endif
+                                @if($errors->has('PV_VALUE'))
+                                <small class="text-theme-6">Data sudah ada pada bulan dan tahun yang sama. Pilih bulan dan tahun lainnya.</small>
+                                @endif
                             </div>
                             <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">PV</label>
-                                <input disabled id="pv_value" type="text" class="input w-full border mt-2 flex-1" name="PV_VALUE">
+                                <input readonly id="pv_value" type="text" class="input w-full border mt-2 flex-1" name="PV_VALUE">
                             </div>
                             <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">Progress Plan (%)</label>
-                                <input disabled id="rencana_value" type="text" class="input w-full border mt-2 flex-1" name="RENCANA_VALUE">
+                                <input readonly id="rencana_value" type="text" class="input w-full border mt-2 flex-1" name="RENCANA_VALUE">
                             </div>
                             <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">EV</label>

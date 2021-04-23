@@ -26,10 +26,8 @@ Route::prefix('admin')->middleware(['auth'])->group(function(){
     Route::get('/exportexcel','MenuProyekController@exportexcel');
 
     Route::resource('user','UserController');
-
-    Route::resource('/rencana','RencanaController');
-    
-
+    Route::resource('rencana','RencanaController');
     Route::resource('realisasi','RealisasiController');
+
     Route::post('/realisasi/get-rencana','RealisasiController@getRencana');
 });
