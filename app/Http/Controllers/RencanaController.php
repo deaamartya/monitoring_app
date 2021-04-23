@@ -93,7 +93,7 @@ class RencanaController extends Controller
         $request->bln = ($request->bln < 10) ? "0".$request->bln : $request->bln;
         $date= $request->thn."-".$request->bln."-01";
 
-        if(Progress::where('TANGGAL', '=' , $date)->exists()){
+        if(Progress::where(['TANGGAL' => $date,'KODE_PROYEK' => $request->KODE_PROYEK])->exists()){
             throw ValidationException::withMessages(['messages' => 'Sudah terdapat rencana pada bulan dan tahun tersebut.']);
         }
         else{

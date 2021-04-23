@@ -240,8 +240,8 @@ function tgl_indo_table($tanggal){
                             <select data-search="true" class="tail-select w-full" name="thn"  placeholder="Select Tahun...">
                                 <option selected disabled>Pilih Tahun.....</option>
                                 <?php
-                                    $now=date('Y');
-                                    for ($a=$now; $a<$now+10; $a++){ 
+                                    $now=date('Y', strtotime($start_proyek));
+                                    for ($a=$now; $a<=date('Y', strtotime($end_proyek)); $a++){ 
                                         echo "<option value=$a >$a</option>";
                                     }
                                     ?>
