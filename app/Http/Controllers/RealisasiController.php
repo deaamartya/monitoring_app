@@ -91,6 +91,8 @@ class RealisasiController extends Controller
     {
         $request->validate([
             'TANGGAL' => 'required',
+            'PV_VALUE' => 'required',
+            'RENCANA_VALUE' => 'required'
         ]);
         
         Progress::where('KODE_PROYEK',$request->KODE_PROYEK)->where('TANGGAL', $request->TANGGAL)
