@@ -141,6 +141,10 @@ class RealisasiController extends Controller
             'VALUE' => $request->REALISASI_VALUE,
         ]);
 
+        Proyek::where('KODE_PROYEK',$request->KODE_PROYEK)->update([
+            'LAST_UPDATE' => now()
+        ]);
+
         return redirect()->back()->with('success','Data realisasi berhasil ditambahkan.');
       
         
@@ -176,6 +180,10 @@ class RealisasiController extends Controller
         Progress::where('KODE_PROYEK',$request->KODE_PROYEK)->where('TANGGAL', $request->TANGGAL_EDIT)
         ->where('ID_TIPE', '5')->update([
             'VALUE' => $request->REALISASI_VALUE_EDIT,
+        ]);
+
+        Proyek::where('KODE_PROYEK',$request->KODE_PROYEK)->update([
+            'LAST_UPDATE' => now()
         ]);
 
         return redirect()->back()->with('success','Data realisasi berhasil diupdate.');
