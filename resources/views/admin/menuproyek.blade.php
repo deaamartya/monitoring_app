@@ -123,9 +123,8 @@
                     <th data-priority="2">Nama Proyek</th>
                     <th data-priority="3">Start Proyek</th>
                     <th data-priority="4">End Proyek</th>
-                    {{-- <th data-priority="5">Status</th> --}}
-                    <th data-priority="6">Last Update</th>
-                    <th data-priority="7">Aksi</th>
+                    <th data-priority="5">Last Update</th>
+                    <th data-priority="6">Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -136,7 +135,6 @@
                     <td>{{$p->NAMA_PROYEK}}</td>
                     <td style="text-align:center">{{ tgl_indo($p->START_PROYEK) }}</td>
                     <td style="text-align:center">{{ tgl_indo($p->END_PROYEK) }}</td>
-                    {{-- <td style="text-align:center">{{$p->STATUS}}</td> --}}
                     <td>{{$p->LAST_UPDATE}}</td>
                     <td style="text-align: center;">
                         <div class="flex" style="justify-content: center;">
