@@ -20,7 +20,8 @@ class CreateProyekTable extends Migration
             $table->date('START_PROYEK');
             $table->date('END_PROYEK');
             $table->smallInteger('STATUS');
-            $table->timestamp('LAST_UPDATE')->useCurrent();
+            $table->dateTime('LAST_UPDATE');
+            $table->timestamp('CREATED_AT')->useCurrent();
         });
     }
 

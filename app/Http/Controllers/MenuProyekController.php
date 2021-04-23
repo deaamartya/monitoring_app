@@ -26,16 +26,11 @@ class MenuProyekController extends Controller
             'STATUS' => 'required'
         ]);
 
-        $date=Carbon::parse($request->START_PROYEK);
-        $date1=Carbon::parse($request->END_PROYEK);
-        $date->format('d-m-Y');
-        $date1->format('d-m-Y');
-
         Proyek::insert([
             'KODE_PROYEK' => $request->KODE_PROYEK,
             'NAMA_PROYEK' => $request->NAMA_PROYEK,
-            'START_PROYEK' => $date,
-            'END_PROYEK' => $date1,
+            'START_PROYEK' => date('Y-m-d',strtotime($request->START_PROYEK)),
+            'END_PROYEK' => date('Y-m-d',strtotime($request->END_PROYEK)),
             'STATUS' => $request->STATUS
         ]);
         

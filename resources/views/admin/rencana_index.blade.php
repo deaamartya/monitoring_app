@@ -145,7 +145,7 @@
         </table>
         
         <div class="modal" id="tambah_proyek">
-            <div class="modal__content modal__content py-5 pl-3 pr-1 ml-auto">
+            <div class="modal__content modal__content py-5 pl-3 pr-3 ml-auto">
                 <div class="modal-header">
                     <div class="modal__content relative"> 
                     </div>
