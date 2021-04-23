@@ -91,7 +91,7 @@ function tgl_indo_table($tanggal){
 <div class="intro-y box p-5 mt-5 sm:mt-5 bg-blue-400 text-white" style="background-color: #1c3faa;">                        
     <div class="flex flex-row">
         <i data-feather="list"></i>
-        <h2 class="text-lg font-medium mr-auto ml-3">Rencana Proyek {{ $nama_proyek }}</h2>
+        <h2 class="text-lg font-medium mr-auto ml-3">Progress Plan #{{ $kode_proyek }} - {{ $nama_proyek }}</h2>
     </div>
 </div>
 <div class="grid grid-cols-12 gap-6">
@@ -176,7 +176,7 @@ function tgl_indo_table($tanggal){
     <div class="col-span-6 intro-y block sm:flex items-center h-10">
         <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
             <a data-toggle="modal" data-target="#tambah_rencana">
-                <button class="ml-3 button box flex items-center shadow-md bg-blue-200 text-gray-700 buttons-html5 buttons-pdf" href="#" type="button"> <i data-feather="plus-circle" class="hidden sm:block w-4 h-4 mr-2"></i> Tambah Rencana </button>
+                <button class="ml-3 button box flex items-center shadow-md bg-theme-33 text-white buttons-html5 buttons-pdf" href="#" type="button"> <i data-feather="plus-circle" class="hidden sm:block w-6 h-6 mr-2"></i> Tambah Progress Plan </button>
             </a>
         </div>
     </div> 
@@ -199,7 +199,7 @@ function tgl_indo_table($tanggal){
                     <td>{{ $loop->iteration  }}</td>
                     <td>{{ tgl_indo_table($p->TANGGAL) }}</td>
                     <td>{{$p->PV}}</td>
-                    <td>{{$p->Rencana}}%</td>
+                    <td>{{ intval($p->Rencana) }}%</td>
                     <td>
                     <div class="flex" style="justify-content: center;">
                         <a data-toggle="modal" data-target="#edit_{{ date('d-m-Y', strtotime($p->TANGGAL)) }}">
@@ -228,7 +228,7 @@ function tgl_indo_table($tanggal){
                     <div class="modal__content relative"> 
                     </div>
                     <div class="flex px-2 sm:pb-3 sm:pt-1 border-b border-gray-200 dark:border-dark-5">
-                        <h2 class="font-bold text-2xl flex"><i data-feather="plus-circle" class="w-8 h-8 mr-2"></i>Tambah Rencana</h2>
+                        <h2 class="font-bold text-2xl flex"><i data-feather="plus-circle" class="w-8 h-8 mr-2"></i>Tambah Progress Plan</h2>
                         <a data-dismiss="modal" href="javascript:;" class="mr-3 ml-auto"><i data-feather="x" class="w-8 h-8 text-gray-500"></i></a>
                     </div>
                 </div>
@@ -241,6 +241,7 @@ function tgl_indo_table($tanggal){
     </div>
                     </div>
                     <input type="hidden" name="KODE_PROYEK" value="{{ $kode_proyek }}">
+                    <br>
                     <div class="mr-5 mb-5 grid grid-cols-12 gap-4 row-gap-3 p-3">
                         <div class="col-span-6">
                                 <label class="font-semibold text-lg">Bulan</label> 
@@ -273,7 +274,7 @@ function tgl_indo_table($tanggal){
 
                         <div class="col-span-12">
                         @error('messages')
-                        <small class="text-theme-6">Sudah terdapat rencana pada bulan dan tahun tersebut.</small>
+                        <small class="text-theme-6">Sudah terdapat progress plan pada bulan dan tahun tersebut.</small>
                          @enderror           
                         </div>
                     
@@ -305,10 +306,11 @@ function tgl_indo_table($tanggal){
                     <div class="modal__content relative"> 
                     </div>
                     <div class="flex px-2 sm:pb-3 sm:pt-1 border-b border-gray-200 dark:border-dark-5">
-                        <h2 class="font-bold text-2xl flex"><i data-feather="info" class="w-8 h-8 mr-2"></i>Edit Rencana #{{ $loop->iteration }}</h2>
+                        <h2 class="font-bold text-2xl flex"><i data-feather="edit" class="w-8 h-8 mr-2"></i>Edit Progress Plan #{{ $loop->iteration }}</h2>
                         <a data-dismiss="modal" href="javascript:;" class="mr-3 ml-auto" id="close_{{$p->TANGGAL}}"><i data-feather="x" class="w-8 h-8 text-gray-500"></i></a>
                     </div>
                 </div>
+                <br>
                 <div class="modal-body">
                     <form action="{{ route('rencana.update', $p->TANGGAL) }}" method="POST" class="needs-validation" novalidate>
                     @method('PUT')
@@ -319,12 +321,12 @@ function tgl_indo_table($tanggal){
                         <input disabled class="input border mr-2 w-full mt-2"  value="{{ tgl_indo_table($p->TANGGAL) }}">
                         <input type="hidden" class="input border mr-2 w-full mt-2" name="TANGGAL_EDIT" value="{{ $p->TANGGAL }}">
                     </div>
-                
+                <br>
                     <div class="col-span-12"> 
                         <label class="font-semibold text-lg">PV</label>
                         <input type="number" class="input w-full border mt-2 flex-1" name="PV_VALUE_EDIT" value="{{ $p->PV }}" required>
                     </div>
-
+                <br>
                     <div class="col-span-12"> 
                         <label class="font-semibold text-lg">Progress Plan (%)</label>
                         <input type="number" class="input w-full border mt-2 flex-1" name="RENCANA_VALUE_EDIT" value="{{ $p->Rencana }}" required>
@@ -345,7 +347,7 @@ function tgl_indo_table($tanggal){
                     <div class="modal__content relative"> 
                     </div>
                     <div class="flex px-2 sm:pb-3 sm:pt-1 border-b border-gray-200 dark:border-dark-5">
-                        <h2 class="font-bold text-2xl flex"><i data-feather="trash-2" class="w-8 h-8 mr-2"></i>Hapus Rencana #{{ $loop->iteration }}</h2>
+                        <h2 class="font-bold text-2xl flex"><i data-feather="trash-2" class="w-8 h-8 mr-2"></i>Hapus Progress Plan #{{ $loop->iteration }}</h2>
                         <a data-dismiss="modal" href="javascript:;" class="mr-3 ml-auto"><i data-feather="x" class="w-8 h-8 text-gray-500"></i></a>
                     </div>
                 </div>
@@ -356,7 +358,7 @@ function tgl_indo_table($tanggal){
                     <input type="hidden" value="{{$p->TANGGAL}}"name="TANGGAL_DELETE">
                     <input type="hidden" value="{{$p->ID_TIPE}}" name="ID_TIPE">
                     <div class="text-base mt-5">
-                        Apakah Anda yakin ingin menghapus rencana proyek  untuk bulan {{ date('F Y',strtotime($p->TANGGAL)) }} ?
+                        Apakah Anda yakin ingin menghapus progress plan untuk proyek {{ $nama_proyek }} pada bulan {{ tgl_indo_table($p->TANGGAL) }} ?
                     </div>
                     <div class="text-base text-theme-6">Data yang dihapus tidak dapat dikembalikan.</div>
                     <div class="modal-footer mt-5">
