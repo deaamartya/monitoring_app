@@ -163,8 +163,6 @@ class RencanaController extends Controller
           'TANGGAL' => $request->TANGGAL_DELETE
       ])->delete();
        
-           
-
         return redirect()->back()->with('success','Data rencana berhasil dihapus.');
     }
 }

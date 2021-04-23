@@ -22,6 +22,7 @@ class ProyekTableSeeder extends Seeder
             'END_PROYEK' => "2021-03-31",
             'STATUS' => "0",
             'LAST_UPDATE' => "2021-04-09 08:40:51",
+            'CREATED_AT' => "2021-04-08 09:40:50",
         ]);
 
         \DB::table('proyek')->insert([
@@ -31,6 +32,7 @@ class ProyekTableSeeder extends Seeder
             'END_PROYEK' => "2022-05-31",
             'STATUS' => "0",
             'LAST_UPDATE' => "2021-04-09 08:40:51",
+            'CREATED_AT' => "2021-04-08 10:40:50",
         ]);
 
         \DB::table('proyek')->insert([
@@ -40,6 +42,7 @@ class ProyekTableSeeder extends Seeder
             'END_PROYEK' => "2023-05-31",
             'STATUS' => "0",
             'LAST_UPDATE' => "2021-04-09 08:40:51",
+            'CREATED_AT' => "2021-04-08 11:40:50",
         ]);
         
     }
