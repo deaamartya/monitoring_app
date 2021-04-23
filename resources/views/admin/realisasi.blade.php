@@ -187,8 +187,8 @@ function tgl_indo($tanggal){
                     <th data-priority="2">PV</th>
                     <th data-priority="3">EV</th>
                     <th data-priority="4">AC</th>
-                    <th data-priority="5">Progress Plan</th>
-                    <th data-priority="6">Realisasi</th>
+                    <th data-priority="5">Progress Plan (%)</th>
+                    <th data-priority="6">Realisasi (%)</th>
                     <th data-priority="7"style="width: 20%;">Aksi</th>
                 </tr>
             </thead>
