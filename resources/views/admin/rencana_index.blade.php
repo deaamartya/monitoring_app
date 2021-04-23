@@ -91,7 +91,7 @@
 <div class="intro-y box p-5 mt-5 sm:mt-5 bg-blue-400 text-white" style="background-color: #1c3faa;">                        
     <div class="flex flex-row">
         <i data-feather="list"></i>
-        <h2 class="text-lg font-medium mr-auto ml-3">Tabel Menu Proyek</h2>
+        <h2 class="text-lg font-medium mr-auto ml-3">Tabel Proyek</h2>
     </div>
 </div>
 
@@ -100,20 +100,10 @@
 <!--Container-->
 <div class="container w-full ">
 
-    <div class="intro-y block sm:flex items-center h-10">
-        <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
-            <a href ="javascript:;" data-toggle="modal" data-target="#tambah_proyek">
-                <button class="button box flex items-center shadow-md bg-blue-200 text-gray-700 buttons-html5 buttons-pdf"> <i data-feather="file-plus" class="hidden sm:block w-4 h-4 mr-2"></i> Tambah Proyek Baru </button>
-            </a>
-            <a target="_blank" href="{{url('/admin/exportexcel')}}">
-                <button class="ml-3 button box flex items-center shadow-md bg-blue-200 text-gray-700 buttons-html5 buttons-pdf"> <i data-feather="download" class="hidden sm:block w-4 h-4 mr-2"></i> Export to Excel </button>
-            </a>
-        </div>
-    </div>  
-    <br>
+    @include('admin.button-atas-proyek')
 
     <!--Card-->
-    <div class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
+    <div class="px-2 py-1">
     
         <table id="view" class="stripe hover display cell-border" style="width:100%; padding-top: 1em;  padding-bottom: 1em;" >
             <thead>
@@ -141,16 +131,9 @@
                     <td style="text-align: center;">
                         <div class="flex" style="justify-content: center;">
                             <a href="{{url('/admin/rencana/'.$p->KODE_PROYEK)}}">
-                                <button href="javascript:;" title="Progress Plan" type="button" class="tooltip button px-2 mr-1 mb-2 bg-green-300 dark:text-gray-300">
+                                <button href="javascript:;" title="Detail" type="button" class="tooltip button px-2 mr-1 mb-2 bg-green-300 dark:text-gray-300">
                                     <span class="w-5 h-5 flex items-center justify-center">
-                                        <i data-feather="file-text" class="w-4 h-4 "></i>
-                                    </span>
-                                </button>
-                            </a>
-                            <a href="{{route('realisasi.show',$p->KODE_PROYEK)}}">
-                                <button href="javascript:;" title="Realisasi" type="button" class="tooltip button px-2 mr-1 mb-2 bg-orange-300 dark:text-gray-300">
-                                    <span class="w-5 h-5 flex items-center justify-center">
-                                        <i data-feather="layers" class="w-4 h-4 "></i>
+                                        <i data-feather="more-vertical" class="w-4 h-4 "></i>
                                     </span>
                                 </button>
                             </a>
