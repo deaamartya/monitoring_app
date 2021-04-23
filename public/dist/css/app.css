@@ -6713,7 +6713,6 @@ body.tabulator-print-fullscreen-hide > *:not(.tabulator-print-fullscreen) {
 .report-chart:before {
   content: "";
   height: 93%;
-  background: linear-gradient(to right, white, #ffffffde, transparent);
   width: 3rem;
   left: 0;
   top: 0;
@@ -6730,7 +6729,6 @@ body.tabulator-print-fullscreen-hide > *:not(.tabulator-print-fullscreen) {
 .report-chart:after {
   content: "";
   height: 93%;
-  background: linear-gradient(to right, transparent, #ffffffde, white);
   width: 3rem;
   right: 0;
   top: 0;
