@@ -11,6 +11,11 @@ use DB;
 
 class RealisasiController extends Controller
 {
+    public function index(){
+        $proyek = Proyek::all();
+        return view('admin.realisasi_index',compact('proyek'));
+    }
+
     /**
      * Display a listing of the resource.
      *
