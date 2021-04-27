@@ -136,6 +136,9 @@ class RencanaController extends Controller
         Proyek::where('KODE_PROYEK',$request->KODE_PROYEK)->update([
             'LAST_UPDATE' => now()
         ]);
+        Progress::where('TANGGAL',$request->TANGGAL)->update([
+            'LAST_UPDATE' => now()
+        ]);
 
         return redirect()->back()->with('success','Data rencana berhasil ditambahkan.');
     }
