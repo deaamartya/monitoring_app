@@ -102,9 +102,11 @@
 
     @include('admin.button-atas-proyek')
     
+    
     <!--Card-->
     <div class="px-2 py-1">
         
+
         <table id="view" class="stripe hover display cell-border" style="width:100%; padding-top: 1em;  padding-bottom: 1em;" >
             <thead>
                 <tr>
@@ -129,7 +131,7 @@
                     <td>{{$p->LAST_UPDATE}}</td>
                     <td>{{$p->CREATED_AT}}</td>
                     <td style="text-align: center;" width="18%">
-                        <a href="{{url('/admin/rencana/'.$p->KODE_PROYEK)}}">
+                        <a href="{{url('/admin/realisasi/'.$p->KODE_PROYEK)}}">
                             <button href="javascript:;" title="Detail" type="button" class="tooltip button px-2 mr-1 mb-2 bg-green-300 dark:text-gray-300">
                                 <span class="w-5 h-5 flex items-center justify-center">
                                     <i data-feather="more-vertical" class="w-4 h-4 "></i>
@@ -210,6 +212,7 @@
             </div>
         </div>     
 
+        @foreach($proyek as $p)
         <div class="modal" id="edit_proyek{{ $p->ID_PROYEK }}">
             <div class="modal__content modal__content py-5 pl-3 pr-3 ml-auto">
                 <div class="modal-header">
@@ -265,7 +268,7 @@
             </div>
         </div>
 
-        @foreach($proyek as $p)
+        
         <div class="modal" id="delete_proyek{{ $p->ID_PROYEK }}">
             <div class="modal__content modal__content--lg p-5 ml-auto">
                 <div class="modal-header">
@@ -280,7 +283,7 @@
                 <form action="{{ route('menuproyek.destroy', $p->ID_PROYEK) }}" method="POST">
                     @method('DELETE')
                     @csrf
-                    <input type="hidden" value="{{$p->ID_PROYEK}}"name="TANGGAL_DELETE">
+                    <input type="hidden" value="{{$p->ID_PROYEK}}"name="ID_PROYEK">
                     <input type="hidden" value="{{$p->KODE_PROYEK}}" name="KODE_PROYEK">
                     <input type="hidden" value="{{$p->NAMA_PROYEK}}" name="NAMA_PROYEK">
                     <div class="text-base mt-5">

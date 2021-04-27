@@ -212,6 +212,7 @@
             </div>
         </div>     
 
+        @foreach($proyek as $p)
         <div class="modal" id="edit_proyek{{ $p->ID_PROYEK }}">
             <div class="modal__content modal__content py-5 pl-3 pr-3 ml-auto">
                 <div class="modal-header">
@@ -223,11 +224,12 @@
                     </div>
                 </div>
 
-                <form action="{{ route('menuproyek.update', $p->ID_PROYEK) }}" method="POST" class="needs-validation" novalidate>
+                <form action="{{ route('menuproyek.update', $p->ID_PROYEK) }}" method="POST" >
                     @method('PUT')
                     @csrf
                     <div class="modal-body">
                         <div class="p-5 grid grid-cols-12 gap-4 row-gap-3">
+                            <input type="hidden" name="ID_PROYEK" value="{{ $p->ID_PROYEK }}">
                             <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">Kode Proyek</label>
                                 <input type="text" class="input w-full border mt-2 flex-1" value="{{ $p->KODE_PROYEK }}" name="KODE_PROYEK">
@@ -267,7 +269,7 @@
             </div>
         </div>
 
-        @foreach($proyek as $p)
+        
         <div class="modal" id="delete_proyek{{ $p->ID_PROYEK }}">
             <div class="modal__content modal__content--lg p-5 ml-auto">
                 <div class="modal-header">
@@ -282,7 +284,7 @@
                 <form action="{{ route('menuproyek.destroy', $p->ID_PROYEK) }}" method="POST">
                     @method('DELETE')
                     @csrf
-                    <input type="hidden" value="{{$p->ID_PROYEK}}"name="TANGGAL_DELETE">
+                    <input type="hidden" value="{{$p->ID_PROYEK}}"name="ID_PROYEK">
                     <input type="hidden" value="{{$p->KODE_PROYEK}}" name="KODE_PROYEK">
                     <input type="hidden" value="{{$p->NAMA_PROYEK}}" name="NAMA_PROYEK">
                     <div class="text-base mt-5">

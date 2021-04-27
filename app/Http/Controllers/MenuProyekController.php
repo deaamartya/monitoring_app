@@ -36,13 +36,15 @@ class MenuProyekController extends Controller
         return redirect()->back()->with('message','Success');
     }
 
-    public function update(Request $request, $id){
-        Proyek::where('ID_PROYEK',$request->$id)
+    public function update(Request $request){
+
+        Proyek::where('ID_PROYEK',$request->ID_PROYEK)
         ->update([
             'KODE_PROYEK' => $request->KODE_PROYEK,
             'NAMA_PROYEK' => $request->NAMA_PROYEK,
             'START_PROYEK' => $request->START_PROYEK,
-            'END_PROYEK' => $request->END_PROYEK    
+            'END_PROYEK' => $request->END_PROYEK,
+            'LAST_UPDATE' => now()    
         ]);
 
         return redirect()->back()->with('success','Data proyek berhasil diupdate.');
