@@ -58,7 +58,7 @@ class MenuProyekController extends Controller
             'NAMA_PROYEK' => $request->NAMA_PROYEK
         ])->delete();
        
-        return redirect()->back()->with('success','Data rencana berhasil dihapus.');
+        return redirect()->back()->with('success','Data proyek berhasil dihapus.');
     }
 
     public function exportexcel()
