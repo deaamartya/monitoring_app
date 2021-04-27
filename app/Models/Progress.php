@@ -34,11 +34,11 @@ class Progress extends Model
 	];
 
 	protected $dates = [
-		'TANGGAL'
+		'TANGGAL', 'LAST_UPDATE'
 	];
 
 	protected $fillable = [
-		'VALUE'
+		'VALUE', 'LAST_UPDATE'
 	];
 
 	public function proyek()
