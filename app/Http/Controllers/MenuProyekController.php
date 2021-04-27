@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Proyek;
 use App\Exports\ProyekExport;
-use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 
 class MenuProyekController extends Controller
@@ -22,8 +21,7 @@ class MenuProyekController extends Controller
             'KODE_PROYEK' => 'required',
             'NAMA_PROYEK' => 'required',
             'START_PROYEK' => 'required',
-            'END_PROYEK' => 'required',
-            'STATUS' => 'required'
+            'END_PROYEK' => 'required'
         ]);
 
         Proyek::insert([
@@ -31,10 +29,34 @@ class MenuProyekController extends Controller
             'NAMA_PROYEK' => $request->NAMA_PROYEK,
             'START_PROYEK' => date('Y-m-d',strtotime($request->START_PROYEK)),
             'END_PROYEK' => date('Y-m-d',strtotime($request->END_PROYEK)),
-            'STATUS' => $request->STATUS
+            'LAST_UPDATE' => now(),
+            'CREATED_AT' => now()
         ]);
         
         return redirect()->back()->with('message','Success');
+    }
+
+    public function update(Request $request, $id){
+        Proyek::where('ID_PROYEK',$request->$id)
+        ->update([
+            'KODE_PROYEK' => $request->KODE_PROYEK,
+            'NAMA_PROYEK' => $request->NAMA_PROYEK,
+            'START_PROYEK' => $request->START_PROYEK,
+            'END_PROYEK' => $request->END_PROYEK    
+        ]);
+
+        return redirect()->back()->with('success','Data proyek berhasil diupdate.');
+    }
+
+    public function destroy($id, Request $request)
+    {
+        Proyek::where([
+            'ID_PROYEK' => $id,
+            'KODE_PROYEK' => $request->KODE_PROYEK,
+            'NAMA_PROYEK' => $request->NAMA_PROYEK
+        ])->delete();
+       
+        return redirect()->back()->with('success','Data rencana berhasil dihapus.');
     }
 
     public function exportexcel()

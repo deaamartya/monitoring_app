@@ -36,7 +36,8 @@ class Proyek extends Model
 	];
 
 	protected $dates = [
-		'LAST_UPDATE'
+		'LAST_UPDATE',
+		'CREATED_AT'
 	];
 
 	protected $fillable = [
@@ -45,7 +46,8 @@ class Proyek extends Model
 		'START_PROYEK',
 		'END_PROYEK',
 		'STATUS',
-		'LAST_UPDATE'
+		'LAST_UPDATE',
+		'CREATED_AT'
 	];
 
 	public function progress()

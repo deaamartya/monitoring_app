@@ -22,9 +22,6 @@ Route::prefix('admin')->middleware(['auth'])->group(function(){
     Route::get('/','AdminController@index');
 
     Route::resource('menuproyek','MenuProyekController');
-    Route::get('/menuproyek','MenuProyekController@index');
-    Route::get('/exportexcel','MenuProyekController@exportexcel');
-
     Route::resource('user','UserController');
     Route::resource('rencana','RencanaController');
     Route::resource('realisasi','RealisasiController');
