@@ -287,7 +287,7 @@
                     <input type="hidden" value="{{$p->KODE_PROYEK}}" name="KODE_PROYEK">
                     <input type="hidden" value="{{$p->NAMA_PROYEK}}" name="NAMA_PROYEK">
                     <div class="text-base mt-5">
-                        Apakah Anda yakin ingin menghapus progress plan untuk kode proyek {{ $p->KODE_PROYEK }} dan nama proyek {{ $p->NAMA_PROYEK }} ?
+                        Apakah Anda yakin ingin menghapus proyek dengan kode proyek {{ $p->KODE_PROYEK }} dan nama proyek {{ $p->NAMA_PROYEK }} ?
                     </div>
                     <div class="text-base text-theme-6">Data yang dihapus tidak dapat dikembalikan.</div>
                     <div class="modal-footer mt-5">
