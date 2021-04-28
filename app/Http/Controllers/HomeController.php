@@ -74,7 +74,7 @@ class HomeController extends Controller
         }
 
         $list_realisasi = Progress::where(
-            'ID_TIPE','=',2)->orWhere('ID_TIPE','=',3)->orWhere('ID_TIPE','=',5)->orderBy('created_at','DESC')->get()->limit(5);
+            'ID_TIPE','=',2)->orWhere('ID_TIPE','=',3)->orWhere('ID_TIPE','=',5)->orderBy('LAST_UPDATE','DESC')->get()->limit(5);
 
         return view('dashboard', compact('progress', 'current_year', 'jml_proyek_this_month', 'jml_proyek_last_month','jml_proyek_this_year', 'jml_proyek_last_year','jml_proyek_all', 'data','list_realisasi'));
     }
