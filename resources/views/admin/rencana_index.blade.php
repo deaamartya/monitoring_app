@@ -136,14 +136,14 @@
                                 </span>
                             </button>
                         </a>
-                        <a href="{{url('/admin/rencana/'.$p->KODE_PROYEK)}}">
+                        <a data-toggle="modal" data-target="#edit_proyek{{ $p->ID_PROYEK }}" >
                             <button href="javascript:;" title="Edit" type="button" class="tooltip button px-2 mr-1 mb-2 bg-orange-300 dark:text-gray-300">
                                 <span class="w-5 h-5 flex items-center justify-center">
                                     <i data-feather="edit" class="w-4 h-4 "></i>
                                 </span>
                             </button>
                         </a>
-                        <a href="{{url('/admin/rencana/'.$p->KODE_PROYEK)}}">
+                        <a data-toggle="modal" data-target="#delete_proyek{{ $p->ID_PROYEK }}">
                             <button href="javascript:;" title="Delete" type="button" class="tooltip button px-2 mr-1 mb-2 bg-red-300 dark:text-gray-300">
                                 <span class="w-5 h-5 flex items-center justify-center">
                                     <i data-feather="trash-2" class="w-4 h-4 "></i>
