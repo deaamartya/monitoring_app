@@ -185,6 +185,7 @@ class RealisasiController extends Controller
         Proyek::where('KODE_PROYEK',$request->KODE_PROYEK)->update([
             'LAST_UPDATE' => now()
         ]);
+        
 
         return redirect()->back()->with('success','Data realisasi berhasil diupdate.');
     }

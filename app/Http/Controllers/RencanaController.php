@@ -102,41 +102,43 @@ class RencanaController extends Controller
             'TANGGAL' =>$date,
             'ID_TIPE' => 1,
             'VALUE' => $request->PV_VALUE,
-            'KODE_PROYEK' => $request->KODE_PROYEK
+            'KODE_PROYEK' => $request->KODE_PROYEK,
+            'LAST_UPDATE' => now()
         ]);
         // Insert rencana
         Progress::insert([
             'TANGGAL' =>$date,
             'ID_TIPE' => 4,
             'VALUE' => $request->RENCANA_VALUE,
-            'KODE_PROYEK' => $request->KODE_PROYEK
+            'KODE_PROYEK' => $request->KODE_PROYEK,
+            'LAST_UPDATE' => now()
         ]);
          // Insert EV
          Progress::insert([
             'TANGGAL' =>$date,
             'ID_TIPE' => 2,
             'VALUE' => null,
-            'KODE_PROYEK' => $request->KODE_PROYEK
+            'KODE_PROYEK' => $request->KODE_PROYEK,
+            'LAST_UPDATE' => now()
         ]);
          // Insert AC
         Progress::insert([
             'TANGGAL' =>$date,
             'ID_TIPE' => 3,
             'VALUE' => null,
-            'KODE_PROYEK' => $request->KODE_PROYEK
+            'KODE_PROYEK' => $request->KODE_PROYEK,
+            'LAST_UPDATE' => now()
         ]);
         // Insert REALISASI
         Progress::insert([
             'TANGGAL' =>$date,
             'ID_TIPE' => 5,
             'VALUE' => null,
+            'LAST_UPDATE' => now() ,
             'KODE_PROYEK' => $request->KODE_PROYEK
         ]);
         }
-        Proyek::where('KODE_PROYEK',$request->KODE_PROYEK)->update([
-            'LAST_UPDATE' => now()
-        ]);
-
+     
         return redirect()->back()->with('success','Data rencana berhasil ditambahkan.');
     }
 
@@ -150,15 +152,15 @@ class RencanaController extends Controller
         Progress::where('KODE_PROYEK',$request->KODE_PROYEK)->where('TANGGAL', $request->TANGGAL_EDIT)
         ->where('ID_TIPE', '1')->update([
             'VALUE' => $request->PV_VALUE_EDIT,
+            'LAST_UPDATE' => now()
         ]);
 
         Progress::where('KODE_PROYEK',$request->KODE_PROYEK)->where('TANGGAL', $request->TANGGAL_EDIT)
         ->where('ID_TIPE', '4')->update([
-            'VALUE' => $request->RENCANA_VALUE_EDIT,
+            'VALUE' => $request->RENCANA_VALUE_EDIT, 'LAST_UPDATE' => now()
         ]);
-        Proyek::where('KODE_PROYEK',$request->KODE_PROYEK)->update([
-            'LAST_UPDATE' => now()
-        ]);
+     
+      
         return redirect()->back()->with('success','Data rencana berhasil diupdate.');
     }
 
