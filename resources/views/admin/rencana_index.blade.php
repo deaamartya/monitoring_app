@@ -197,10 +197,10 @@
                                         <input type="text" class="datepicker input pl-12 border" name="END_PROYEK" data-single-mode="true" required> 
                                     </div> 
                             </div>
-                            <div class="col-span-12"> 
+                            <!-- <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">Status</label>
                                 <input type="number" class="input w-full border mt-2 flex-1" name="STATUS" required>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <div class="modal-footer mt-5">
