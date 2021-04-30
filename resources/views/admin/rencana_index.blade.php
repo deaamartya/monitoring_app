@@ -227,6 +227,7 @@
                     @csrf
                     <div class="modal-body">
                         <div class="p-5 grid grid-cols-12 gap-4 row-gap-3">
+                        <input type="hidden" name="ID_PROYEK" value="{{ $p->ID_PROYEK }}">
                             <div class="col-span-12"> 
                                 <label class="font-semibold text-lg">Kode Proyek</label>
                                 <input type="text" class="input w-full border mt-2 flex-1" value="{{ $p->KODE_PROYEK }}" name="KODE_PROYEK">
